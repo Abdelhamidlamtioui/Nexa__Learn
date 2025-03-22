@@ -1,32 +1,36 @@
 package org.doctech.user.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.doctech.common.dto.ApiResponse;
 import org.doctech.common.dto.PagedResponse;
-import org.doctech.points.model.TransactionType;
 import org.doctech.security.model.SecurityUser;
 import org.doctech.user.dto.LoginRequest;
 import org.doctech.user.dto.PasswordUpdateRequest;
 import org.doctech.user.dto.RegisterRequest;
 import org.doctech.user.dto.UserDTO;
-import org.doctech.user.model.User;
+import org.doctech.user.dto.UserStatisticsDTO;
+import org.doctech.user.dto.UserStatusUpdateDTO;
 import org.doctech.user.service.UserService;
 import org.doctech.security.JwtTokenProvider;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.validation.Valid;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.UUID;
+import java.util.List;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/users")
@@ -37,6 +41,12 @@ public class UserController {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider tokenProvider;
 
+    @GetMapping("/statistics")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse> getUserStatistics() {
+        UserStatisticsDTO statistics = userService.getUserStatistics();
+        return ResponseEntity.ok(new ApiResponse(true, "User statistics retrieved successfully", statistics));
+    }
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse> register(@Valid @RequestBody RegisterRequest request) {
@@ -52,52 +62,58 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse> login(@Valid @RequestBody LoginRequest request) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
-        );
+    public ResponseEntity<ApiResponse> login(@Valid @RequestBody LoginRequest request, HttpServletRequest servletRequest) {
+        // Log request details to help troubleshoot
+        System.out.println("Login request received:");
+        System.out.println("Request URI: " + servletRequest.getRequestURI());
+        System.out.println("Context Path: " + servletRequest.getContextPath());
+        System.out.println("Servlet Path: " + servletRequest.getServletPath());
+        System.out.println("Username: " + request.getUsername());
+        
+        // First check if user is enabled
+        try {
+            // Check if the user exists and is enabled
+            UserDTO userDTO = null;
+            try {
+                // Try to find by username first
+                userDTO = userService.getUserByUsername(request.getUsername());
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            
+            // If user was found, check if enabled
+            if (userDTO != null && !userDTO.isEnabled()) {
+                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+                        .body(new ApiResponse(false, "Account is disabled. Please contact an administrator.", null));
+            }
+            
+            // Proceed with authentication
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getUsername(),
+                            request.getPassword()
+                    )
+            );
+            
+            SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+            userService.updateLastLogin(securityUser.getId());
 
-        String token = tokenProvider.generateToken(authentication);
+            String token = tokenProvider.generateToken(authentication);
+            String refreshToken = tokenProvider.generateRefreshToken(authentication);
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("token", token);
-        response.put("tokenType", "Bearer");
+            Map<String, Object> response = new HashMap<>();
+            response.put("token", token);
+            response.put("refreshToken", refreshToken);
+            response.put("tokenType", "Bearer");
 
-        return ResponseEntity.ok(new ApiResponse(true, "Login successful", response));
+            return ResponseEntity.ok(new ApiResponse(true, "Login successful", response));
+        } catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ApiResponse(false, "Authentication failed: " + e.getMessage(), null));
+        }
     }
 
-//    // Authentication Endpoints
-//    @PostMapping("/register")
-//    public ResponseEntity<ApiResponse> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
-//        UserDTO user = userService.registerUser(
-//                registerRequest.getEmail(),
-//                registerRequest.getUsername(),
-//                registerRequest.getPassword(),
-//                registerRequest.getRole()
-//        );
-//        return ResponseEntity.status(HttpStatus.CREATED)
-//                .body(new ApiResponse(true, "User registered successfully", user));
-//    }
-//
-//    @PostMapping("/login")
-//    public ResponseEntity<ApiResponse> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(
-//                        loginRequest.getUsername(),
-//                        loginRequest.getPassword()
-//                )
-//        );
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        String jwt = tokenProvider.generateToken(authentication);
-//
-//        return ResponseEntity.ok(new ApiResponse(true, "User logged in successfully", jwt));
-//    }
-
-    // User Profile Management
     @GetMapping("/me")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> getCurrentUser(Authentication authentication) {
@@ -116,13 +132,36 @@ public class UserController {
         return ResponseEntity.ok(new ApiResponse(true, "User updated successfully", updatedUser));
     }
 
-    // Admin User Management
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse> getAllUsers(Pageable pageable) {
         Page<UserDTO> users = userService.getAllUsers(pageable);
         PagedResponse<UserDTO> response = PagedResponse.of(users.getContent(), users);
         return ResponseEntity.ok(new ApiResponse(true, "Users retrieved successfully", response));
+    }
+
+
+    @PostMapping("/refresh")
+    public ResponseEntity<ApiResponse> refreshToken(@RequestBody Map<String, String> refreshRequest) {
+        String refreshToken = refreshRequest.get("refreshToken");
+        if (refreshToken == null) {
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse(false, "Refresh token is required", null));
+        }
+
+        try {
+            String newToken = tokenProvider.refreshToken(refreshToken);
+            String newRefreshToken = tokenProvider.refreshRefreshToken(refreshToken);
+            
+            Map<String, String> tokens = new HashMap<>();
+            tokens.put("token", newToken);
+            tokens.put("refreshToken", newRefreshToken);
+
+            return ResponseEntity.ok(new ApiResponse(true, "Token refreshed successfully", tokens));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ApiResponse(false, "Invalid refresh token", null));
+        }
     }
 
     @GetMapping("/{id}")
@@ -148,70 +187,6 @@ public class UserController {
         return ResponseEntity.ok(new ApiResponse(true, "User deleted successfully", null));
     }
 
-    // User Points Management
-    @PostMapping("/{id}/points/add")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse> addPoints(
-            @PathVariable UUID id,
-            @RequestParam Integer points,
-            @RequestParam(required = false) String description) {
-        UserDTO updatedUser = userService.addPoints(id, points);
-        return ResponseEntity.ok(new ApiResponse(true, "Points added successfully", updatedUser));
-    }
-
-    @PostMapping("/{id}/points/spend")
-    @PreAuthorize("hasRole('ADMIN') or @userService.isCurrentUser(#id, principal)")
-    public ResponseEntity<ApiResponse> spendPoints(
-            @PathVariable UUID id,
-            @RequestParam Integer points,
-            @RequestParam TransactionType type,
-            @RequestParam(required = false) String description) {
-        UserDTO updatedUser = userService.spendPoints(id, points);
-        return ResponseEntity.ok(new ApiResponse(true, "Points spent successfully", updatedUser));
-    }
-
-    // User Badge Management
-    @GetMapping("/{id}/badges")
-    public ResponseEntity<ApiResponse> getUserBadges(@PathVariable UUID id) {
-        return ResponseEntity.ok(new ApiResponse(true, "User badges retrieved successfully",
-                userService.getUserBadges(id)));
-    }
-
-    @PostMapping("/{id}/badges/{badgeId}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse> awardBadge(
-            @PathVariable UUID id,
-            @PathVariable UUID badgeId) {
-        UserDTO updatedUser = userService.awardBadge(id, badgeId);
-        return ResponseEntity.ok(new ApiResponse(true, "Badge awarded successfully", updatedUser));
-    }
-
-    // User Statistics
-    @GetMapping("/stats/top")
-    public ResponseEntity<ApiResponse> getTopUsers(@RequestParam(defaultValue = "10") int limit) {
-        return ResponseEntity.ok(new ApiResponse(true, "Top users retrieved successfully",
-                userService.getTopUsersByPoints(limit)));
-    }
-
-    @PostMapping("/refresh")
-    public ResponseEntity<ApiResponse> refreshToken(@RequestBody Map<String, String> refreshRequest) {
-        String refreshToken = refreshRequest.get("refreshToken");
-        if (refreshToken == null) {
-            return ResponseEntity.badRequest()
-                    .body(new ApiResponse(false, "Refresh token is required", null));
-        }
-
-        try {
-            String newToken = tokenProvider.refreshToken(refreshToken);
-            Map<String, String> tokens = new HashMap<>();
-            tokens.put("token", newToken);
-
-            return ResponseEntity.ok(new ApiResponse(true, "Token refreshed successfully", tokens));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new ApiResponse(false, "Invalid refresh token", null));
-        }
-    }
 
     @PutMapping("/me/password")
     @PreAuthorize("isAuthenticated()")
@@ -221,5 +196,83 @@ public class UserController {
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
         userService.updatePassword(securityUser.getId(), request.getCurrentPassword(), request.getNewPassword());
         return ResponseEntity.ok(new ApiResponse(true, "Password updated successfully", null));
+    }
+
+    @PatchMapping("/{id}/status")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse> updateUserStatus(
+            @PathVariable UUID id,
+            @Valid @RequestBody UserStatusUpdateDTO statusUpdate) {
+        UserDTO updatedUser = userService.updateUserStatus(id, statusUpdate.getEnabled());
+        return ResponseEntity.ok(new ApiResponse(true, "User status updated successfully", updatedUser));
+    }
+
+    @GetMapping("/filter")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse> getFilteredUsers(
+            @RequestParam(required = false) List<String> roles,
+            @RequestParam(required = false) String registrationDate,
+            @RequestParam(required = false) Integer minPoints,
+            @RequestParam(required = false) Integer maxPoints,
+            @RequestParam(required = false) Boolean enabled,
+            @RequestParam(required = false) String activityLevel,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "DESC") String sortDirection) {
+        
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        
+        Page<UserDTO> users = userService.getFilteredUsers(roles, registrationDate, minPoints, maxPoints, enabled, activityLevel, pageable);
+        PagedResponse<UserDTO> response = PagedResponse.of(users.getContent(), users);
+        return ResponseEntity.ok(new ApiResponse(true, "Filtered users retrieved successfully", response));
+    }
+
+    @PutMapping("/{id}/roles")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse> updateUserRoles(
+            @PathVariable UUID id,
+            @RequestBody Map<String, List<String>> request) {
+        List<String> roles = request.get("roles");
+        if (roles == null || roles.isEmpty()) {
+            return ResponseEntity.badRequest()
+                .body(new ApiResponse(false, "Roles list cannot be empty", null));
+        }
+        
+        // Filter out any null values
+        roles = roles.stream()
+            .filter(role -> role != null && !role.isEmpty())
+            .toList();
+            
+        if (roles.isEmpty()) {
+            return ResponseEntity.badRequest()
+                .body(new ApiResponse(false, "Valid roles must be provided", null));
+        }
+
+        UserDTO updatedUser = userService.updateUserRoles(id, roles);
+        return ResponseEntity.ok(new ApiResponse(true, "User roles updated successfully", updatedUser));
+    }
+
+    @GetMapping("/auth/debug")
+    public ResponseEntity<ApiResponse> debugAuth(Authentication authentication) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("authenticated", authentication != null);
+        
+        if (authentication != null) {
+            SecurityUser securityUser = null;
+            if (authentication.getPrincipal() instanceof SecurityUser) {
+                securityUser = (SecurityUser) authentication.getPrincipal();
+            }
+            
+            response.put("username", securityUser != null ? securityUser.getUsername() : "unknown");
+            response.put("authorities", authentication.getAuthorities().stream()
+                    .map(Object::toString)
+                    .toList());
+            response.put("tokenExpiryTime", "Use client-side debugging to check token expiry");
+            response.put("serverTime", new Date());
+        }
+        
+        return ResponseEntity.ok(new ApiResponse(true, "Authentication debug info", response));
     }
 }

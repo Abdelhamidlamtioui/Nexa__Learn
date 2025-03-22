@@ -68,16 +68,6 @@ public class User {
     @Builder.Default
     private Integer level = 1;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "user_badges",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "badge_id")
-    )
-    @Builder.Default
-    @ToString.Exclude
-    private List<Badge> badges = new ArrayList<>();
-
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -123,12 +113,6 @@ public class User {
         return false;
     }
 
-    public void addBadge(Badge badge) {
-        if (!this.badges.contains(badge)) {
-            this.badges.add(badge);
-        }
-    }
-
     public void updateLastLogin() {
         this.lastLogin = LocalDateTime.now();
     }
@@ -147,5 +131,13 @@ public class User {
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
