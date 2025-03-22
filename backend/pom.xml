@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.0</version>
+        <version>3.2.3</version>
         <relativePath/>
     </parent>
 
@@ -63,7 +63,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>runtime</scope>
+            <scope>test</scope>
         </dependency>
 
         <!-- Development Tools -->
@@ -203,13 +203,13 @@
                         </configuration>
                     </execution>
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.springframework.restdocs</groupId>
-                        <artifactId>spring-restdocs-asciidoctor</artifactId>
-                        <version>${spring-restdocs.version}</version>
-                    </dependency>
-                </dependencies>
+<!--                <dependencies>-->
+<!--                    <dependency>-->
+<!--                        <groupId>org.springframework.restdocs</groupId>-->
+<!--                        <artifactId>spring-restdocs-asciidoctor</artifactId>-->
+<!--                        <version>${spring-restdocs.version}</version>-->
+<!--                    </dependency>-->
+<!--                </dependencies>-->
             </plugin>
         </plugins>
     </build>
