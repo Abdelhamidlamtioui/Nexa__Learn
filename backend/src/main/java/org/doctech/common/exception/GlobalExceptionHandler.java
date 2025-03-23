@@ -194,26 +194,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         );
     }
 
-    @ExceptionHandler(InsufficientPointsException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiResponse handleInsufficientPoints(InsufficientPointsException ex) {
-        return new ApiResponse(
-                false,
-                "Insufficient Points",
-                ex.getMessage()
-        );
-    }
-
-    @ExceptionHandler(BadgeNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiResponse handleBadgeNotFound(BadgeNotFoundException ex) {
-        return new ApiResponse(
-                false,
-                "Badge Not Found",
-                ex.getMessage()
-        );
-    }
-
     // Handle all other exceptions
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -223,17 +203,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 false,
                 "Internal Server Error",
                 "An unexpected error occurred. Please try again later."
-        );
-    }
-
-    @ExceptionHandler(BlogNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiResponse handleBlogNotFoundException(BlogNotFoundException ex) {
-        log.error("Blog not found", ex);
-        return new ApiResponse(
-                false,
-                "Blog Not Found",
-                ex.getMessage()
         );
     }
 
@@ -248,27 +217,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         );
     }
 
-    @ExceptionHandler(DocumentationCommentNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiResponse handleDocumentationCommentNotFoundException(DocumentationCommentNotFoundException ex) {
-        log.error("Documentation comment not found", ex);
-        return new ApiResponse(
-                false,
-                "Documentation Comment Not Found",
-                ex.getMessage()
-        );
-    }
-
-    @ExceptionHandler(BlogCommentNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiResponse handleBlogCommentNotFoundException(BlogCommentNotFoundException ex) {
-        log.error("Blog comment not found", ex);
-        return new ApiResponse(
-                false,
-                "Blog Comment Not Found",
-                ex.getMessage()
-        );
-    }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ApiResponse handleIllegalArgumentException(IllegalArgumentException ex) {
@@ -283,5 +231,41 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiResponse handleInvalidCredentials(InvalidCredentialsException ex) {
         return new ApiResponse(false, "Invalid Credentials", ex.getMessage());
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ApiResponse> handleIllegalStateException(IllegalStateException ex) {
+        if (ex.getMessage().contains("already liked")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(new ApiResponse(
+                            false,
+                            "Already Liked",
+                            "You have already liked this blog post"
+                    ));
+        }
+
+        // Handle other illegal state exceptions
+        return ResponseEntity.badRequest()
+                .body(new ApiResponse(
+                        false,
+                        "Invalid Operation",
+                        ex.getMessage()
+                ));
+    }
+
+    @ExceptionHandler(IllegalOperationException.class)
+    public ResponseEntity<ApiResponse> handleIllegalOperationException(IllegalOperationException ex) {
+        logger.warn("Illegal operation attempted: {}");
+
+        ApiResponse response = ApiResponse.builder()
+                .success(false)
+                .message(ex.getMessage())
+                .data(null)
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(response);
     }
 }
