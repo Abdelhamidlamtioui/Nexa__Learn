@@ -7,8 +7,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring",
-        unmappedTargetPolicy = ReportingPolicy.IGNORE,
-        uses = {DocumentationCommentMapper.class})
+        unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DocumentationMapper {
 
     @Mapping(source = "author.id", target = "authorId")
@@ -16,5 +15,6 @@ public interface DocumentationMapper {
     DocumentationDTO toDTO(Documentation documentation);
 
     @Mapping(target = "author", ignore = true)
+    @Mapping(target = "status", defaultExpression = "java(org.doctech.documentation.model.DocumentationStatus.DRAFT)")
     Documentation toEntity(DocumentationDTO dto);
 }

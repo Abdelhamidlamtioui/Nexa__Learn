@@ -52,11 +52,6 @@ public class Documentation extends Auditable {
     @ToString.Exclude
     private User author;
 
-    @OneToMany(mappedBy = "documentation", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    @ToString.Exclude
-    private List<DocumentationComment> comments = new ArrayList<>();
-
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -64,6 +59,11 @@ public class Documentation extends Auditable {
 
     @Version
     private Long version;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
+    private DocumentationStatus status = DocumentationStatus.DRAFT;
 
     @PrePersist
     protected void onPrePersist() {
@@ -81,16 +81,6 @@ public class Documentation extends Auditable {
             this.views = 0;
         }
         this.views = this.views + 1;
-    }
-
-    public void addComment(DocumentationComment comment) {
-        comments.add(comment);
-        comment.setDocumentation(this);
-    }
-
-    public void removeComment(DocumentationComment comment) {
-        comments.remove(comment);
-        comment.setDocumentation(null);
     }
 
     @Override
