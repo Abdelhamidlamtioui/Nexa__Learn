@@ -21,7 +21,6 @@ export default function HomePage() {
         <div className="container mx-auto px-4 space-y-16 py-16">
           <FeaturedLearningPaths />
           <TopContributors />
-          <LatestActivityFeed />
           <ResourcesSection />
           <CurrencyMarketOverview />
           <CommunityHighlights />

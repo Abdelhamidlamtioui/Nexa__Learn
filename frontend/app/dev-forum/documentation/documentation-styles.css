@@ -1,0 +1,42 @@
+/* Create this file with these styles */
+[data-theme="light"] .documentation-container {
+  --foreground: #000000;
+  --muted-foreground: #000000 !important;
+  color: var(--foreground);
+}
+
+[data-theme="light"] .documentation-container h1,
+[data-theme="light"] .documentation-container h2,
+[data-theme="light"] .documentation-container h3,
+[data-theme="light"] .documentation-container h4,
+[data-theme="light"] .documentation-container h5,
+[data-theme="light"] .documentation-container h6,
+[data-theme="light"] .documentation-container p,
+[data-theme="light"] .documentation-container li,
+[data-theme="light"] .documentation-container a {
+  color: var(--foreground);
+}
+
+[data-theme="light"] .documentation-container .text-muted-foreground,
+[data-theme="light"] .documentation-container .text-foreground,
+[data-theme="light"] .documentation-container button,
+[data-theme="light"] .documentation-container input,
+[data-theme="light"] .documentation-container label,
+[data-theme="light"] .documentation-container span,
+[data-theme="light"] .documentation-container div {
+  color: #000000;
+}
+
+[data-theme="light"] .documentation-container .sidebar-item,
+[data-theme="light"] .documentation-container .collapsible-trigger,
+[data-theme="light"] .documentation-container .tooltip-content,
+[data-theme="light"] .documentation-container .badge,
+[data-theme="light"] .documentation-container .dropdown-menu {
+  color: #000000;
+}
+
+[data-theme="light"] .documentation-container [class*="description"],
+[data-theme="light"] .documentation-container [class*="subtitle"],
+[data-theme="light"] .documentation-container [class*="secondary"] {
+  color: #000000 !important;
+} 
