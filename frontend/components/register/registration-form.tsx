@@ -80,10 +80,6 @@ export function RegistrationForm({ onSubmit, isSubmitting }: RegistrationFormPro
             </div>
           </RadioGroup>
         </div>
-        <div className="flex items-center space-x-2">
-          <Checkbox id="terms" checked={agreeTerms} onCheckedChange={() => setAgreeTerms(!agreeTerms)} />
-          <Label htmlFor="terms">I agree to the terms and token economy</Label>
-        </div>
         <Button 
           type="submit" 
           disabled={isSubmitting} 

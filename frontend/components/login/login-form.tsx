@@ -69,10 +69,6 @@ export function LoginForm({ onSubmit, isSubmitting, error }: LoginFormProps) {
                 </div>
               </div>
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="remember" checked={rememberMe} onCheckedChange={() => setRememberMe(!rememberMe)} />
-                  <Label htmlFor="remember">Remember me</Label>
-                </div>
                 <Link href="/forgot-password" className="text-sm text-blue-400 hover:underline">
                   Forgot password?
                 </Link>

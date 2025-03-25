@@ -1,50 +1,101 @@
 "use client"
 
-import type React from "react"
-import { createContext, useContext, useState, useEffect } from "react"
+import { createContext, useContext, useEffect, useState, ReactNode } from "react"
 
-type Theme = "light" | "dark"
+type Theme = "dark" | "light" | "system"
 
-type ThemeContextType = {
-  theme: Theme
-  toggleTheme: () => void
+interface ThemeProviderProps {
+  children: ReactNode
+  defaultTheme?: Theme
+  storageKey?: string
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
+interface ThemeContextType {
+  theme: Theme
+  setTheme: (theme: Theme) => void
+  toggleTheme: () => void
+  isDocumentation: boolean
+  setIsDocumentation: (isDocs: boolean) => void
+}
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light")
+const initialState: ThemeContextType = {
+  theme: "system",
+  setTheme: () => null,
+  toggleTheme: () => null,
+  isDocumentation: false,
+  setIsDocumentation: () => null,
+}
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as Theme | null
-    if (savedTheme) {
-      setTheme(savedTheme)
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setTheme("dark")
-    }
-  }, [])
+const ThemeContext = createContext<ThemeContextType>(initialState)
 
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark")
-    } else {
-      document.documentElement.classList.remove("dark")
-    }
-    localStorage.setItem("theme", theme)
-  }, [theme])
+export function ThemeProvider({
+  children,
+  defaultTheme = "system",
+  storageKey = "doctech-theme",
+  ...props
+}: ThemeProviderProps) {
+  const [theme, setTheme] = useState<Theme>(defaultTheme)
+  const [isDocumentation, setIsDocumentation] = useState<boolean>(false)
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"))
+    setTheme(theme === "dark" ? "light" : "dark")
   }
 
-  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>
+  useEffect(() => {
+    const stored = localStorage.getItem(storageKey)
+    
+    if (stored) {
+      setTheme(stored as Theme)
+    } else {
+      // Set dark as default for documentation pages
+      if (window.location.pathname.includes("/documentation")) {
+        setTheme("dark")
+        localStorage.setItem(storageKey, "dark")
+        setIsDocumentation(true)
+      }
+    }
+  }, [storageKey])
+
+  useEffect(() => {
+    const root = window.document.documentElement
+    
+    root.classList.remove("light", "dark")
+    
+    // Allow light mode even in documentation - remove the forced dark mode
+    if (theme === "dark") {
+      root.classList.add("dark")
+      localStorage.setItem(storageKey, "dark")
+    } else if (theme === "light") {
+      root.classList.add("light")
+      localStorage.setItem(storageKey, "light")
+    } else {
+      // Handle system preference
+      const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+      root.classList.add(systemPreference)
+    }
+  }, [theme, storageKey])
+
+  const value = {
+    theme,
+    setTheme,
+    toggleTheme,
+    isDocumentation,
+    setIsDocumentation,
+  }
+
+  return (
+    <ThemeContext.Provider {...props} value={value}>
+      {children}
+    </ThemeContext.Provider>
+  )
 }
 
-export function useTheme() {
+export const useTheme = () => {
   const context = useContext(ThemeContext)
-  if (context === undefined) {
+
+  if (context === undefined)
     throw new Error("useTheme must be used within a ThemeProvider")
-  }
+
   return context
 }
 
