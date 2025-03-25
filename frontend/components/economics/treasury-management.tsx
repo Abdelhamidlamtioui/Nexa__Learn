@@ -45,9 +45,9 @@ export function TreasuryManagement() {
           <div>
             <h4 className="font-semibold mb-2">Recent Transactions</h4>
             <ul className="space-y-2">
-              <li>Buy-back: 10,000 ELP ($20,000)</li>
+              <li>Buy-back: 10,000 token ($20,000)</li>
               <li>Development: $50,000 allocated</li>
-              <li>Rewards Distribution: 5,000 ELP</li>
+              <li>Rewards Distribution: 5,000 token</li>
             </ul>
           </div>
         </div>

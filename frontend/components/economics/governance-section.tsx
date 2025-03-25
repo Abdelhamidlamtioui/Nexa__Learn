@@ -35,7 +35,7 @@ export function GovernanceSection() {
           </div>
           <div>
             <h4 className="font-semibold mb-2">Your Voting Power</h4>
-            <p>1,500 ELP</p>
+            <p>1,500 token</p>
           </div>
           <Button className="w-full">Create Proposal</Button>
         </div>
