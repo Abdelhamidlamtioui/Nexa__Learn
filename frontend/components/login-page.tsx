@@ -38,8 +38,16 @@ export function LoginPage() {
         router.push("/dev-forum/me")
       }
     } catch (error: any) {
-      const errorMsg = error.response?.data?.message || "Invalid credentials"
-      setError(errorMsg)
+      // Check for specific error message about disabled account
+      const errorResponse = error.response?.data;
+      let errorMsg = errorResponse?.message || "Invalid credentials";
+      
+      // Special handling for disabled account
+      if (errorResponse?.code === "USER_DISABLED" || errorMsg.includes("disabled") || errorMsg.includes("enabled")) {
+        errorMsg = "Your account has been disabled. Please contact an administrator.";
+      }
+      
+      setError(errorMsg);
       toast({
         title: "Login failed",
         description: errorMsg,

@@ -31,14 +31,7 @@ export function RegisterPage() {
   const [showConfetti, setShowConfetti] = useState(false)
 
   const handleSubmit = async (formData: any) => {
-    if (!formData.agreeTerms) {
-      toast({
-        title: "Terms Agreement Required",
-        description: "Please agree to the terms and token economy",
-        variant: "destructive"
-      })
-      return
-    }
+
 
     setIsSubmitting(true)
     try {

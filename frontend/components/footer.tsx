@@ -7,7 +7,7 @@ export function Footer() {
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap justify-between items-center">
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
-            <h2 className="text-2xl font-bold mb-2">NexaLearn</h2>
+            <h2 className="text-2xl font-bold mb-2">Nexa Learn</h2>
             <p className="text-sm">Connect, learn, and grow with developers worldwide.</p>
           </div>
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
@@ -29,7 +29,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-white border-opacity-20 text-center">
-          <p className="text-sm">&copy; 2023 NexaLearn. All rights reserved.</p>
+          <p className="text-sm">&copy; 2025 Nexa Learn. All rights reserved.</p>
         </div>
       </div>
     </footer>
