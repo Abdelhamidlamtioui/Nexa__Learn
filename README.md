@@ -41,7 +41,7 @@ View our project presentation here: [Canva Presentation](https://www.canva.com/d
 - **Containerization**: Docker
 
 ### Frontend
-- **Framework**: Next.js 14
+- **Framework**: React.js
 - **Language**: TypeScript
 - **State Management**: Zustand
 - **Styling**: Tailwind CSS
@@ -52,7 +52,7 @@ View our project presentation here: [Canva Presentation](https://www.canva.com/d
 
 ### Prerequisites
 - Java 17 or higher
-- Node.js 18 or higher
+- React.js 18 or higher
 - PostgreSQL 13 or higher
 - Docker (optional)
 
