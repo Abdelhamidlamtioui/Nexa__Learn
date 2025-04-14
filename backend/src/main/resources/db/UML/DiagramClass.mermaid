@@ -1,0 +1,62 @@
+---
+config:
+  theme: dark
+---
+classDiagram
+    class User {
+        +UUID id
+        +String username
+        +String email
+        +String avatar
+        +String passwordHash
+        +boolean enabled
+        +LocalDateTime createdAt
+        +LocalDateTime lastLogin
+    }
+    class Role {
+        +UUID id
+        +String name
+    }
+    class Documentation {
+        +UUID id
+        +String title
+        +String content
+        +Integer views
+        +TechnologyType technology
+        +DocumentationStatus status
+        +LocalDateTime createdAt
+        +LocalDateTime lastUpdatedAt
+    }
+    class DocumentationSection {
+        +UUID id
+        +String title
+        +String content
+        +Integer orderIndex
+        +String sectionId
+    }
+    class DocumentationStatus {
+        <<enumeration>>
+        DRAFT
+        REVIEW
+        PUBLISHED
+        ARCHIVED
+    }
+    class TechnologyType {
+        <<enumeration>>
+        PROGRAMMING_LANGUAGE
+        FRAMEWORK
+        LIBRARY
+        FRONTEND
+        BACKEND
+        DEVOPS
+        API
+        TOOL
+        DATABASE
+        CLOUD_SERVICE
+        OTHER
+    }
+    User "*" -- "*" Role : has
+    User "1" -- "*" Documentation : authors
+    Documentation "1" -- "*" DocumentationSection : contains
+    Documentation ..> DocumentationStatus : has
+    Documentation ..> TechnologyType : categorized as

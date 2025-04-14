@@ -2,6 +2,7 @@ package org.doctech.documentation.service;
 
 import lombok.RequiredArgsConstructor;
 import org.doctech.common.exception.DocumentationNotFoundException;
+import org.doctech.common.exception.SectctionNotFoundException;
 import org.doctech.common.exception.UserNotFoundException;
 import org.doctech.common.utils.ValidationUtils;
 import org.doctech.documentation.dto.DocumentationDTO;
@@ -149,6 +150,8 @@ public class DocumentationServiceImpl implements DocumentationService {
         }
         documentationRepository.deleteById(id);
     }
+
+
 
     @Override
     @Transactional(readOnly = true)

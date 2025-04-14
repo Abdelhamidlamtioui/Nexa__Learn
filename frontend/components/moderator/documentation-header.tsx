@@ -41,6 +41,17 @@ export function DocumentationHeader() {
     }
   }, [selectedSection, selectedDocumentation])
 
+
+  const handleDeleteSection= async () =>{
+    if(selectedSection && selectedSection.id){
+      await documentationService.deleteSection(selectedSection.id)
+    }
+      setSelectedSection(null);
+    if(selectedDocumentation && selectedDocumentation.id) {
+      await fetchDocumentSections(selectedDocumentation.id)
+    }
+   }
+
   const handleTitleChange = async () => {
     if (!localTitle.trim()) return;
     
@@ -174,7 +185,7 @@ export function DocumentationHeader() {
                 Export as Markdown
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-indigo-500/20" />
-              <DropdownMenuItem className="hover:bg-indigo-700/50 focus:bg-indigo-700/50 text-red-400">
+              <DropdownMenuItem onClick={} className="hover:bg-indigo-700/50 focus:bg-indigo-700/50 text-red-400">
                 Delete document
               </DropdownMenuItem>
             </DropdownMenuContent>

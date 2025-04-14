@@ -132,6 +132,12 @@ export function AddUserModal({ open, onClose, onSuccess }: AddUserModalProps) {
                 >
                   Admin
                 </SelectItem>
+                <SelectItem
+                    value="MODERATOR"
+                    className="text-white hover:bg-[#3a4764] focus:bg-[#3a4764] focus:text-white"
+                >
+                  MODERATOR
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>

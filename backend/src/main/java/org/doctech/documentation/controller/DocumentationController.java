@@ -46,7 +46,7 @@ public class DocumentationController {
 
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
     public ResponseEntity<ApiResponse> createDocumentation(
             @Valid @RequestBody DocumentationDTO documentationDTO,
             Authentication authentication) {
@@ -59,7 +59,7 @@ public class DocumentationController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
     public ResponseEntity<ApiResponse> updateDocumentation(
             @PathVariable UUID id,
             @Valid @RequestBody DocumentationDTO documentationDTO,
@@ -153,12 +153,14 @@ public class DocumentationController {
         return ResponseEntity.ok(new ApiResponse(true, "Search results retrieved successfully", response));
     }
 
+
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR')")
     public ResponseEntity<ApiResponse> deleteDocumentation(@PathVariable UUID id) {
         documentationService.deleteDocumentation(id);
         return ResponseEntity.ok(new ApiResponse(true, "Documentation deleted successfully", null));
     }
+
 
     @GetMapping("/stats")
     public ResponseEntity<ApiResponse> getDocumentationStats() {
