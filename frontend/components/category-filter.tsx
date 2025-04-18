@@ -7,9 +7,9 @@ import { TrendingUp, Code, Server, Cloud, Smartphone } from 'lucide-react'
 const categories = [
   { name: 'All', icon: TrendingUp, color: 'text-blue-500' },
   { name: 'Frontend', icon: Code, color: 'text-green-500' },
-  { name: 'Backend', icon: Server, color: 'text-purple-500' },
+  { name: 'Backend', icon: Server, color: 'text-blue-500' },
   { name: 'DevOps', icon: Cloud, color: 'text-orange-500' },
-  { name: 'Mobile', icon: Smartphone, color: 'text-pink-500' },
+  { name: 'Mobile', icon: Smartphone, color: 'text-cyan-500' },
 ]
 
 export function CategoryFilter() {
@@ -23,7 +23,7 @@ export function CategoryFilter() {
             <Button
               variant={activeCategory === category.name ? "default" : "outline"}
               onClick={() => setActiveCategory(category.name)}
-              className={`rounded-full ${activeCategory === category.name ? 'bg-gradient-to-r from-pink-500 to-yellow-500 text-white' : 'text-white border-white hover:bg-white hover:text-purple-900'}`}
+              className={`rounded-full ${activeCategory === category.name ? 'bg-gradient-to-r from-cyan-500 to-yellow-500 text-white' : 'text-white border-white hover:bg-white hover:text-blue-900'}`}
             >
               <category.icon className={`mr-2 h-4 w-4 ${category.color}`} />
               {category.name}

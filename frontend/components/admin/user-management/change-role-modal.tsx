@@ -111,7 +111,7 @@ export function ChangeRoleModal({ open, onClose, selectedUsers }: ChangeRoleModa
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px] bg-[#1a2744] text-white border border-gray-800">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+          <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-600 bg-clip-text text-transparent">
             Change User Roles
           </DialogTitle>
           <DialogDescription className="text-gray-400">
@@ -136,7 +136,7 @@ export function ChangeRoleModal({ open, onClose, selectedUsers }: ChangeRoleModa
                   id={role.id}
                   checked={selectedRoles.includes(role.name)}
                   onCheckedChange={() => toggleRole(role.name)}
-                  className="border-gray-600 data-[state=checked]:bg-purple-600 data-[state=checked]:border-purple-600"
+                  className="border-gray-600 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
                 />
                 <Label
                   htmlFor={role.id}
@@ -160,7 +160,7 @@ export function ChangeRoleModal({ open, onClose, selectedUsers }: ChangeRoleModa
             <Button
               type="submit"
               disabled={loading || selectedRoles.length === 0}
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+              className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white"
             >
               {loading ? (
                 <>

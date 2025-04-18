@@ -31,7 +31,7 @@ export function EconomicsDashboard() {
               variant="ghost"
               size="icon"
               onClick={() => setDarkMode(!darkMode)}
-              className="text-white hover:text-pink-400"
+              className="text-white hover:text-cyan-400"
             >
               {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>

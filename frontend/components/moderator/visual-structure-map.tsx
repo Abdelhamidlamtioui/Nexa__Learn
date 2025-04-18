@@ -8,10 +8,10 @@ import { FileText, FolderTree, Plus, Trash2 } from "lucide-react"
 export function VisualStructureMap() {
   return (
     <div className="space-y-6">
-      <Card className="bg-indigo-900/20 border-indigo-500/30 text-white">
-        <CardHeader className="bg-indigo-900/30 border-b border-indigo-500/30">
+      <Card className="bg-blue-900/20 border-blue-500/30 text-white">
+        <CardHeader className="bg-blue-900/30 border-b border-blue-500/30">
           <CardTitle className="text-lg flex items-center">
-            <FolderTree className="h-5 w-5 mr-2 text-indigo-400" />
+            <FolderTree className="h-5 w-5 mr-2 text-blue-400" />
             Document Structure
           </CardTitle>
         </CardHeader>
@@ -20,7 +20,7 @@ export function VisualStructureMap() {
             <Button
               variant="outline"
               size="sm"
-              className="bg-indigo-900/30 border-indigo-500/30 text-indigo-300 hover:bg-indigo-800/50"
+              className="bg-blue-900/30 border-blue-500/30 text-blue-300 hover:bg-blue-800/50"
             >
               <Plus className="h-4 w-4 mr-2" />
               Add Section
@@ -49,17 +49,17 @@ export function VisualStructureMap() {
         </CardContent>
       </Card>
 
-      <Card className="bg-indigo-900/20 border-indigo-500/30 text-white">
-        <CardHeader className="bg-indigo-900/30 border-b border-indigo-500/30">
+      <Card className="bg-blue-900/20 border-blue-500/30 text-white">
+        <CardHeader className="bg-blue-900/30 border-b border-blue-500/30">
           <CardTitle className="text-lg flex items-center">
-            <FileText className="h-5 w-5 mr-2 text-indigo-400" />
+            <FileText className="h-5 w-5 mr-2 text-blue-400" />
             Document Relationships
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4">
           <div className="flex justify-center">
-            <div className="relative w-full h-64 bg-indigo-950/50 rounded-lg border border-indigo-500/30 p-4">
-              <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-indigo-700/50 rounded-lg p-3 border border-indigo-500/50 z-10">
+            <div className="relative w-full h-64 bg-blue-950/50 rounded-lg border border-blue-500/30 p-4">
+              <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-700/50 rounded-lg p-3 border border-blue-500/50 z-10">
                 <div className="text-sm font-medium text-center">Platform Guidelines</div>
               </div>
 
@@ -92,16 +92,16 @@ function DocumentSection({ title, level = 1, wordCount, status, children }) {
       case "in-progress":
         return "bg-yellow-500"
       case "not-started":
-        return "bg-indigo-500/50"
+        return "bg-blue-500/50"
       default:
-        return "bg-indigo-500/50"
+        return "bg-blue-500/50"
     }
   }
 
   return (
     <div>
       <div
-        className={`flex items-center gap-2 py-2 px-3 rounded-md hover:bg-indigo-800/30 cursor-pointer ${level === 1 ? "bg-indigo-900/30" : ""}`}
+        className={`flex items-center gap-2 py-2 px-3 rounded-md hover:bg-blue-800/30 cursor-pointer ${level === 1 ? "bg-blue-900/30" : ""}`}
         style={{ marginLeft: `${(level - 1) * 1.5}rem` }}
         onClick={() => setExpanded(!expanded)}
       >
@@ -110,11 +110,11 @@ function DocumentSection({ title, level = 1, wordCount, status, children }) {
         <div className="flex-1">
           <div className="flex items-center">
             <span className={`${level === 1 ? "font-medium" : ""}`}>{title}</span>
-            <span className="text-xs text-indigo-400 ml-2">({wordCount} words)</span>
+            <span className="text-xs text-blue-400 ml-2">({wordCount} words)</span>
           </div>
 
           {status === "in-progress" && (
-            <div className="h-1 w-24 bg-indigo-900/50 rounded-full mt-1">
+            <div className="h-1 w-24 bg-blue-900/50 rounded-full mt-1">
               <div className="h-1 bg-yellow-500 rounded-full" style={{ width: "60%" }}></div>
             </div>
           )}
@@ -124,14 +124,14 @@ function DocumentSection({ title, level = 1, wordCount, status, children }) {
           <Button
             variant="ghost"
             size="sm"
-            className="h-7 w-7 p-0 text-indigo-400 hover:text-white hover:bg-indigo-700/30"
+            className="h-7 w-7 p-0 text-blue-400 hover:text-white hover:bg-blue-700/30"
           >
             <Plus className="h-3.5 w-3.5" />
           </Button>
           <Button
             variant="ghost"
             size="sm"
-            className="h-7 w-7 p-0 text-indigo-400 hover:text-white hover:bg-indigo-700/30"
+            className="h-7 w-7 p-0 text-blue-400 hover:text-white hover:bg-blue-700/30"
           >
             <Trash2 className="h-3.5 w-3.5" />
           </Button>
@@ -177,7 +177,7 @@ function RelationshipNode({ title, position }) {
 
   return (
     <div
-      className={`absolute transform ${getPosition(position)} bg-indigo-600/50 rounded-lg p-2 border border-indigo-500/50`}
+      className={`absolute transform ${getPosition(position)} bg-blue-600/50 rounded-lg p-2 border border-blue-500/50`}
     >
       <div className="text-xs text-center">{title}</div>
     </div>

@@ -66,7 +66,7 @@ export function UserFilters() {
   return (
     <Card className="bg-[#1a2744] border-gray-700 shadow-lg">
       <CardHeader className="border-b border-gray-700">
-        <CardTitle className="text-lg font-semibold text-white bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+        <CardTitle className="text-lg font-semibold text-white bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent">
           Filters
         </CardTitle>
       </CardHeader>
@@ -77,7 +77,7 @@ export function UserFilters() {
             value={filters.roles?.length ? filters.roles[0] : 'ALL'}
             onValueChange={handleRoleChange}
           >
-            <SelectTrigger className="w-full bg-[#2a3754] border-gray-600 text-white focus:ring-purple-500 hover:bg-[#2f3f63] transition-colors">
+            <SelectTrigger className="w-full bg-[#2a3754] border-gray-600 text-white focus:ring-blue-500 hover:bg-[#2f3f63] transition-colors">
               <SelectValue placeholder="Select role" />
             </SelectTrigger>
             <SelectContent 
@@ -109,7 +109,7 @@ export function UserFilters() {
             value={filters.registrationDate || 'all'}
             onValueChange={handleRegistrationDateChange}
           >
-            <SelectTrigger className="w-full bg-[#2a3754] border-gray-600 text-white focus:ring-purple-500 hover:bg-[#2f3f63] transition-colors">
+            <SelectTrigger className="w-full bg-[#2a3754] border-gray-600 text-white focus:ring-blue-500 hover:bg-[#2f3f63] transition-colors">
               <SelectValue placeholder="Select period" />
             </SelectTrigger>
             <SelectContent 
@@ -149,7 +149,7 @@ export function UserFilters() {
                   maxPoints: max,
                 })
               }}
-              className="relative flex items-center select-none touch-none w-full [&>span]:block [&>span]:w-6 [&>span]:h-6 [&>span]:bg-white [&>span]:rounded-full [&>span]:border-4 [&>span]:border-purple-600 [&>span]:hover:border-purple-500 [&>span]:transition-all [&>span]:shadow-lg [&>span]:cursor-grab [&>span]:active:cursor-grabbing [&_[role=slider]]:h-2 [&_[role=slider]]:grow [&_[role=slider]]:rounded-full [&_[role=slider]]:bg-purple-600"
+              className="relative flex items-center select-none touch-none w-full [&>span]:block [&>span]:w-6 [&>span]:h-6 [&>span]:bg-white [&>span]:rounded-full [&>span]:border-4 [&>span]:border-blue-600 [&>span]:hover:border-blue-500 [&>span]:transition-all [&>span]:shadow-lg [&>span]:cursor-grab [&>span]:active:cursor-grabbing [&_[role=slider]]:h-2 [&_[role=slider]]:grow [&_[role=slider]]:rounded-full [&_[role=slider]]:bg-blue-600"
             />
             <div className="flex justify-between mt-4 text-sm text-gray-400">
               <span>{filters.minPoints || 0}</span>
@@ -165,7 +165,7 @@ export function UserFilters() {
             <Switch
               checked={filters.enabled}
               onCheckedChange={handleStatusChange}
-              className="data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-purple-500 data-[state=checked]:to-pink-500 data-[state=unchecked]:bg-gray-600 h-6 w-11 rounded-full [&>span]:rounded-full [&>span]:shadow-sm [&>span]:h-5 [&>span]:w-5 [&>span]:translate-x-0.5 data-[state=checked]:[&>span]:translate-x-5"
+              className="data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-blue-500 data-[state=checked]:to-cyan-500 data-[state=unchecked]:bg-gray-600 h-6 w-11 rounded-full [&>span]:rounded-full [&>span]:shadow-sm [&>span]:h-5 [&>span]:w-5 [&>span]:translate-x-0.5 data-[state=checked]:[&>span]:translate-x-5"
             />
           </div>
         </div>
@@ -176,7 +176,7 @@ export function UserFilters() {
             value={filters.activityLevel || 'all'}
             onValueChange={handleActivityLevelChange}
           >
-            <SelectTrigger className="w-full bg-[#2a3754] border-gray-600 text-white focus:ring-purple-500 hover:bg-[#2f3f63] transition-colors">
+            <SelectTrigger className="w-full bg-[#2a3754] border-gray-600 text-white focus:ring-blue-500 hover:bg-[#2f3f63] transition-colors">
               <SelectValue placeholder="Select level" />
             </SelectTrigger>
             <SelectContent 

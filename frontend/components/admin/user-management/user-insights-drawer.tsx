@@ -77,7 +77,7 @@ export function UserInsightsDrawer({ userId, open, onClose }: UserInsightsDrawer
         
         {loading ? (
           <div className="h-[calc(100vh-100px)] flex items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-purple-500" />
+            <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
           </div>
         ) : userDetails ? (
           <ScrollArea className="h-[calc(100vh-100px)] pr-4">
@@ -120,7 +120,7 @@ export function UserInsightsDrawer({ userId, open, onClose }: UserInsightsDrawer
                   <CardTitle className="text-white">Points Overview</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-purple-400">
+                  <div className="text-2xl font-bold text-blue-400">
                     {userDetails.points.toLocaleString()} pts
                   </div>
                 </CardContent>

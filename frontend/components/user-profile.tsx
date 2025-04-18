@@ -167,7 +167,7 @@ export function UserProfile() {
                         </div>
                         <div>
                             <p className="text-sm font-medium text-gray-300 mb-1">Points</p>
-                            <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-500">
+                            <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-yellow-500">
                                 {userData.points}
                             </p>
                         </div>

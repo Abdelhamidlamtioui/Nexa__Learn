@@ -158,8 +158,8 @@ export function UserTable({ searchQuery, selectedUsers, onSelectUsers, onSelectU
         }
       case 'MODERATOR':
         return {
-          color: 'text-purple-100',
-          bgColor: 'bg-purple-500/80 hover:bg-purple-500',
+          color: 'text-blue-100',
+          bgColor: 'bg-blue-500/80 hover:bg-blue-500',
           icon: Shield
         }
       default:

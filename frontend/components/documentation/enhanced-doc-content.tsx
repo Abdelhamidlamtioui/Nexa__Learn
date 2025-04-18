@@ -100,7 +100,7 @@ function ReadOnlyTipTapContent({ content }: { content: string }) {
       }),
       CodeBlock.configure({
         HTMLAttributes: {
-          class: "bg-indigo-950 text-indigo-300 p-4 rounded-md font-mono text-sm my-4 overflow-x-auto",
+          class: "bg-blue-950 text-blue-300 p-4 rounded-md font-mono text-sm my-4 overflow-x-auto",
         },
       }),
     ],
@@ -211,7 +211,7 @@ function ReadOnlyTipTapContent({ content }: { content: string }) {
           />
         ) : (
           <div className="flex items-center justify-center p-4">
-            <div className="w-6 h-6 border-t-2 border-indigo-500 rounded-full animate-spin mr-2"></div>
+            <div className="w-6 h-6 border-t-2 border-blue-500 rounded-full animate-spin mr-2"></div>
             <span>Loading content...</span>
           </div>
         )}
@@ -841,14 +841,14 @@ export function EnhancedDocContent() {
       info: <Info className="h-5 w-5 text-blue-500 flex-shrink-0 mt-1" />,
       warning: <AlertTriangle className="h-5 w-5 text-amber-500 flex-shrink-0 mt-1" />,
       success: <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-1" />,
-      tip: <Lightbulb className="h-5 w-5 text-purple-500 flex-shrink-0 mt-1" />,
+      tip: <Lightbulb className="h-5 w-5 text-blue-500 flex-shrink-0 mt-1" />,
     }
 
     const styles = {
       info: "border-blue-200 bg-blue-50 dark:border-blue-900 dark:bg-blue-900/20",
       warning: "border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-900/20",
       success: "border-green-200 bg-green-50 dark:border-green-900 dark:bg-green-900/20",
-      tip: "border-purple-200 bg-purple-50 dark:border-purple-900 dark:bg-purple-900/20",
+      tip: "border-blue-200 bg-purple-50 dark:border-blue-900 dark:bg-blue-900/20",
     }
 
     return (

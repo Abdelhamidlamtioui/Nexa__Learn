@@ -22,7 +22,7 @@ export const createEditorExtensions = (isEditable = true) => [
   }),
   CodeBlock.configure({
     HTMLAttributes: {
-      class: "bg-indigo-950 text-indigo-300 p-4 rounded-md font-mono text-sm my-4 overflow-x-auto",
+      class: "bg-blue-950 text-blue-300 p-4 rounded-md font-mono text-sm my-4 overflow-x-auto",
     },
   }),
 ] 

@@ -42,7 +42,7 @@ export function Gauge({ value, size = "medium", className }: GaugeProps) {
           cy="50"
         />
         <circle
-          className="text-purple-500"
+          className="text-blue-500"
           stroke="currentColor"
           strokeWidth={strokeWidth[size]}
           strokeDasharray={circumference}

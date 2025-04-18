@@ -257,18 +257,18 @@ export function EnhancedDocumentationSidebar() {
   return (
     <div
       ref={sidebarRef}
-      className={`border-r border-indigo-500/20 bg-indigo-900/30 backdrop-blur-md transition-all duration-300 relative h-full`}
+      className={`border-r border-blue-500/20 bg-blue-900/30 backdrop-blur-md transition-all duration-300 relative h-full`}
       style={{ width: isExpanded ? `${sidebarWidth}px` : "64px" }}
     >
-      <div className="p-3 border-b border-indigo-500/20 flex items-center justify-between">
+      <div className="p-3 border-b border-blue-500/20 flex items-center justify-between">
         {isExpanded ? (
           <>
-            <h2 className="font-semibold text-indigo-100">Documentation</h2>
+            <h2 className="font-semibold text-blue-100">Documentation</h2>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setIsExpanded(false)}
-              className="h-7 w-7 p-0 text-indigo-300 hover:text-white hover:bg-indigo-700/30"
+              className="h-7 w-7 p-0 text-blue-300 hover:text-white hover:bg-blue-700/30"
             >
               <PanelLeft className="h-4 w-4" />
             </Button>
@@ -278,7 +278,7 @@ export function EnhancedDocumentationSidebar() {
             variant="ghost"
             size="sm"
             onClick={() => setIsExpanded(true)}
-            className="h-7 w-7 p-0 mx-auto text-indigo-300 hover:text-white hover:bg-indigo-700/30"
+            className="h-7 w-7 p-0 mx-auto text-blue-300 hover:text-white hover:bg-blue-700/30"
           >
             <PanelLeft className="h-4 w-4 transform rotate-180" />
           </Button>
@@ -286,14 +286,14 @@ export function EnhancedDocumentationSidebar() {
       </div>
 
       {isExpanded && (
-        <div className="p-3 border-b border-indigo-500/20">
+        <div className="p-3 border-b border-blue-500/20">
           <div className="relative">
-            <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-indigo-400" />
+            <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-blue-400" />
             <Input
               placeholder="Search documents..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8 bg-indigo-800/30 border-indigo-500/30 text-white placeholder:text-indigo-400 focus-visible:ring-indigo-500/50"
+              className="pl-8 bg-blue-800/30 border-blue-500/30 text-white placeholder:text-blue-400 focus-visible:ring-blue-500/50"
             />
           </div>
         </div>
@@ -305,7 +305,7 @@ export function EnhancedDocumentationSidebar() {
             <div className="p-3">
               {loading ? (
                 <div className="flex justify-center py-4">
-                  <div className="animate-spin h-5 w-5 border-2 border-indigo-500 rounded-full border-t-transparent"></div>
+                  <div className="animate-spin h-5 w-5 border-2 border-blue-500 rounded-full border-t-transparent"></div>
                 </div>
               ) : error ? (
                 <div className="text-red-400 p-2">{error}</div>
@@ -332,56 +332,56 @@ export function EnhancedDocumentationSidebar() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="w-full justify-start text-indigo-300 hover:text-white hover:bg-indigo-700/30 pl-3 mt-4"
+                        className="w-full justify-start text-blue-300 hover:text-white hover:bg-blue-700/30 pl-3 mt-4"
                       >
                         <FolderPlus className="h-4 w-4 mr-2" />
                         New Documentation
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px] bg-indigo-900/90 border-indigo-500/30 text-white">
+                    <DialogContent className="sm:max-w-[425px] bg-blue-900/90 border-blue-500/30 text-white">
                       <DialogHeader>
                         <DialogTitle className="text-white flex items-center">
-                          <BookTemplate className="h-5 w-5 mr-2 text-indigo-400" />
+                          <BookTemplate className="h-5 w-5 mr-2 text-blue-400" />
                           Create Documentation from Template
                         </DialogTitle>
-                        <DialogDescription className="text-indigo-300">
+                        <DialogDescription className="text-blue-300">
                           Select a template type and provide basic information to get started.
                         </DialogDescription>
                       </DialogHeader>
                       <div className="grid gap-4 py-4">
                         <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="template-type" className="text-right text-indigo-200">
+                          <Label htmlFor="template-type" className="text-right text-blue-200">
                             Template
                           </Label>
                           <Select 
                             value={templateType} 
                             onValueChange={setTemplateType}
                           >
-                            <SelectTrigger id="template-type" className="col-span-3 bg-indigo-800/50 border-indigo-500/30 text-white focus:ring-indigo-500/50">
+                            <SelectTrigger id="template-type" className="col-span-3 bg-blue-800/50 border-blue-500/30 text-white focus:ring-blue-500/50">
                               <SelectValue placeholder="Select template" />
                             </SelectTrigger>
-                            <SelectContent className="bg-indigo-900 border-indigo-500/30 text-white">
-                              <SelectItem value="react" className="hover:bg-indigo-800 focus:bg-indigo-800">
+                            <SelectContent className="bg-blue-900 border-blue-500/30 text-white">
+                              <SelectItem value="react" className="hover:bg-blue-800 focus:bg-blue-800">
                                 <div className="flex items-center">
                                   <Code className="h-4 w-4 mr-2 text-blue-400" />
                                   React Frontend
                                 </div>
                               </SelectItem>
-                              <SelectItem value="spring" className="hover:bg-indigo-800 focus:bg-indigo-800">
+                              <SelectItem value="spring" className="hover:bg-blue-800 focus:bg-blue-800">
                                 <div className="flex items-center">
                                   <Server className="h-4 w-4 mr-2 text-green-400" />
                                   Spring Backend
                                 </div>
                               </SelectItem>
-                              <SelectItem value="api" className="hover:bg-indigo-800 focus:bg-indigo-800">
+                              <SelectItem value="api" className="hover:bg-blue-800 focus:bg-blue-800">
                                 <div className="flex items-center">
                                   <Database className="h-4 w-4 mr-2 text-yellow-400" />
                                   API Documentation
                                 </div>
                               </SelectItem>
-                              <SelectItem value="general" className="hover:bg-indigo-800 focus:bg-indigo-800">
+                              <SelectItem value="general" className="hover:bg-blue-800 focus:bg-blue-800">
                                 <div className="flex items-center">
-                                  <Library className="h-4 w-4 mr-2 text-purple-400" />
+                                  <Library className="h-4 w-4 mr-2 text-blue-400" />
                                   General Library
                                 </div>
                               </SelectItem>
@@ -389,26 +389,26 @@ export function EnhancedDocumentationSidebar() {
                           </Select>
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="title" className="text-right text-indigo-200">
+                          <Label htmlFor="title" className="text-right text-blue-200">
                             Title
                           </Label>
                           <Input
                             id="title"
                             value={templateTitle}
                             onChange={(e) => setTemplateTitle(e.target.value)}
-                            className="col-span-3 bg-indigo-800/50 border-indigo-500/30 text-white focus:ring-indigo-500/50"
+                            className="col-span-3 bg-blue-800/50 border-blue-500/30 text-white focus:ring-blue-500/50"
                             placeholder="Documentation title"
                           />
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="description" className="text-right text-indigo-200">
+                          <Label htmlFor="description" className="text-right text-blue-200">
                             Description
                           </Label>
                           <Textarea
                             id="description"
                             value={templateDescription}
                             onChange={(e) => setTemplateDescription(e.target.value)}
-                            className="col-span-3 bg-indigo-800/50 border-indigo-500/30 text-white focus:ring-indigo-500/50"
+                            className="col-span-3 bg-blue-800/50 border-blue-500/30 text-white focus:ring-blue-500/50"
                             placeholder="Brief description"
                             rows={3}
                           />
@@ -421,14 +421,14 @@ export function EnhancedDocumentationSidebar() {
                             setIsTemplateModalOpen(false)
                             resetTemplateForm()
                           }}
-                          className="bg-transparent border-indigo-500/50 text-indigo-300 hover:bg-indigo-800/50 hover:text-white"
+                          className="bg-transparent border-blue-500/50 text-blue-300 hover:bg-blue-800/50 hover:text-white"
                         >
                           Cancel
                         </Button>
                         <Button 
                           onClick={handleCreateFromTemplate}
                           disabled={isSubmitting || !templateTitle.trim()}
-                          className="bg-indigo-600 hover:bg-indigo-700 text-white"
+                          className="bg-blue-600 hover:bg-blue-700 text-white"
                         >
                           {isSubmitting ? (
                             <>
@@ -450,7 +450,7 @@ export function EnhancedDocumentationSidebar() {
               <EnhancedIconButton icon={<FileText />} tooltip="Documents" />
               <Dialog open={isTemplateModalOpen} onOpenChange={setIsTemplateModalOpen}>
                 <DialogTrigger asChild>
-                  <Button className="h-8 w-8 p-0 rounded-full bg-indigo-800/30 hover:bg-indigo-700/40 text-indigo-300 hover:text-white transition-all duration-300">
+                  <Button className="h-8 w-8 p-0 rounded-full bg-blue-800/30 hover:bg-blue-700/40 text-blue-300 hover:text-white transition-all duration-300">
                     <FolderPlus className="h-4 w-4" />
                   </Button>
                 </DialogTrigger>
@@ -461,13 +461,13 @@ export function EnhancedDocumentationSidebar() {
         </ScrollArea>
 
         {isExpanded ? (
-          <div className="p-7 border-t border-indigo-500/20">
+          <div className="p-7 border-t border-blue-500/20">
             <div className="flex flex-col gap-1">
               <EnhancedNavButton icon={<BookOpen />} label="Documentation" isActive />
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center gap-4 py-4 border-t border-indigo-500/20">
+          <div className="flex flex-col items-center gap-4 py-4 border-t border-blue-500/20">
             <EnhancedIconButton icon={<Home />} tooltip="Dashboard" />
             <EnhancedIconButton icon={<BookOpen />} tooltip="Documentation" isActive />
             <EnhancedIconButton icon={<Settings />} tooltip="Settings" />
@@ -480,7 +480,7 @@ export function EnhancedDocumentationSidebar() {
       )}
       
       <div
-        className="absolute top-0 right-0 w-1 h-full cursor-col-resize hover:bg-indigo-500/30 transition-colors duration-200"
+        className="absolute top-0 right-0 w-1 h-full cursor-col-resize hover:bg-blue-500/30 transition-colors duration-200"
         onMouseDown={handleMouseDown}
       />
     </div>
@@ -606,19 +606,19 @@ function DynamicDocumentFolder({
           setIsOpen(true);
         }}
         className={`w-full text-left px-3 py-2 rounded-md flex items-center justify-between group transition-colors duration-200 ${
-          isSelected ? "bg-indigo-800/50" : "hover:bg-indigo-800/30"
+          isSelected ? "bg-blue-800/50" : "hover:bg-blue-800/30"
         }`}
       >
         <div className="flex items-center">
           <button onClick={toggleOpen} className="mr-1 focus:outline-none">
             {isOpen ? (
-              <ChevronDown className="h-4 w-4 text-indigo-300" />
+              <ChevronDown className="h-4 w-4 text-blue-300" />
             ) : (
-              <ChevronRight className="h-4 w-4 text-indigo-300" />
+              <ChevronRight className="h-4 w-4 text-blue-300" />
             )}
           </button>
           {isOpen ? (
-            <FolderOpen className="h-4 w-4 mr-2 text-indigo-300" />
+            <FolderOpen className="h-4 w-4 mr-2 text-blue-300" />
           ) : (
             <FileText className="h-4 w-4 mr-2" />
           )}
@@ -630,15 +630,15 @@ function DynamicDocumentFolder({
       </button>
 
       {isOpen && (
-        <div className="ml-4 mt-1 space-y-1 pl-2 border-l border-indigo-500/30">
+        <div className="ml-4 mt-1 space-y-1 pl-2 border-l border-blue-500/30">
           {documentation.sections && documentation.sections.length > 0 ? (
             documentation.sections.map((section) => (
               <button
                 key={section.id}
                 className={`w-full text-left px-3 py-1.5 rounded-md flex items-center text-sm transition-colors duration-200 ${
                   selectedSection?.id === section.id
-                    ? "bg-indigo-700/60 text-white"
-                    : "text-indigo-300 hover:text-white hover:bg-indigo-700/30"
+                    ? "bg-blue-700/60 text-white"
+                    : "text-blue-300 hover:text-white hover:bg-blue-700/30"
                 }`}
                 onClick={() => onSectionSelect(section)}
               >
@@ -647,14 +647,14 @@ function DynamicDocumentFolder({
               </button>
             ))
           ) : (
-            <div className="text-indigo-400/60 text-xs px-2 py-1">No documents</div>
+            <div className="text-blue-400/60 text-xs px-2 py-1">No documents</div>
           )}
           
           {/* Show the New Document button or the creation form */}
           {isCreatingDocument ? (
-            <div className="p-2 bg-indigo-800/40 rounded border border-indigo-500/30 animate-fadeIn mt-2">
+            <div className="p-2 bg-blue-800/40 rounded border border-blue-500/30 animate-fadeIn mt-2">
               <div className="flex items-center gap-2 mb-2">
-                <PlusCircle className="h-4 w-4 text-indigo-400" />
+                <PlusCircle className="h-4 w-4 text-blue-400" />
                 <span className="text-sm font-medium text-white">New Section</span>
               </div>
               <div className="flex gap-2">
@@ -663,11 +663,11 @@ function DynamicDocumentFolder({
                   onChange={(e) => setNewDocumentName(e.target.value)}
                   placeholder="Section name"
                   autoFocus
-                  className="h-8 text-sm bg-indigo-900/50 border-indigo-500/30 text-white"
+                  className="h-8 text-sm bg-blue-900/50 border-blue-500/30 text-white"
                 />
                 <Button
                   size="sm"
-                  className="h-8 bg-indigo-600 hover:bg-indigo-700 text-white"
+                  className="h-8 bg-blue-600 hover:bg-blue-700 text-white"
                   onClick={handleCreateDocument}
                 >
                   Add
@@ -675,7 +675,7 @@ function DynamicDocumentFolder({
                 <Button
                   size="sm"
                   variant="outline"
-                  className="h-8 p-0 w-8 bg-transparent border-indigo-500/30 text-indigo-300"
+                  className="h-8 p-0 w-8 bg-transparent border-blue-500/30 text-blue-300"
                   onClick={cancelCreateDocument}
                 >
                   <X className="h-4 w-4" />
@@ -688,7 +688,7 @@ function DynamicDocumentFolder({
                 e.stopPropagation();
                 onCreateDocument();
               }}
-              className="w-full flex items-center px-3 py-1.5 text-sm text-indigo-300 hover:text-white hover:bg-indigo-600/40 rounded-md transition-colors duration-200 border border-indigo-500/30 bg-indigo-800/20"
+              className="w-full flex items-center px-3 py-1.5 text-sm text-blue-300 hover:text-white hover:bg-blue-600/40 rounded-md transition-colors duration-200 border border-blue-500/30 bg-blue-800/20"
             >
               <FilePlus className="h-4 w-4 mr-2" />
               <span>New Document</span>
@@ -712,7 +712,7 @@ function EnhancedNavButton({ icon, label, isActive = false }: EnhancedNavButtonP
       variant="ghost"
       size="sm"
       className={`w-full justify-start transition-all duration-300 ${
-        isActive ? "bg-indigo-700/40 text-white" : "text-indigo-300 hover:text-white hover:bg-indigo-700/30"
+        isActive ? "bg-blue-700/40 text-white" : "text-blue-300 hover:text-white hover:bg-blue-700/30"
       }`}
     >
       {React.cloneElement(icon, { className: "h-4 w-4 mr-2" })}
@@ -738,16 +738,16 @@ function EnhancedIconButton({ icon, tooltip, isActive = false, onClick }: Enhanc
         size="sm"
         onClick={onClick}
         className={`h-8 w-8 p-0 transition-all duration-300 ${
-          isActive ? "bg-indigo-700/40 text-white" : "text-indigo-300 hover:text-white hover:bg-indigo-700/30"
+          isActive ? "bg-blue-700/40 text-white" : "text-blue-300 hover:text-white hover:bg-blue-700/30"
         } ${isHovered ? "scale-110" : ""}`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         {React.cloneElement(icon, {
-          className: `h-4 w-4 transition-all duration-300 ${isActive ? "text-indigo-400" : ""}`,
+          className: `h-4 w-4 transition-all duration-300 ${isActive ? "text-blue-400" : ""}`,
         })}
       </Button>
-      <div className="absolute left-full ml-2 px-2 py-1 bg-indigo-900 rounded text-xs whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 glass-panel">
+      <div className="absolute left-full ml-2 px-2 py-1 bg-blue-900 rounded text-xs whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 glass-panel">
         {tooltip}
       </div>
     </div>

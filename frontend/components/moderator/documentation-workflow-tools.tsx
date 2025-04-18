@@ -186,10 +186,10 @@ export function DocumentationWorkflowTools() {
   
   return (
     <div className="space-y-6">
-      <Card className="bg-indigo-900/20 border-indigo-500/30 text-white">
-        <CardHeader className="bg-indigo-900/30 border-b border-indigo-500/30">
+      <Card className="bg-blue-900/20 border-blue-500/30 text-white">
+        <CardHeader className="bg-blue-900/30 border-b border-blue-500/30">
           <CardTitle className="text-lg flex items-center">
-            <Clock className="h-5 w-5 mr-2 text-indigo-400" />
+            <Clock className="h-5 w-5 mr-2 text-blue-400" />
             Publication Workflow
           </CardTitle>
         </CardHeader>
@@ -198,16 +198,16 @@ export function DocumentationWorkflowTools() {
             <h3 className="text-sm font-medium">Current Status</h3>
             <div className="flex items-center gap-3">
               <StatusBadge status={documentStatus} />
-              <div className="text-sm text-indigo-300">Last updated {lastUpdatedFormatted} by {lastModifiedByUsername}</div>
+              <div className="text-sm text-blue-300">Last updated {lastUpdatedFormatted} by {lastModifiedByUsername}</div>
             </div>
           </div>
 
           <div className="space-y-2">
             <h3 className="text-sm font-medium">Workflow Progress</h3>
             <div className="relative pt-4">
-              <div className="absolute top-0 left-0 w-full h-1 bg-indigo-900/50">
+              <div className="absolute top-0 left-0 w-full h-1 bg-blue-900/50">
                 <div
-                  className={`h-1 bg-indigo-500 transition-all duration-300 ${
+                  className={`h-1 bg-blue-500 transition-all duration-300 ${
                     documentStatus === "draft" ? "w-1/3" : documentStatus === "review" ? "w-2/3" : "w-full"
                   }`}
                 ></div>
@@ -264,7 +264,7 @@ export function DocumentationWorkflowTools() {
                 </Button>
                 <Button
                   variant="outline"
-                  className="w-full bg-indigo-900/30 border-indigo-500/30 text-indigo-300 hover:bg-indigo-800/50"
+                  className="w-full bg-blue-900/30 border-blue-500/30 text-blue-300 hover:bg-blue-800/50"
                   onClick={() => {
                     console.log("Request Changes clicked");
                     handleRequestChanges();
@@ -280,7 +280,7 @@ export function DocumentationWorkflowTools() {
               <div className="space-y-3">
                 <Button
                   variant="outline"
-                  className="w-full bg-indigo-900/30 border-indigo-500/30 text-indigo-300 hover:bg-indigo-800/50"
+                  className="w-full bg-blue-900/30 border-blue-500/30 text-blue-300 hover:bg-blue-800/50"
                   onClick={() => {
                     console.log("Unpublish clicked");
                     handleUnpublish();
@@ -295,10 +295,10 @@ export function DocumentationWorkflowTools() {
         </CardContent>
       </Card>
 
-      <Card className="bg-indigo-900/20 border-indigo-500/30 text-white">
-        <CardHeader className="bg-indigo-900/30 border-b border-indigo-500/30">
+      <Card className="bg-blue-900/20 border-blue-500/30 text-white">
+        <CardHeader className="bg-blue-900/30 border-b border-blue-500/30">
           <CardTitle className="text-lg flex items-center">
-            <Users className="h-5 w-5 mr-2 text-indigo-400" />
+            <Users className="h-5 w-5 mr-2 text-blue-400" />
             Collaboration
           </CardTitle>
         </CardHeader>
@@ -309,7 +309,7 @@ export function DocumentationWorkflowTools() {
               <Button
                 variant="outline"
                 size="sm"
-                className="h-7 bg-indigo-900/30 border-indigo-500/30 text-indigo-300 hover:bg-indigo-800/50"
+                className="h-7 bg-blue-900/30 border-blue-500/30 text-blue-300 hover:bg-blue-800/50"
               >
                 Invite
               </Button>
@@ -324,10 +324,10 @@ export function DocumentationWorkflowTools() {
         </CardContent>
       </Card>
 
-      <Card className="bg-indigo-900/20 border-indigo-500/30 text-white">
-        <CardHeader className="bg-indigo-900/30 border-b border-indigo-500/30">
+      <Card className="bg-blue-900/20 border-blue-500/30 text-white">
+        <CardHeader className="bg-blue-900/30 border-b border-blue-500/30">
           <CardTitle className="text-lg flex items-center">
-            <Calendar className="h-5 w-5 mr-2 text-indigo-400" />
+            <Calendar className="h-5 w-5 mr-2 text-blue-400" />
             Publication Schedule
           </CardTitle>
         </CardHeader>
@@ -335,21 +335,21 @@ export function DocumentationWorkflowTools() {
           <div className="space-y-2">
             <h3 className="text-sm font-medium">Scheduled Publication</h3>
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-full bg-indigo-900/50 flex items-center justify-center">
-                <Calendar className="h-5 w-5 text-indigo-400" />
+              <div className="h-10 w-10 rounded-full bg-blue-900/50 flex items-center justify-center">
+                <Calendar className="h-5 w-5 text-blue-400" />
               </div>
               <div>
                 <div className="text-sm font-medium">March 15, 2023 at 9:00 AM</div>
-                <div className="text-xs text-indigo-300">Scheduled by Alex Morgan</div>
+                <div className="text-xs text-blue-300">Scheduled by Alex Morgan</div>
               </div>
             </div>
           </div>
 
           <div className="pt-2 space-y-2">
-            <Button className="w-full bg-indigo-600 hover:bg-indigo-700">Change Schedule</Button>
+            <Button className="w-full bg-blue-600 hover:bg-blue-700">Change Schedule</Button>
             <Button
               variant="outline"
-              className="w-full bg-indigo-900/30 border-indigo-500/30 text-indigo-300 hover:bg-indigo-800/50"
+              className="w-full bg-blue-900/30 border-blue-500/30 text-blue-300 hover:bg-blue-800/50"
             >
               Publish Now
             </Button>
@@ -357,10 +357,10 @@ export function DocumentationWorkflowTools() {
         </CardContent>
       </Card>
 
-      <Card className="bg-indigo-900/20 border-indigo-500/30 text-white">
-        <CardHeader className="bg-indigo-900/30 border-b border-indigo-500/30">
+      <Card className="bg-blue-900/20 border-blue-500/30 text-white">
+        <CardHeader className="bg-blue-900/30 border-b border-blue-500/30">
           <CardTitle className="text-lg flex items-center">
-            <FileText className="h-5 w-5 mr-2 text-indigo-400" />
+            <FileText className="h-5 w-5 mr-2 text-blue-400" />
             Quality Assessment
           </CardTitle>
         </CardHeader>
@@ -431,16 +431,16 @@ function WorkflowStep({ label, isActive, isCompleted, onClick }) {
       <button
         className={`h-8 w-8 rounded-full flex items-center justify-center mb-1 transition-colors ${
           isActive
-            ? "bg-indigo-600 text-white"
+            ? "bg-blue-600 text-white"
             : isCompleted
               ? "bg-green-600 text-white"
-              : "bg-indigo-900/50 text-indigo-400"
+              : "bg-blue-900/50 text-blue-400"
         }`}
         onClick={onClick}
       >
         {isCompleted ? <CheckCircle className="h-4 w-4" /> : <span className="text-xs">{label.charAt(0)}</span>}
       </button>
-      <span className={`text-xs ${isActive ? "text-white font-medium" : "text-indigo-300"}`}>{label}</span>
+      <span className={`text-xs ${isActive ? "text-white font-medium" : "text-blue-300"}`}>{label}</span>
     </div>
   )
 }
@@ -449,11 +449,11 @@ function CollaboratorItem({ name, role, status, lastActive }) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <div className={`h-2 w-2 rounded-full ${status === "active" ? "bg-green-500" : "bg-indigo-500/50"}`}></div>
+        <div className={`h-2 w-2 rounded-full ${status === "active" ? "bg-green-500" : "bg-blue-500/50"}`}></div>
         <span className="text-sm">{name}</span>
-        <span className="text-xs text-indigo-400">({role})</span>
+        <span className="text-xs text-blue-400">({role})</span>
       </div>
-      <span className="text-xs text-indigo-300">{lastActive}</span>
+      <span className="text-xs text-blue-300">{lastActive}</span>
     </div>
   )
 }
@@ -471,7 +471,7 @@ function QualityItem({ label, score }) {
         <span className="text-sm">{label}</span>
         <span className="text-sm font-medium">{score}/100</span>
       </div>
-      <div className="h-1.5 bg-indigo-900/50 rounded-full">
+      <div className="h-1.5 bg-blue-900/50 rounded-full">
         <div className={`h-1.5 ${getScoreColor(score)} rounded-full`} style={{ width: `${score}%` }}></div>
       </div>
     </div>

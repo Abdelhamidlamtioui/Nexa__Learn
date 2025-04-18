@@ -5,7 +5,7 @@ import Link from "next/link"
 
 export function QuickActions() {
   return (
-    <Card className="bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-lg">
+    <Card className="bg-blue-900/20 backdrop-filter backdrop-blur-lg">
       <CardHeader>
         <CardTitle>Quick Actions</CardTitle>
       </CardHeader>

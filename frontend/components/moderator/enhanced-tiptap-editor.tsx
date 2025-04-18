@@ -168,10 +168,10 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
 
   if (!isMounted) {
     return (
-      <div className="h-64 w-full bg-indigo-900/20 border border-indigo-500/30 rounded-md flex items-center justify-center">
+      <div className="h-64 w-full bg-blue-900/20 border border-blue-500/30 rounded-md flex items-center justify-center">
         <div className="flex flex-col items-center">
-          <div className="w-10 h-10 border-t-2 border-indigo-500 rounded-full animate-spin mb-4"></div>
-          <p className="text-indigo-300">Loading editor...</p>
+          <div className="w-10 h-10 border-t-2 border-blue-500 rounded-full animate-spin mb-4"></div>
+          <p className="text-blue-300">Loading editor...</p>
         </div>
       </div>
     )
@@ -197,7 +197,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
               variant="ghost"
               size="sm"
               onClick={() => editor.chain().focus().toggleBold().run()}
-              className={`animated-button ${editor.isActive("bold") ? "bg-indigo-700/50" : "bg-transparent"} text-indigo-300 hover:bg-indigo-800/50 hover:text-white`}
+              className={`animated-button ${editor.isActive("bold") ? "bg-blue-700/50" : "bg-transparent"} text-blue-300 hover:bg-blue-800/50 hover:text-white`}
             >
               <Bold className="h-4 w-4" />
             </Button>
@@ -205,7 +205,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
               variant="ghost"
               size="sm"
               onClick={() => editor.chain().focus().toggleItalic().run()}
-              className={`animated-button ${editor.isActive("italic") ? "bg-indigo-700/50" : "bg-transparent"} text-indigo-300 hover:bg-indigo-800/50 hover:text-white`}
+              className={`animated-button ${editor.isActive("italic") ? "bg-blue-700/50" : "bg-transparent"} text-blue-300 hover:bg-blue-800/50 hover:text-white`}
             >
               <Italic className="h-4 w-4" />
             </Button>
@@ -213,7 +213,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
               variant="ghost"
               size="sm"
               onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-              className={`animated-button ${editor.isActive("heading", { level: 1 }) ? "bg-indigo-700/50" : "bg-transparent"} text-indigo-300 hover:bg-indigo-800/50 hover:text-white`}
+              className={`animated-button ${editor.isActive("heading", { level: 1 }) ? "bg-blue-700/50" : "bg-transparent"} text-blue-300 hover:bg-blue-800/50 hover:text-white`}
             >
               <Heading1 className="h-4 w-4" />
             </Button>
@@ -221,7 +221,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
               variant="ghost"
               size="sm"
               onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-              className={`animated-button ${editor.isActive("heading", { level: 2 }) ? "bg-indigo-700/50" : "bg-transparent"} text-indigo-300 hover:bg-indigo-800/50 hover:text-white`}
+              className={`animated-button ${editor.isActive("heading", { level: 2 }) ? "bg-blue-700/50" : "bg-transparent"} text-blue-300 hover:bg-blue-800/50 hover:text-white`}
             >
               <Heading2 className="h-4 w-4" />
             </Button>
@@ -229,7 +229,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
               variant="ghost"
               size="sm"
               onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-              className={`animated-button ${editor.isActive("heading", { level: 3 }) ? "bg-indigo-700/50" : "bg-transparent"} text-indigo-300 hover:bg-indigo-800/50 hover:text-white`}
+              className={`animated-button ${editor.isActive("heading", { level: 3 }) ? "bg-blue-700/50" : "bg-transparent"} text-blue-300 hover:bg-blue-800/50 hover:text-white`}
             >
               <Heading3 className="h-4 w-4" />
             </Button>
@@ -237,7 +237,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
               variant="ghost"
               size="sm"
               onClick={() => editor.chain().focus().toggleBulletList().run()}
-              className={`animated-button ${editor.isActive("bulletList") ? "bg-indigo-700/50" : "bg-transparent"} text-indigo-300 hover:bg-indigo-800/50 hover:text-white`}
+              className={`animated-button ${editor.isActive("bulletList") ? "bg-blue-700/50" : "bg-transparent"} text-blue-300 hover:bg-blue-800/50 hover:text-white`}
             >
               <List className="h-4 w-4" />
             </Button>
@@ -245,7 +245,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
               variant="ghost"
               size="sm"
               onClick={() => editor.chain().focus().toggleOrderedList().run()}
-              className={`animated-button ${editor.isActive("orderedList") ? "bg-indigo-700/50" : "bg-transparent"} text-indigo-300 hover:bg-indigo-800/50 hover:text-white`}
+              className={`animated-button ${editor.isActive("orderedList") ? "bg-blue-700/50" : "bg-transparent"} text-blue-300 hover:bg-blue-800/50 hover:text-white`}
             >
               <ListOrdered className="h-4 w-4" />
             </Button>
@@ -253,7 +253,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
               variant="ghost"
               size="sm"
               onClick={addLink}
-              className={`animated-button ${editor.isActive("link") ? "bg-indigo-700/50" : "bg-transparent"} text-indigo-300 hover:bg-indigo-800/50 hover:text-white`}
+              className={`animated-button ${editor.isActive("link") ? "bg-blue-700/50" : "bg-transparent"} text-blue-300 hover:bg-blue-800/50 hover:text-white`}
             >
               <LinkIcon className="h-4 w-4" />
             </Button>
@@ -261,7 +261,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
               variant="ghost"
               size="sm"
               onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-              className={`animated-button ${editor.isActive("codeBlock") ? "bg-indigo-700/50" : "bg-transparent"} text-indigo-300 hover:bg-indigo-800/50 hover:text-white`}
+              className={`animated-button ${editor.isActive("codeBlock") ? "bg-blue-700/50" : "bg-transparent"} text-blue-300 hover:bg-blue-800/50 hover:text-white`}
             >
               <Code className="h-4 w-4" />
             </Button>
@@ -269,17 +269,17 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
               variant="ghost"
               size="sm"
               onClick={addImage}
-              className="animated-button text-indigo-300 hover:bg-indigo-800/50 hover:text-white"
+              className="animated-button text-blue-300 hover:bg-blue-800/50 hover:text-white"
             >
               <ImageIcon className="h-4 w-4" />
             </Button>
-            <div className="border-r border-indigo-500/30 mx-1 h-6"></div>
+            <div className="border-r border-blue-500/30 mx-1 h-6"></div>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => editor.chain().focus().undo().run()}
               disabled={!editor.can().undo()}
-              className="animated-button text-indigo-300 hover:bg-indigo-800/50 hover:text-white disabled:opacity-50"
+              className="animated-button text-blue-300 hover:bg-blue-800/50 hover:text-white disabled:opacity-50"
             >
               <Undo className="h-4 w-4" />
             </Button>
@@ -288,16 +288,16 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
               size="sm"
               onClick={() => editor.chain().focus().redo().run()}
               disabled={!editor.can().redo()}
-              className="animated-button text-indigo-300 hover:bg-indigo-800/50 hover:text-white disabled:opacity-50"
+              className="animated-button text-blue-300 hover:bg-blue-800/50 hover:text-white disabled:opacity-50"
             >
               <Redo className="h-4 w-4" />
             </Button>
-            <div className="border-r border-indigo-500/30 mx-1 h-6"></div>
+            <div className="border-r border-blue-500/30 mx-1 h-6"></div>
             <Button
               variant="ghost"
               size="sm"
               onClick={toggleFloatingToolbar}
-              className="animated-button text-indigo-300 hover:bg-indigo-800/50 hover:text-white ml-auto"
+              className="animated-button text-blue-300 hover:bg-blue-800/50 hover:text-white ml-auto"
               data-tooltip="Toggle floating toolbar"
             >
               <Sparkles className="h-4 w-4" />
@@ -314,7 +314,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
                 variant="ghost"
                 size="sm"
                 onClick={() => editor.chain().focus().toggleBold().run()}
-                className={`animated-button ${editor.isActive("bold") ? "bg-indigo-700/50" : "bg-transparent"} text-indigo-300 hover:bg-indigo-800/50 hover:text-white`}
+                className={`animated-button ${editor.isActive("bold") ? "bg-blue-700/50" : "bg-transparent"} text-blue-300 hover:bg-blue-800/50 hover:text-white`}
               >
                 <Bold className="h-4 w-4" />
               </Button>
@@ -322,7 +322,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
                 variant="ghost"
                 size="sm"
                 onClick={() => editor.chain().focus().toggleItalic().run()}
-                className={`animated-button ${editor.isActive("italic") ? "bg-indigo-700/50" : "bg-transparent"} text-indigo-300 hover:bg-indigo-800/50 hover:text-white`}
+                className={`animated-button ${editor.isActive("italic") ? "bg-blue-700/50" : "bg-transparent"} text-blue-300 hover:bg-blue-800/50 hover:text-white`}
               >
                 <Italic className="h-4 w-4" />
               </Button>
@@ -330,7 +330,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
                 variant="ghost"
                 size="sm"
                 onClick={addLink}
-                className={`animated-button ${editor.isActive("link") ? "bg-indigo-700/50" : "bg-transparent"} text-indigo-300 hover:bg-indigo-800/50 hover:text-white`}
+                className={`animated-button ${editor.isActive("link") ? "bg-blue-700/50" : "bg-transparent"} text-blue-300 hover:bg-blue-800/50 hover:text-white`}
               >
                 <LinkIcon className="h-4 w-4" />
               </Button>
@@ -338,7 +338,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
                 variant="ghost"
                 size="sm"
                 onClick={toggleFloatingToolbar}
-                className="animated-button text-indigo-300 hover:bg-indigo-800/50 hover:text-white ml-auto"
+                className="animated-button text-blue-300 hover:bg-blue-800/50 hover:text-white ml-auto"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -366,7 +366,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
             variant="ghost"
             size="sm"
             onClick={() => editor.chain().focus().toggleBold().run()}
-            className={`animated-button ${editor.isActive("bold") ? "bg-indigo-700/50" : "bg-transparent"} text-white hover:bg-indigo-800/50 h-8 w-8 p-0`}
+            className={`animated-button ${editor.isActive("bold") ? "bg-blue-700/50" : "bg-transparent"} text-white hover:bg-blue-800/50 h-8 w-8 p-0`}
           >
             <Bold className="h-4 w-4" />
           </Button>
@@ -374,7 +374,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
             variant="ghost"
             size="sm"
             onClick={() => editor.chain().focus().toggleItalic().run()}
-            className={`animated-button ${editor.isActive("italic") ? "bg-indigo-700/50" : "bg-transparent"} text-white hover:bg-indigo-800/50 h-8 w-8 p-0`}
+            className={`animated-button ${editor.isActive("italic") ? "bg-blue-700/50" : "bg-transparent"} text-white hover:bg-blue-800/50 h-8 w-8 p-0`}
           >
             <Italic className="h-4 w-4" />
           </Button>
@@ -382,7 +382,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
             variant="ghost"
             size="sm"
             onClick={addLink}
-            className={`animated-button ${editor.isActive("link") ? "bg-indigo-700/50" : "bg-transparent"} text-white hover:bg-indigo-800/50 h-8 w-8 p-0`}
+            className={`animated-button ${editor.isActive("link") ? "bg-blue-700/50" : "bg-transparent"} text-white hover:bg-blue-800/50 h-8 w-8 p-0`}
           >
             <LinkIcon className="h-4 w-4" />
           </Button>
@@ -390,7 +390,7 @@ export function EnhancedTipTapEditor({ content, onChange, editable = true }: Enh
             variant="ghost"
             size="sm"
             onClick={() => editor.chain().focus().toggleCode().run()}
-            className={`animated-button ${editor.isActive("code") ? "bg-indigo-700/50" : "bg-transparent"} text-white hover:bg-indigo-800/50 h-8 w-8 p-0`}
+            className={`animated-button ${editor.isActive("code") ? "bg-blue-700/50" : "bg-transparent"} text-white hover:bg-blue-800/50 h-8 w-8 p-0`}
           >
             <Code className="h-4 w-4" />
           </Button>

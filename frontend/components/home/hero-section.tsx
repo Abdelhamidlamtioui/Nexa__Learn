@@ -23,7 +23,7 @@ export function HeroSection() {
   }, [])
 
   return (
-    <div className="bg-gradient-to-br from-purple-900 to-indigo-900 text-white py-20">
+    <div className="bg-gradient-to-br from-blue-900 to-blue-900 text-white py-20">
       <div className="container mx-auto px-4 text-center">
         <motion.h1
           className="text-5xl font-bold mb-4"
@@ -56,7 +56,7 @@ export function HeroSection() {
           </p>
         </motion.div>
         <div className="space-x-4">
-          <Button size="lg" className="bg-pink-600 hover:bg-pink-700">
+          <Button size="lg" className="bg-cyan-600 hover:bg-cyan-700">
             Start Learning
           </Button>
           <Button size="lg" variant="outline">

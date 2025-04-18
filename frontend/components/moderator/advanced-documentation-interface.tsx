@@ -56,11 +56,11 @@ export function AdvancedDocumentationInterface() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-gradient-to-br from-indigo-950 to-purple-950 text-white">
+      <div className="flex h-screen items-center justify-center bg-gradient-to-br from-blue-950 to-blue-950 text-white">
         <div className="flex flex-col items-center">
-          <div className="w-16 h-16 border-t-2 border-indigo-500 rounded-full animate-spin mb-6"></div>
+          <div className="w-16 h-16 border-t-2 border-blue-500 rounded-full animate-spin mb-6"></div>
           <h2 className="text-xl font-semibold mb-2 glow-text">Loading Documentation Interface</h2>
-          <p className="text-indigo-300">Preparing your workspace...</p>
+          <p className="text-blue-300">Preparing your workspace...</p>
         </div>
       </div>
     )
@@ -69,13 +69,13 @@ export function AdvancedDocumentationInterface() {
   return (
     <div
       ref={containerRef}
-      className="flex h-screen bg-gradient-to-br from-indigo-950 to-purple-950 text-white relative overflow-hidden"
+      className="flex h-screen bg-gradient-to-br from-blue-950 to-blue-950 text-white relative overflow-hidden"
     >
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full opacity-10 parallax-bg" data-depth="0.2">
-          <div className="absolute top-10 left-10 w-40 h-40 rounded-full bg-indigo-600 filter blur-3xl"></div>
-          <div className="absolute bottom-20 right-20 w-60 h-60 rounded-full bg-purple-600 filter blur-3xl"></div>
+          <div className="absolute top-10 left-10 w-40 h-40 rounded-full bg-blue-600 filter blur-3xl"></div>
+          <div className="absolute bottom-20 right-20 w-60 h-60 rounded-full bg-blue-600 filter blur-3xl"></div>
           <div className="absolute top-1/3 right-1/4 w-20 h-20 rounded-full bg-blue-600 filter blur-2xl"></div>
         </div>
       </div>
@@ -85,7 +85,7 @@ export function AdvancedDocumentationInterface() {
         <DocumentationHeader />
         <div className="flex-1 overflow-auto p-6 custom-scrollbar">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid grid-cols-4 mb-6 bg-indigo-900/30 border border-indigo-500/30 glass-panel">
+            <TabsList className="grid grid-cols-4 mb-6 bg-blue-900/30 border border-blue-500/30 glass-panel">
               <TabsTrigger
                 value="editor"
                 className="data-[state=active]:white/50 transition-all duration-300 animated-button"
@@ -132,7 +132,7 @@ export function AdvancedDocumentationInterface() {
 
       {/* Floating action button */}
       <div className="absolute bottom-6 right-6">
-        <Button className="h-12 w-12 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 p-0 shadow-lg animated-button">
+        <Button className="h-12 w-12 rounded-full bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 p-0 shadow-lg animated-button">
           <Sparkles className="h-5 w-5" />
         </Button>
       </div>
@@ -148,7 +148,7 @@ function DocumentSection({ title, children, level = 1, active = false }) {
     <div className="select-none">
       <div
         className={`flex items-center gap-2 py-1 px-2 rounded cursor-pointer transition-all duration-300 ${
-          active ? "bg-indigo-700/30" : isHovered ? "bg-indigo-800/30" : ""
+          active ? "bg-blue-700/30" : isHovered ? "bg-blue-800/30" : ""
         }`}
         style={{ paddingLeft: `${(level - 1) * 1}rem` }}
         onClick={() => setExpanded(!expanded)}
@@ -157,7 +157,7 @@ function DocumentSection({ title, children, level = 1, active = false }) {
       >
         <div
           className={`h-2 w-2 rounded-full transition-all duration-300 ${
-            active ? "bg-indigo-500" : isHovered ? "bg-indigo-400" : "bg-indigo-400/50"
+            active ? "bg-blue-500" : isHovered ? "bg-blue-400" : "bg-blue-400/50"
           }`}
         ></div>
         <span
@@ -204,13 +204,13 @@ function RelatedDocument({ title }) {
   return (
     <div
       className={`flex items-center gap-2 py-1 px-2 rounded cursor-pointer transition-all duration-300 ${
-        isHovered ? "bg-indigo-800/30 translate-x-0.5" : ""
+        isHovered ? "bg-blue-800/30 translate-x-0.5" : ""
       }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <BookOpen
-        className={`h-4 w-4 transition-all duration-300 ${isHovered ? "text-indigo-300 scale-110" : "text-indigo-400"}`}
+        className={`h-4 w-4 transition-all duration-300 ${isHovered ? "text-blue-300 scale-110" : "text-blue-400"}`}
       />
       <span className="text-sm">{title}</span>
     </div>
@@ -262,7 +262,7 @@ function HistoryItem({ version, author, date, changes, current = false }) {
   return (
     <div
       className={`p-4 rounded-lg border transition-all duration-300 ${
-        current ? "bg-indigo-800/30 border-indigo-500/50" : "bg-indigo-900/30 border-indigo-500/30"
+        current ? "bg-blue-800/30 border-blue-500/50" : "bg-blue-900/30 border-blue-500/30"
       } ${isHovered ? "transform scale-[1.01] shadow-lg" : ""}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -271,9 +271,9 @@ function HistoryItem({ version, author, date, changes, current = false }) {
         <div>
           <div className="flex items-center gap-2">
             <span className="font-medium">Version {version}</span>
-            {current && <span className="text-xs bg-indigo-600 px-2 py-0.5 rounded">Current</span>}
+            {current && <span className="text-xs bg-blue-600 px-2 py-0.5 rounded">Current</span>}
           </div>
-          <div className="text-sm text-indigo-300">
+          <div className="text-sm text-blue-300">
             {author} • {date}
           </div>
         </div>
@@ -282,7 +282,7 @@ function HistoryItem({ version, author, date, changes, current = false }) {
           <Button
             size="sm"
             variant="ghost"
-            className="h-8 text-indigo-300 hover:text-white hover:bg-indigo-700/30 animated-button"
+            className="h-8 text-blue-300 hover:text-white hover:bg-blue-700/30 animated-button"
           >
             View
           </Button>
@@ -290,7 +290,7 @@ function HistoryItem({ version, author, date, changes, current = false }) {
             <Button
               size="sm"
               variant="ghost"
-              className="h-8 text-indigo-300 hover:text-white hover:bg-indigo-700/30 animated-button"
+              className="h-8 text-blue-300 hover:text-white hover:bg-blue-700/30 animated-button"
             >
               Restore
             </Button>
@@ -303,7 +303,7 @@ function HistoryItem({ version, author, date, changes, current = false }) {
         <ul className="space-y-1">
           {changes.map((change, index) => (
             <li key={index} className="text-sm flex items-start gap-2">
-              <span className="text-indigo-400">•</span>
+              <span className="text-blue-400">•</span>
               <span>{change}</span>
             </li>
           ))}

@@ -83,7 +83,7 @@ export function RegistrationForm({ onSubmit, isSubmitting }: RegistrationFormPro
         <Button 
           type="submit" 
           disabled={isSubmitting} 
-          className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white transition-all duration-200 disabled:opacity-50"
+          className="w-full bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white transition-all duration-200 disabled:opacity-50"
         >
           {isSubmitting ? "Signing Up..." : "Sign Up"}
         </Button>
@@ -99,14 +99,14 @@ export function RegistrationForm({ onSubmit, isSubmitting }: RegistrationFormPro
           <div className="mt-6 grid grid-cols-2 gap-4">
             <Button 
               variant="outline" 
-              className="w-full border-indigo-600 hover:bg-indigo-600/10 text-white transition-all duration-200"
+              className="w-full border-blue-600 hover:bg-blue-600/10 text-white transition-all duration-200"
             >
               <FaGoogle className="mr-2 h-4 w-4" />
               Google
             </Button>
             <Button 
               variant="outline" 
-              className="w-full border-purple-600 hover:bg-purple-600/10 text-white transition-all duration-200"
+              className="w-full border-blue-600 hover:bg-blue-600/10 text-white transition-all duration-200"
             >
               <FaGithub className="mr-2 h-4 w-4" />
               GitHub
@@ -114,7 +114,7 @@ export function RegistrationForm({ onSubmit, isSubmitting }: RegistrationFormPro
           </div>
           <Button 
             variant="outline" 
-            className="w-full mt-4 border-indigo-600 hover:bg-indigo-600/10 text-white transition-all duration-200"
+            className="w-full mt-4 border-blue-600 hover:bg-blue-600/10 text-white transition-all duration-200"
           >
             Connect Web3 Wallet
           </Button>

@@ -217,10 +217,10 @@ export function AdvancedEditor() {
 
   if (!isMounted) {
     return (
-      <div className="h-64 w-full bg-indigo-900/20 border border-indigo-500/30 rounded-md flex items-center justify-center">
+      <div className="h-64 w-full bg-blue-900/20 border border-blue-500/30 rounded-md flex items-center justify-center">
         <div className="flex flex-col items-center">
-          <div className="w-10 h-10 border-t-2 border-indigo-500 rounded-full animate-spin mb-4"></div>
-          <p className="text-indigo-300">Loading editor...</p>
+          <div className="w-10 h-10 border-t-2 border-blue-500 rounded-full animate-spin mb-4"></div>
+          <p className="text-blue-300">Loading editor...</p>
         </div>
       </div>
     )
@@ -229,10 +229,10 @@ export function AdvancedEditor() {
   // If no section is selected, show placeholder
   if (!selectedSection) {
     return (
-      <div className="h-96 w-full bg-indigo-900/20 border border-indigo-500/30 rounded-md flex items-center justify-center">
+      <div className="h-96 w-full bg-blue-900/20 border border-blue-500/30 rounded-md flex items-center justify-center">
         <div className="text-center p-6">
-          <h3 className="text-xl font-medium text-indigo-300 mb-2">No section selected</h3>
-          <p className="text-indigo-200 opacity-70">
+          <h3 className="text-xl font-medium text-blue-300 mb-2">No section selected</h3>
+          <p className="text-blue-200 opacity-70">
             Select a section from the sidebar to edit its content.
           </p>
         </div>
@@ -244,16 +244,16 @@ export function AdvancedEditor() {
     <Card className="w-full h-full glass-panel">
       <Tabs defaultValue="write" value={activeTab} onValueChange={setActiveTab} className="w-full h-full">
         <div className="flex justify-between items-center px-4 pt-2">
-          <TabsList className="bg-indigo-800/30 border border-indigo-500/30">
-            <TabsTrigger value="write" className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white">
+          <TabsList className="bg-blue-800/30 border border-blue-500/30">
+            <TabsTrigger value="write" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white">
               <PenTool className="h-4 w-4 mr-2" />
               Write
             </TabsTrigger>
-            <TabsTrigger value="preview" className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white">
+            <TabsTrigger value="preview" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white">
               <Eye className="h-4 w-4 mr-2" />
               Preview
             </TabsTrigger>
-            <TabsTrigger value="html" className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white">
+            <TabsTrigger value="html" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white">
               <Code className="h-4 w-4 mr-2" />
               HTML
             </TabsTrigger>
@@ -264,13 +264,13 @@ export function AdvancedEditor() {
               <>
                 <button 
                   onClick={handleCopyHtml} 
-                  className="p-1 text-indigo-300 hover:text-white hover:bg-indigo-700/30 rounded"
+                  className="p-1 text-blue-300 hover:text-white hover:bg-blue-700/30 rounded"
                 >
                   <Copy className="h-4 w-4" />
                 </button>
                 <button 
                   onClick={handleDownload} 
-                  className="p-1 text-indigo-300 hover:text-white hover:bg-indigo-700/30 rounded"
+                  className="p-1 text-blue-300 hover:text-white hover:bg-blue-700/30 rounded"
                 >
                   <Download className="h-4 w-4" />
                 </button>
@@ -279,7 +279,7 @@ export function AdvancedEditor() {
             <button 
               onClick={handleSave} 
               disabled={isSaving}
-              className={`p-1 rounded flex items-center ${isSaving ? 'bg-indigo-600/50 text-gray-300' : 'text-indigo-300 hover:text-white hover:bg-indigo-700/30'}`}
+              className={`p-1 rounded flex items-center ${isSaving ? 'bg-blue-600/50 text-gray-300' : 'text-blue-300 hover:text-white hover:bg-blue-700/30'}`}
             >
               {isSaving ? (
                 <RefreshCw className="h-4 w-4 animate-spin" />
@@ -323,7 +323,7 @@ export function AdvancedEditor() {
                     <EditorContent editor={previewEditor} className="prose max-w-none" />
                   ) : (
                     <div className="flex items-center justify-center p-4">
-                      <div className="w-6 h-6 border-t-2 border-indigo-500 rounded-full animate-spin mr-2"></div>
+                      <div className="w-6 h-6 border-t-2 border-blue-500 rounded-full animate-spin mr-2"></div>
                       <span>Loading preview...</span>
                     </div>
                   )}

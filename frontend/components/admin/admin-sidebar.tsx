@@ -37,7 +37,7 @@ export function AdminSidebar({ open, setOpen }: AdminSidebarProps) {
         transition={{ duration: 0.2 }}
       />
       <motion.nav
-        className="fixed top-0 left-0 bottom-0 w-64 bg-[#0A192F] z-50 shadow-lg"
+        className="fixed top-0 left-0 bottom-0 w-64 bg-[#0F172A] z-50 shadow-lg"
         initial={{ x: "-100%" }}
         animate={{ x: open ? 0 : "-100%" }}
         transition={{ duration: 0.2 }}
@@ -55,7 +55,7 @@ export function AdminSidebar({ open, setOpen }: AdminSidebarProps) {
                 variant="ghost"
                 className={cn(
                   "w-full justify-start px-4 py-2 text-left",
-                  activeItem === item.label && "bg-purple-900 text-white",
+                  activeItem === item.label && "bg-blue-900 text-white",
                 )}
                 onClick={() => setActiveItem(item.label)}
               >

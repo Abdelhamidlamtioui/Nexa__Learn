@@ -45,8 +45,8 @@ export function PricingContent() {
   return (
     <div className="grid gap-8 md:grid-cols-3">
       {pricingPlans.map((plan, index) => (
-        <Card key={index} className={`relative ${plan.popular ? "border-pink-500" : ""}`}>
-          {plan.popular && <Badge className="absolute top-0 right-0 m-4 bg-pink-500">Most Popular</Badge>}
+        <Card key={index} className={`relative ${plan.popular ? "border-cyan-500" : ""}`}>
+          {plan.popular && <Badge className="absolute top-0 right-0 m-4 bg-cyan-500">Most Popular</Badge>}
           <CardHeader>
             <CardTitle className="text-2xl font-bold">{plan.title}</CardTitle>
             <p className="text-3xl font-bold">{plan.price}</p>

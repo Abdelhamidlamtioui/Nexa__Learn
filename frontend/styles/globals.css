@@ -282,9 +282,9 @@ body {
 
 /* Ensure blog content is visible on dark backgrounds even without dark mode */
 .bg-gradient-to-br .blog-content,
-.from-indigo-900 .blog-content,
-.to-pink-800 .blog-content,
-.bg-purple-900 .blog-content {
+.from-blue-900 .blog-content,
+.to-cyan-800 .blog-content,
+.bg-blue-900 .blog-content {
   color: #f1f5f9 !important;
 }
 

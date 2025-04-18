@@ -69,7 +69,7 @@ export function LoginPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
             >
-              <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-pink-500 to-yellow-500 text-transparent bg-clip-text">
+              <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-cyan-500 to-yellow-500 text-transparent bg-clip-text">
                 Welcome Back
               </h1>
               <p className="text-lg text-gray-300">Login to continue your learning journey</p>

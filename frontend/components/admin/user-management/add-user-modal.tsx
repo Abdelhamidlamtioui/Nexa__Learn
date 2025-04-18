@@ -54,7 +54,7 @@ export function AddUserModal({ open, onClose, onSuccess }: AddUserModalProps) {
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px] bg-[#1a2744] text-white border border-gray-800">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+          <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-600 bg-clip-text text-transparent">
             Add New User
           </DialogTitle>
           <DialogDescription className="text-gray-400">
@@ -107,7 +107,7 @@ export function AddUserModal({ open, onClose, onSuccess }: AddUserModalProps) {
               value={formData.role}
               onValueChange={(value) => setFormData({ ...formData, role: value })}
             >
-              <SelectTrigger className="w-full bg-[#2a3754] border-gray-700 text-white focus:ring-purple-500">
+              <SelectTrigger className="w-full bg-[#2a3754] border-gray-700 text-white focus:ring-blue-500">
                 <SelectValue placeholder="Select role" />
               </SelectTrigger>
               <SelectContent 
@@ -154,7 +154,7 @@ export function AddUserModal({ open, onClose, onSuccess }: AddUserModalProps) {
             <Button
               type="submit"
               disabled={loading}
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+              className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white"
             >
               {loading ? (
                 <>

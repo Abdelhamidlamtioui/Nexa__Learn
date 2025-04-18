@@ -183,7 +183,7 @@ export default function UserSettings() {
               <Button 
                 type="submit" 
                 disabled={isLoading}
-                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white transition-all duration-200"
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white transition-all duration-200"
               >
                 {isLoading ? "Updating..." : "Update Profile"}
               </Button>
@@ -244,7 +244,7 @@ export default function UserSettings() {
               <Button 
                 type="submit" 
                 disabled={isLoading}
-                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white transition-all duration-200"
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white transition-all duration-200"
               >
                 {isLoading ? "Updating..." : "Update Password"}
               </Button>
@@ -266,7 +266,7 @@ export default function UserSettings() {
                   You haven't added any payment methods yet.
                 </p>
                 <Button 
-                  className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white transition-all duration-200"
+                  className="bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white transition-all duration-200"
                 >
                   Add Payment Method
                 </Button>

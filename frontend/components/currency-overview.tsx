@@ -8,7 +8,7 @@ export function CurrencyOverview({ totalBalance }: CurrencyOverviewProps) {
   const usdEquivalent = totalBalance * 0.1 // Assuming 1 TT = $0.10 USD
 
   return (
-    <Card className="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+    <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
       <CardHeader>
         <CardTitle>Total Holdings</CardTitle>
       </CardHeader>

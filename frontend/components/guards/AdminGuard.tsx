@@ -47,7 +47,7 @@ export function AdminGuard({ children }: AdminGuardProps) {
   // Show loading state only while checking
   if (isChecking) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0A192F] to-[#663399] flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-[#0F172A] to-[#0284C7] flex items-center justify-center">
         <div className="text-white text-xl p-4">
           <p className="mb-2">Checking admin status...</p>
           <p className="text-sm text-gray-300">This may take a few moments.</p>

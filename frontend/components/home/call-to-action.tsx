@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 export function CallToAction() {
   return (
     <section>
-      <Card className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
+      <Card className="bg-gradient-to-r from-blue-600 to-blue-600 text-white">
         <CardHeader>
           <CardTitle className="text-3xl">Join Our Learning Community</CardTitle>
         </CardHeader>

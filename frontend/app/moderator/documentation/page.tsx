@@ -8,7 +8,7 @@ import {ModeratorGuard} from "@/components/guards/ModeratorGuard";
 export default function ModeratorDocumentationPage() {
   return (
     <ModeratorGuard>
-      <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#0A192F] to-[#663399] text-white">
+      <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#0F172A] to-[#0284C7] text-white">
         <ForumHeader />
         <div className="flex-grow">
           <DocumentationPortal />

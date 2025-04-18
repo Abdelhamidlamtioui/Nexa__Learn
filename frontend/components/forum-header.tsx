@@ -16,16 +16,16 @@ type RoleType = string | { name: string };
 
 const NavLinks = () => (
   <>
-    <Link href="/" className="text-white hover:text-pink-400 transition-colors">
+    <Link href="/" className="text-white hover:text-cyan-400 transition-colors">
       Home
     </Link>
-    <Link href="/dev-forum/documentation" className="text-white hover:text-pink-400 transition-colors">
+    <Link href="/dev-forum/documentation" className="text-white hover:text-cyan-400 transition-colors">
       Documentation
     </Link>
-    <Link href="/dev-forum/pricing" className="text-white hover:text-pink-400 transition-colors">
+    <Link href="/dev-forum/pricing" className="text-white hover:text-cyan-400 transition-colors">
       Pricing
     </Link>
-    <Link href="/dev-forum/tokensphere" className="text-white hover:text-pink-400 transition-colors">
+    <Link href="/dev-forum/tokensphere" className="text-white hover:text-cyan-400 transition-colors">
       Tokensphere
     </Link>
   </>
@@ -82,7 +82,7 @@ export function ForumHeader() {
   }
 
   return (
-    <header className="border-b border-white border-opacity-20 bg-gradient-to-r from-indigo-900 to-purple-900 dark:from-gray-800 dark:to-gray-900 backdrop-filter backdrop-blur-lg bg-opacity-30">
+    <header className="border-b border-white border-opacity-20 bg-gradient-to-r from-blue-900 to-blue-900 dark:from-gray-800 dark:to-gray-900 backdrop-filter backdrop-blur-lg bg-opacity-30">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center space-x-4">
           <Link href="/" className="text-2xl font-bold text-white">
@@ -93,21 +93,21 @@ export function ForumHeader() {
           </nav>
         </div>
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" size="icon" className="text-white hover:text-pink-400">
+          <Button variant="ghost" size="icon" className="text-white hover:text-cyan-400">
             <Bell className="h-5 w-5" />
           </Button>
-          <Button onClick={toggleTheme} variant="ghost" size="icon" className="text-white hover:text-pink-400">
+          <Button onClick={toggleTheme} variant="ghost" size="icon" className="text-white hover:text-cyan-400">
             {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
           </Button>
           {!isAuthenticated ? (
             <>
               <div className="hidden md:block">
-                <Button variant="outline" asChild className="text-white border-white hover:bg-white hover:text-purple-900">
+                <Button variant="outline" asChild className="text-white border-white hover:bg-white hover:text-blue-900">
                   <Link href="/register">Register</Link>
                 </Button>
               </div>
               <div className="hidden md:block">
-                <Button variant="outline" asChild className="text-white border-white hover:bg-white hover:text-purple-900">
+                <Button variant="outline" asChild className="text-white border-white hover:bg-white hover:text-blue-900">
                   <Link href="/login">Login</Link>
                 </Button>
               </div>
@@ -173,7 +173,7 @@ export function ForumHeader() {
           )}
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden text-white hover:text-pink-400">
+              <Button variant="ghost" size="icon" className="md:hidden text-white hover:text-cyan-400">
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
@@ -185,21 +185,21 @@ export function ForumHeader() {
                 <NavLinks />
                 {!isAuthenticated && (
                   <>
-                    <Link href="/register" className="text-white hover:text-pink-400 transition-colors">
+                    <Link href="/register" className="text-white hover:text-cyan-400 transition-colors">
                       Register
                     </Link>
-                    <Link href="/login" className="text-white hover:text-pink-400 transition-colors">
+                    <Link href="/login" className="text-white hover:text-cyan-400 transition-colors">
                       Login
                     </Link>
                   </>
                 )}
                 {isAdmin && (
-                  <Link href="/dev-forum/admin" className="text-white hover:text-pink-400 transition-colors">
+                  <Link href="/dev-forum/admin" className="text-white hover:text-cyan-400 transition-colors">
                     Admin Dashboard
                   </Link>
                 )}
                 {(isAdmin || isModerator) && (
-                  <Link href="/moderator/documentation" className="text-white hover:text-pink-400 transition-colors">
+                  <Link href="/moderator/documentation" className="text-white hover:text-cyan-400 transition-colors">
                     Moderator Documentation
                   </Link>
                 )}

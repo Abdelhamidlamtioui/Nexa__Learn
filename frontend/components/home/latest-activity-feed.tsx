@@ -10,8 +10,8 @@ const activityTypes = [
   { type: "course_launch", label: "New Course", color: "bg-green-500" },
   { type: "achievement", label: "Achievement Unlocked", color: "bg-yellow-500" },
   { type: "discussion", label: "New Discussion", color: "bg-blue-500" },
-  { type: "project", label: "Project Showcase", color: "bg-purple-500" },
-  { type: "badge", label: "Badge Awarded", color: "bg-pink-500" },
+  { type: "project", label: "Project Showcase", color: "bg-blue-500" },
+  { type: "badge", label: "Badge Awarded", color: "bg-cyan-500" },
 ]
 
 const generateRandomActivity = () => {

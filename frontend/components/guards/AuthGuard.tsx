@@ -36,7 +36,7 @@ export function AuthGuard({ children, mode }: AuthGuardProps) {
   // Show loading state while checking authentication
   if (!mounted || !initialized || loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0A192F] to-[#663399] flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-[#0F172A] to-[#0284C7] flex items-center justify-center">
         <div className="text-white text-xl">Loading...</div>
       </div>
     )

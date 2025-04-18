@@ -29,7 +29,7 @@ const tickets = [
 
 export function SupportTickets() {
   return (
-    <Card className="bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-lg">
+    <Card className="bg-blue-900/20 backdrop-filter backdrop-blur-lg">
       <CardHeader>
         <CardTitle>Support Tickets</CardTitle>
       </CardHeader>

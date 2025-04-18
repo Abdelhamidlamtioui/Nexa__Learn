@@ -13,23 +13,23 @@ export function ContentModerationFeatures() {
 
   return (
     <div className="space-y-6">
-      <Card className="bg-indigo-900/20 border-indigo-500/30 text-white overflow-hidden">
-        <CardHeader className="bg-indigo-900/30 border-b border-indigo-500/30">
+      <Card className="bg-blue-900/20 border-blue-500/30 text-white overflow-hidden">
+        <CardHeader className="bg-blue-900/30 border-b border-blue-500/30">
           <CardTitle className="text-lg flex items-center">
-            <Shield className="h-5 w-5 mr-2 text-indigo-400" />
+            <Shield className="h-5 w-5 mr-2 text-blue-400" />
             Content Sensitivity Analysis
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="w-full grid grid-cols-3 bg-indigo-900/30 rounded-md mb-4">
-              <TabsTrigger value="sensitivity" className="data-[state=active]:bg-indigo-600">
+            <TabsList className="w-full grid grid-cols-3 bg-blue-900/30 rounded-md mb-4">
+              <TabsTrigger value="sensitivity" className="data-[state=active]:bg-blue-600">
                 Sensitivity
               </TabsTrigger>
-              <TabsTrigger value="terminology" className="data-[state=active]:bg-indigo-600">
+              <TabsTrigger value="terminology" className="data-[state=active]:bg-blue-600">
                 Terminology
               </TabsTrigger>
-              <TabsTrigger value="citations" className="data-[state=active]:bg-indigo-600">
+              <TabsTrigger value="citations" className="data-[state=active]:bg-blue-600">
                 Citations
               </TabsTrigger>
             </TabsList>
@@ -81,7 +81,7 @@ export function ContentModerationFeatures() {
                 />
               </div>
 
-              <Button className="w-full bg-indigo-600 hover:bg-indigo-700">Apply Terminology Recommendations</Button>
+              <Button className="w-full bg-blue-600 hover:bg-blue-700">Apply Terminology Recommendations</Button>
             </TabsContent>
 
             <TabsContent value="citations" className="space-y-4">
@@ -105,16 +105,16 @@ export function ContentModerationFeatures() {
                 />
               </div>
 
-              <Button className="w-full bg-indigo-600 hover:bg-indigo-700">Verify All Citations</Button>
+              <Button className="w-full bg-blue-600 hover:bg-blue-700">Verify All Citations</Button>
             </TabsContent>
           </Tabs>
         </CardContent>
       </Card>
 
-      <Card className="bg-indigo-900/20 border-indigo-500/30 text-white">
-        <CardHeader className="bg-indigo-900/30 border-b border-indigo-500/30">
+      <Card className="bg-blue-900/20 border-blue-500/30 text-white">
+        <CardHeader className="bg-blue-900/30 border-b border-blue-500/30">
           <CardTitle className="text-lg flex items-center">
-            <MessageSquare className="h-5 w-5 mr-2 text-indigo-400" />
+            <MessageSquare className="h-5 w-5 mr-2 text-blue-400" />
             Technical Accuracy Verification
           </CardTitle>
         </CardHeader>
@@ -140,14 +140,14 @@ export function ContentModerationFeatures() {
             />
           </div>
 
-          <Button className="w-full bg-indigo-600 hover:bg-indigo-700">Request Expert Review</Button>
+          <Button className="w-full bg-blue-600 hover:bg-blue-700">Request Expert Review</Button>
         </CardContent>
       </Card>
 
-      <Card className="bg-indigo-900/20 border-indigo-500/30 text-white">
-        <CardHeader className="bg-indigo-900/30 border-b border-indigo-500/30">
+      <Card className="bg-blue-900/20 border-blue-500/30 text-white">
+        <CardHeader className="bg-blue-900/30 border-b border-blue-500/30">
           <CardTitle className="text-lg flex items-center">
-            <AlertCircle className="h-5 w-5 mr-2 text-indigo-400" />
+            <AlertCircle className="h-5 w-5 mr-2 text-blue-400" />
             Moderation Insights
           </CardTitle>
         </CardHeader>
@@ -162,7 +162,7 @@ export function ContentModerationFeatures() {
 
           <div className="space-y-2">
             <h3 className="text-sm font-medium">Recommended Actions</h3>
-            <ul className="space-y-2 text-sm text-indigo-300">
+            <ul className="space-y-2 text-sm text-blue-300">
               <li className="flex items-start gap-2">
                 <AlertTriangle className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" />
                 <span>Update cross-references to User Permissions Overview</span>
@@ -203,10 +203,10 @@ function SensitivityItem({ label, score, issues, details }) {
           )}
         </div>
       </div>
-      <div className="h-1.5 bg-indigo-900/50 rounded-full">
+      <div className="h-1.5 bg-blue-900/50 rounded-full">
         <div className={`h-1.5 ${getScoreColor(score)} rounded-full`} style={{ width: `${score}%` }}></div>
       </div>
-      <p className="text-xs text-indigo-300">{details}</p>
+      <p className="text-xs text-blue-300">{details}</p>
     </div>
   )
 }
@@ -233,7 +233,7 @@ function TerminologyItem({ term, status, occurrences, suggestion }) {
       <div className="flex-1">
         <div className="flex justify-between">
           <span className="text-sm font-medium">{term}</span>
-          <span className="text-xs text-indigo-300">
+          <span className="text-xs text-blue-300">
             {occurrences} {occurrences === 1 ? "occurrence" : "occurrences"}
           </span>
         </div>
@@ -293,7 +293,7 @@ function TechnicalItem({ section, status, expert, details }) {
       <div className="mt-0.5">{statusDetails.icon}</div>
       <div className="flex-1">
         <div className="text-sm font-medium">{section}</div>
-        <div className="text-xs text-indigo-300">Expert: {expert}</div>
+        <div className="text-xs text-blue-300">Expert: {expert}</div>
         <div className={`text-xs ${statusDetails.className}`}>{details}</div>
       </div>
     </div>

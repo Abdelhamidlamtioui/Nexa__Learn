@@ -212,7 +212,7 @@ export function EnhancedDocRightPanel() {
     { id: "user2", initials: "MK", color: "bg-blue-500/20" },
     { id: "user3", initials: "TS", color: "bg-green-500/20" },
     { id: "user4", initials: "AL", color: "bg-yellow-500/20" },
-    { id: "user5", initials: "RB", color: "bg-purple-500/20" },
+    { id: "user5", initials: "RB", color: "bg-blue-500/20" },
   ]
 
   // Animation variants

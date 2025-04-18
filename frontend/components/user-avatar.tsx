@@ -22,7 +22,7 @@ export function UserAvatar({ username, avatarUrl, size = "md" }: UserAvatarProps
           className="h-full w-full object-cover"
         />
       ) : (
-        <AvatarFallback className="bg-gradient-to-br from-purple-500 to-pink-600 text-white font-medium">
+        <AvatarFallback className="bg-gradient-to-br from-blue-500 to-cyan-600 text-white font-medium">
           {username?.[0]?.toUpperCase() || '?'}
         </AvatarFallback>
       )}

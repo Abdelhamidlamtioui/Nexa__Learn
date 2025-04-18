@@ -27,23 +27,23 @@ export function ModerationFeatures() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div className="space-y-6">
-        <Card className="bg-indigo-900/20 border-indigo-500/30 text-white overflow-hidden">
-          <CardHeader className="bg-indigo-900/30 border-b border-indigo-500/30">
+        <Card className="bg-blue-900/20 border-blue-500/30 text-white overflow-hidden">
+          <CardHeader className="bg-blue-900/30 border-b border-blue-500/30">
             <CardTitle className="text-lg flex items-center">
-              <Shield className="h-5 w-5 mr-2 text-indigo-400" />
+              <Shield className="h-5 w-5 mr-2 text-blue-400" />
               Content Sensitivity Analyzer
             </CardTitle>
           </CardHeader>
           <CardContent className="p-0">
             <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="w-full grid grid-cols-3 bg-indigo-900/30 rounded-none border-b border-indigo-500/30">
-                <TabsTrigger value="sensitivity" className="data-[state=active]:bg-indigo-600">
+              <TabsList className="w-full grid grid-cols-3 bg-blue-900/30 rounded-none border-b border-blue-500/30">
+                <TabsTrigger value="sensitivity" className="data-[state=active]:bg-blue-600">
                   Sensitivity
                 </TabsTrigger>
-                <TabsTrigger value="terminology" className="data-[state=active]:bg-indigo-600">
+                <TabsTrigger value="terminology" className="data-[state=active]:bg-blue-600">
                   Terminology
                 </TabsTrigger>
-                <TabsTrigger value="citations" className="data-[state=active]:bg-indigo-600">
+                <TabsTrigger value="citations" className="data-[state=active]:bg-blue-600">
                   Citations
                 </TabsTrigger>
               </TabsList>
@@ -107,7 +107,7 @@ export function ModerationFeatures() {
                     <TerminologyItem term="security" status="consistent" occurrences={6} suggestion="" />
                   </div>
 
-                  <Button className="w-full bg-indigo-600 hover:bg-indigo-700">
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700">
                     Apply Terminology Recommendations
                   </Button>
                 </div>
@@ -144,17 +144,17 @@ export function ModerationFeatures() {
                     />
                   </div>
 
-                  <Button className="w-full bg-indigo-600 hover:bg-indigo-700">Verify All Citations</Button>
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700">Verify All Citations</Button>
                 </div>
               </TabsContent>
             </Tabs>
           </CardContent>
         </Card>
 
-        <Card className="bg-indigo-900/20 border-indigo-500/30 text-white">
-          <CardHeader className="bg-indigo-900/30 border-b border-indigo-500/30">
+        <Card className="bg-blue-900/20 border-blue-500/30 text-white">
+          <CardHeader className="bg-blue-900/30 border-b border-blue-500/30">
             <CardTitle className="text-lg flex items-center">
-              <BookOpen className="h-5 w-5 mr-2 text-indigo-400" />
+              <BookOpen className="h-5 w-5 mr-2 text-blue-400" />
               Content Categorization
             </CardTitle>
           </CardHeader>
@@ -162,11 +162,11 @@ export function ModerationFeatures() {
             <div className="space-y-2">
               <h3 className="text-sm font-medium">Detected Categories</h3>
               <div className="flex flex-wrap gap-2">
-                <Badge className="bg-indigo-600">Platform Guidelines</Badge>
-                <Badge className="bg-indigo-600">Security</Badge>
-                <Badge className="bg-indigo-600">User Experience</Badge>
-                <Badge className="bg-indigo-600">Accessibility</Badge>
-                <Badge className="bg-indigo-600">Best Practices</Badge>
+                <Badge className="bg-blue-600">Platform Guidelines</Badge>
+                <Badge className="bg-blue-600">Security</Badge>
+                <Badge className="bg-blue-600">User Experience</Badge>
+                <Badge className="bg-blue-600">Accessibility</Badge>
+                <Badge className="bg-blue-600">Best Practices</Badge>
               </div>
             </div>
 
@@ -175,7 +175,7 @@ export function ModerationFeatures() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-indigo-400" />
+                    <FileText className="h-4 w-4 text-blue-400" />
                     <span className="text-sm">Documentation &gt; Guidelines &gt; Platform</span>
                   </div>
                   <div className="flex items-center gap-1">
@@ -197,7 +197,7 @@ export function ModerationFeatures() {
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-indigo-400" />
+                    <FileText className="h-4 w-4 text-blue-400" />
                     <span className="text-sm">Security > Principles > Core</span>
                   </div>
                   <div className="flex items-center gap-1">
@@ -219,7 +219,7 @@ export function ModerationFeatures() {
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-indigo-400" />
+                    <FileText className="h-4 w-4 text-blue-400" />
                     <span className="text-sm">User Experience > Accessibility > Standards</span>
                   </div>
                   <div className="flex items-center gap-1">
@@ -246,10 +246,10 @@ export function ModerationFeatures() {
       </div>
 
       <div className="space-y-6">
-        <Card className="bg-indigo-900/20 border-indigo-500/30 text-white">
-          <CardHeader className="bg-indigo-900/30 border-b border-indigo-500/30">
+        <Card className="bg-blue-900/20 border-blue-500/30 text-white">
+          <CardHeader className="bg-blue-900/30 border-b border-blue-500/30">
             <CardTitle className="text-lg flex items-center">
-              <MessageSquare className="h-5 w-5 mr-2 text-indigo-400" />
+              <MessageSquare className="h-5 w-5 mr-2 text-blue-400" />
               Technical Accuracy Verification
             </CardTitle>
           </CardHeader>
@@ -282,15 +282,15 @@ export function ModerationFeatures() {
             </div>
 
             <div className="pt-2">
-              <Button className="w-full bg-indigo-600 hover:bg-indigo-700">Request Expert Review</Button>
+              <Button className="w-full bg-blue-600 hover:bg-blue-700">Request Expert Review</Button>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-indigo-900/20 border-indigo-500/30 text-white">
-          <CardHeader className="bg-indigo-900/30 border-b border-indigo-500/30">
+        <Card className="bg-blue-900/20 border-blue-500/30 text-white">
+          <CardHeader className="bg-blue-900/30 border-b border-blue-500/30">
             <CardTitle className="text-lg flex items-center">
-              <Link className="h-5 w-5 mr-2 text-indigo-400" />
+              <Link className="h-5 w-5 mr-2 text-blue-400" />
               Cross-Reference Validation
             </CardTitle>
           </CardHeader>
@@ -323,15 +323,15 @@ export function ModerationFeatures() {
             </div>
 
             <div className="pt-2">
-              <Button className="w-full bg-indigo-600 hover:bg-indigo-700">Fix All References</Button>
+              <Button className="w-full bg-blue-600 hover:bg-blue-700">Fix All References</Button>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-indigo-900/20 border-indigo-500/30 text-white">
-          <CardHeader className="bg-indigo-900/30 border-b border-indigo-500/30">
+        <Card className="bg-blue-900/20 border-blue-500/30 text-white">
+          <CardHeader className="bg-blue-900/30 border-b border-blue-500/30">
             <CardTitle className="text-lg flex items-center">
-              <AlertCircle className="h-5 w-5 mr-2 text-indigo-400" />
+              <AlertCircle className="h-5 w-5 mr-2 text-blue-400" />
               Moderation Insights
             </CardTitle>
           </CardHeader>
@@ -349,22 +349,22 @@ export function ModerationFeatures() {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between items-center">
                   <span>Initial review by Jamie Chen</span>
-                  <span className="text-indigo-300">2 days ago</span>
+                  <span className="text-blue-300">2 days ago</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span>Technical verification by Alex Morgan</span>
-                  <span className="text-indigo-300">1 day ago</span>
+                  <span className="text-blue-300">1 day ago</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span>Sensitivity check by System</span>
-                  <span className="text-indigo-300">4 hours ago</span>
+                  <span className="text-blue-300">4 hours ago</span>
                 </div>
               </div>
             </div>
 
             <div className="space-y-2">
               <h3 className="text-sm font-medium">Recommended Actions</h3>
-              <ul className="space-y-2 text-sm text-indigo-300">
+              <ul className="space-y-2 text-sm text-blue-300">
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" />
                   <span>Update cross-references to User Permissions Overview</span>
@@ -406,10 +406,10 @@ function SensitivityItem({ label, score, issues, details }) {
           )}
         </div>
       </div>
-      <div className="h-1.5 bg-indigo-900/50 rounded-full">
+      <div className="h-1.5 bg-blue-900/50 rounded-full">
         <div className={`h-1.5 ${getScoreColor(score)} rounded-full`} style={{ width: `${score}%` }}></div>
       </div>
-      <p className="text-xs text-indigo-300">{details}</p>
+      <p className="text-xs text-blue-300">{details}</p>
     </div>
   )
 }
@@ -436,7 +436,7 @@ function TerminologyItem({ term, status, occurrences, suggestion }) {
       <div className="flex-1">
         <div className="flex justify-between">
           <span className="text-sm font-medium">{term}</span>
-          <span className="text-xs text-indigo-300">
+          <span className="text-xs text-blue-300">
             {occurrences} {occurrences === 1 ? "occurrence" : "occurrences"}
           </span>
         </div>
@@ -471,13 +471,13 @@ function CitationItem({ source, status, link, details }) {
           <Button
             size="sm"
             variant="ghost"
-            className="h-6 p-0 px-1 text-indigo-300 hover:text-white hover:bg-indigo-700/30"
+            className="h-6 p-0 px-1 text-blue-300 hover:text-white hover:bg-blue-700/30"
           >
             <ExternalLink className="h-3 w-3 mr-1" />
             <span className="text-xs">View</span>
           </Button>
         </div>
-        <div className="text-xs text-indigo-300">{link}</div>
+        <div className="text-xs text-blue-300">{link}</div>
         <div className={`text-xs ${statusDetails.className}`}>{details}</div>
       </div>
     </div>
@@ -507,7 +507,7 @@ function TechnicalItem({ section, status, expert, details }) {
       <div className="mt-0.5">{statusDetails.icon}</div>
       <div className="flex-1">
         <div className="text-sm font-medium">{section}</div>
-        <div className="text-xs text-indigo-300">Expert: {expert}</div>
+        <div className="text-xs text-blue-300">Expert: {expert}</div>
         <div className={`text-xs ${statusDetails.className}`}>{details}</div>
       </div>
     </div>
@@ -536,7 +536,7 @@ function CrossReferenceItem({ document, status, references, details }) {
       <div className="flex-1">
         <div className="flex justify-between">
           <span className="text-sm font-medium">{document}</span>
-          <span className="text-xs text-indigo-300">
+          <span className="text-xs text-blue-300">
             {references} {references === 1 ? "reference" : "references"}
           </span>
         </div>

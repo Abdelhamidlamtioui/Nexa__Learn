@@ -32,7 +32,7 @@ export function OnboardingPreview() {
             <p>Join our welcoming community of learners</p>
           </div>
           <div className="flex items-center space-x-2">
-            <Award className="w-6 h-6 text-purple-400" />
+            <Award className="w-6 h-6 text-blue-400" />
             <p>
               Earn your first badge: <Badge variant="secondary">Eager Learner</Badge>
             </p>

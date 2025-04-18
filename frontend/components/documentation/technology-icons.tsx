@@ -60,15 +60,15 @@ export const getTechnologyColor = (type?: string) => {
     case "GETTING_STARTED":
       return "bg-blue-500/20 text-blue-500"
     case "PROGRAMMING_LANGUAGE":
-      return "bg-purple-500/20 text-purple-500"
+      return "bg-blue-500/20 text-blue-500"
     case "FRAMEWORK":
       return "bg-green-500/20 text-green-500"
     case "LIBRARY":
       return "bg-yellow-500/20 text-yellow-500"
     case "FRONTEND":
-      return "bg-pink-500/20 text-pink-500"
+      return "bg-cyan-500/20 text-cyan-500"
     case "BACKEND":
-      return "bg-indigo-500/20 text-indigo-500"
+      return "bg-blue-500/20 text-blue-500"
     case "RESOURCES":
       return "bg-violet-500/20 text-violet-500"
     case "ADVANCED":

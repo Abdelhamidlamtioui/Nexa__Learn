@@ -39,7 +39,7 @@ export function UserManagement() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0A192F] to-[#663399] text-white">
+    <div className="min-h-screen bg-gradient-to-br from-[#0F172A] to-[#0284C7] text-white">
       <ForumHeader />
       <Toaster />
       <div className="flex h-[calc(100vh-4rem)]">
@@ -49,7 +49,7 @@ export function UserManagement() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <h1 className="text-2xl md:text-3xl font-bold">User Management</h1>
               <Button 
-                className="w-full md:w-auto bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                className="w-full md:w-auto bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700"
                 onClick={() => setIsAddUserModalOpen(true)}
               >
                 <PlusCircle className="mr-2 h-4 w-4" />

@@ -15,7 +15,7 @@ export function ModeratorHeader({ activeSection, setActiveSection }: ModeratorHe
   const [notifications, setNotifications] = useState(3)
 
   return (
-    <header className="bg-[#0F172A] bg-opacity-80 backdrop-filter backdrop-blur-lg border-b border-indigo-500/20">
+    <header className="bg-[#0F172A] bg-opacity-80 backdrop-filter backdrop-blur-lg border-b border-blue-500/20">
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold">Moderator Documentation Portal</h1>
