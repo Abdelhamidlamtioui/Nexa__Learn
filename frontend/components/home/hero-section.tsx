@@ -41,20 +41,20 @@ export function HeroSection() {
         >
           Your Journey to Tech Excellence Starts Here
         </motion.p>
-        <motion.div
-          className="bg-white bg-opacity-10 rounded-lg p-4 mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          <p className="text-lg">
-            <span className="font-bold">{stats.activeLearners.toLocaleString()}</span> active learners
-            <span className="mx-2">•</span>
-            Recent achievement: <span className="font-bold">{stats.recentAchievement}</span>
-            <span className="mx-2">•</span>
-            Hot topic: <span className="font-bold">{stats.hotTopic}</span>
-          </p>
-        </motion.div>
+        {/*<motion.div*/}
+        {/*  className="bg-white bg-opacity-10 rounded-lg p-4 mb-8"*/}
+        {/*  initial={{ opacity: 0, y: 20 }}*/}
+        {/*  animate={{ opacity: 1, y: 0 }}*/}
+        {/*  transition={{ duration: 0.5, delay: 0.4 }}*/}
+        {/*>*/}
+        {/*  <p className="text-lg">*/}
+        {/*    <span className="font-bold">{stats.activeLearners.toLocaleString()}</span> active learners*/}
+        {/*    <span className="mx-2">•</span>*/}
+        {/*    Recent achievement: <span className="font-bold">{stats.recentAchievement}</span>*/}
+        {/*    <span className="mx-2">•</span>*/}
+        {/*    Hot topic: <span className="font-bold">{stats.hotTopic}</span>*/}
+        {/*  </p>*/}
+        {/*</motion.div>*/}
         <div className="space-x-4">
           <Button size="lg" className="bg-cyan-600 hover:bg-cyan-700">
             Start Learning

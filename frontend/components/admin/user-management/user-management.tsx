@@ -39,7 +39,7 @@ export function UserManagement() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0F172A] to-[#0284C7] text-white">
+    <div className="min-h-screen bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 text-white">
       <ForumHeader />
       <Toaster />
       <div className="flex h-[calc(100vh-4rem)]">

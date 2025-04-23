@@ -9,7 +9,7 @@ const notifications = [
 
 export function PlatformNotifications() {
   return (
-    <Card className="bg-blue-900/20 backdrop-filter backdrop-blur-lg">
+    <Card className="bg-white/10 backdrop-filter backdrop-blur-md border border-white/10 shadow-xl">
       <CardHeader>
         <CardTitle>System Notifications</CardTitle>
       </CardHeader>

@@ -36,24 +36,24 @@ const resources = [
 export function ResourcesSection() {
   return (
     <section>
-      <h2 className="text-3xl font-bold text-white mb-6">Resources</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {resources.map((resource, index) => (
-          <Card key={index} className="bg-white bg-opacity-10 text-white">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <resource.icon className="w-6 h-6" />
-                <span>{resource.title}</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Badge variant="secondary">{resource.type}</Badge>
-              <p className="mt-2">{resource.engagement}</p>
-              <p className="font-bold mt-2">Reward: {resource.reward}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {/*<h2 className="text-3xl font-bold text-white mb-6">Resources</h2>*/}
+      {/*<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 transform transition-all hover:scale-[0.99]">*/}
+      {/*  {resources.map((resource, index) => (*/}
+      {/*    <Card key={index} className="bg-white bg-opacity-10 text-white">*/}
+      {/*      <CardHeader>*/}
+      {/*        <CardTitle className="flex items-center space-x-2">*/}
+      {/*          <resource.icon className="w-6 h-6" />*/}
+      {/*          <span>{resource.title}</span>*/}
+      {/*        </CardTitle>*/}
+      {/*      </CardHeader>*/}
+      {/*      <CardContent>*/}
+      {/*        <Badge variant="secondary">{resource.type}</Badge>*/}
+      {/*        <p className="mt-2">{resource.engagement}</p>*/}
+      {/*        <p className="font-bold mt-2">Reward: {resource.reward}</p>*/}
+      {/*      </CardContent>*/}
+      {/*    </Card>*/}
+      {/*  ))}*/}
+      {/*</div>*/}
     </section>
   )
 }

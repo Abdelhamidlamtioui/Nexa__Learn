@@ -44,37 +44,37 @@ const learningPaths = [
 export function FeaturedLearningPaths() {
   return (
     <section>
-      <h2 className="text-3xl font-bold text-white mb-6">Featured Learning Paths</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {learningPaths.map((path, index) => (
-          <Card key={index} className="bg-white bg-opacity-10 text-white">
-            <CardHeader>
-              <CardTitle>{path.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <Badge variant="secondary">{path.difficulty}</Badge>
-                  <span>{path.estimatedTime}</span>
-                </div>
-                <p>{path.enrolledStudents.toLocaleString()} students enrolled</p>
-                <div>
-                  <Progress value={path.completionRate} className="h-2" />
-                  <p className="text-sm text-right">{path.completionRate}% completion rate</p>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {path.techStack.map((tech, i) => (
-                    <Badge key={i} variant="outline">
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
-                <p className="font-bold">Reward: {path.xpReward} XP</p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {/*<h2 className="text-3xl font-bold text-white mb-6">Featured Learning Paths</h2>*/}
+      {/*<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 transform transition-all hover:scale-[0.99]">*/}
+      {/*  {learningPaths.map((path, index) => (*/}
+      {/*    <Card key={index} className="bg-white bg-opacity-10 text-white">*/}
+      {/*      <CardHeader>*/}
+      {/*        <CardTitle>{path.title}</CardTitle>*/}
+      {/*      </CardHeader>*/}
+      {/*      <CardContent>*/}
+      {/*        <div className="space-y-2">*/}
+      {/*          <div className="flex justify-between">*/}
+      {/*            <Badge variant="secondary">{path.difficulty}</Badge>*/}
+      {/*            <span>{path.estimatedTime}</span>*/}
+      {/*          </div>*/}
+      {/*          <p>{path.enrolledStudents.toLocaleString()} students enrolled</p>*/}
+      {/*          <div>*/}
+      {/*            <Progress value={path.completionRate} className="h-2" />*/}
+      {/*            <p className="text-sm text-right">{path.completionRate}% completion rate</p>*/}
+      {/*          </div>*/}
+      {/*          <div className="flex flex-wrap gap-2">*/}
+      {/*            {path.techStack.map((tech, i) => (*/}
+      {/*              <Badge key={i} variant="outline">*/}
+      {/*                {tech}*/}
+      {/*              </Badge>*/}
+      {/*            ))}*/}
+      {/*          </div>*/}
+      {/*          <p className="font-bold">Reward: {path.xpReward} XP</p>*/}
+      {/*        </div>*/}
+      {/*      </CardContent>*/}
+      {/*    </Card>*/}
+      {/*  ))}*/}
+      {/*</div>*/}
     </section>
   )
 }

@@ -36,28 +36,28 @@ const achievements = [
 export function AchievementShowcase() {
   return (
     <section>
-      <h2 className="text-3xl font-bold text-white mb-6">Achievement Showcase</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {achievements.map((achievement, index) => (
-          <Card key={index} className="bg-white bg-opacity-10 text-white">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <achievement.icon className="w-6 h-6" />
-                <span>{achievement.title}</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Badge variant="secondary" className="mb-2">
-                {achievement.type}
-              </Badge>
-              <p className="text-sm mb-2">{achievement.description}</p>
-              {achievement.rarity && <p className="text-yellow-400">Rarity: {achievement.rarity}</p>}
-              {achievement.xp && <p className="text-green-400">{achievement.xp}</p>}
-              {achievement.progress && <p>{achievement.progress}</p>}
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {/*<h2 className="text-3xl font-bold text-white mb-6">Achievement Showcase</h2>*/}
+      {/*<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 transform transition-all hover:scale-[0.99]">*/}
+      {/*  {achievements.map((achievement, index) => (*/}
+      {/*    <Card key={index} className="bg-white bg-opacity-10 text-white">*/}
+      {/*      <CardHeader>*/}
+      {/*        <CardTitle className="flex items-center space-x-2">*/}
+      {/*          <achievement.icon className="w-6 h-6" />*/}
+      {/*          <span>{achievement.title}</span>*/}
+      {/*        </CardTitle>*/}
+      {/*      </CardHeader>*/}
+      {/*      <CardContent>*/}
+      {/*        <Badge variant="secondary" className="mb-2">*/}
+      {/*          {achievement.type}*/}
+      {/*        </Badge>*/}
+      {/*        <p className="text-sm mb-2">{achievement.description}</p>*/}
+      {/*        {achievement.rarity && <p className="text-yellow-400">Rarity: {achievement.rarity}</p>}*/}
+      {/*        {achievement.xp && <p className="text-green-400">{achievement.xp}</p>}*/}
+      {/*        {achievement.progress && <p>{achievement.progress}</p>}*/}
+      {/*      </CardContent>*/}
+      {/*    </Card>*/}
+      {/*  ))}*/}
+      {/*</div>*/}
     </section>
   )
 }

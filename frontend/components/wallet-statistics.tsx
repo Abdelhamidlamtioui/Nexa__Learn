@@ -19,33 +19,33 @@ const recentTransactions = [
 export function WalletStatistics() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>Earning Velocity</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="h-[200px] flex items-center justify-center">
-            Chart placeholder - Recharts not supported
-          </div>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Recent Transactions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-2">
-            {recentTransactions.map((transaction) => (
-              <li key={transaction.id} className="flex justify-between items-center">
-                <span>
-                  {transaction.type} {transaction.amount} {transaction.currency}
-                </span>
-                <span className="text-sm text-gray-500">{transaction.date}</span>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
+      {/*<Card>*/}
+      {/*  <CardHeader>*/}
+      {/*    <CardTitle>Earning Velocity</CardTitle>*/}
+      {/*  </CardHeader>*/}
+      {/*  <CardContent>*/}
+      {/*    <div className="h-[200px] flex items-center justify-center">*/}
+      {/*      Chart placeholder - Recharts not supported*/}
+      {/*    </div>*/}
+      {/*  </CardContent>*/}
+      {/*</Card>*/}
+      {/*<Card>*/}
+      {/*  <CardHeader>*/}
+      {/*    <CardTitle>Recent Transactions</CardTitle>*/}
+      {/*  </CardHeader>*/}
+      {/*  <CardContent>*/}
+      {/*    <ul className="space-y-2">*/}
+      {/*      {recentTransactions.map((transaction) => (*/}
+      {/*        <li key={transaction.id} className="flex justify-between items-center">*/}
+      {/*          <span>*/}
+      {/*            {transaction.type} {transaction.amount} {transaction.currency}*/}
+      {/*          </span>*/}
+      {/*          <span className="text-sm text-gray-500">{transaction.date}</span>*/}
+      {/*        </li>*/}
+      {/*      ))}*/}
+      {/*    </ul>*/}
+      {/*  </CardContent>*/}
+      {/*</Card>*/}
     </div>
   )
 }

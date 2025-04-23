@@ -79,7 +79,7 @@ export default function AdminDashboardPage() {
             </TabsList>
             
             <TabsContent value="overview">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
                 <Card className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg border-none">
                   <CardHeader>
                     <CardTitle>Users</CardTitle>

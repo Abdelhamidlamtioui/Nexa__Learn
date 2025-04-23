@@ -15,11 +15,11 @@ export function ModeratorDocumentationPage() {
   const [activeSection, setActiveSection] = useState("content-moderation")
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0F172A] to-[#0284C7] text-white">
+    <div className="min-h-screen bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 text-white">
       <ForumHeader />
       <div className="flex">
         <ModeratorSidebar activeSection={activeSection} setActiveSection={setActiveSection} />
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-8 overflow-hidden">
           <ModeratorHeader />
           <div className="mt-6">
             {activeSection === "content-moderation" && <ContentModerationGuidelines />}

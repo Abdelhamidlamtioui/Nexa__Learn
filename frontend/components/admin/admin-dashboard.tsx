@@ -20,14 +20,24 @@ export function AdminDashboard() {
 
   return (
     <AdminGuard>
-      <div className="min-h-screen bg-gradient-to-br from-[#0F172A] to-[#0284C7] text-white">
+      <div className="min-h-screen bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 text-white">
         <ForumHeader />
         <div className="flex">
           <AdminSidebar open={sidebarOpen} setOpen={setSidebarOpen} />
-          <main className="flex-1 p-6">
+          <main className="flex-1 p-8 overflow-hidden">
             <AdminTopNav onMenuButtonClick={() => setSidebarOpen(true)} />
             <div className="mt-6">
-              <h1 className="text-3xl font-bold mb-6">Welcome, {user?.username}</h1>
+              <div className="flex items-center mb-8 bg-white/5 p-6 rounded-lg backdrop-blur-sm border border-white/10 shadow-lg">
+  <div className="mr-4">
+    <div className="h-12 w-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-xl font-bold">
+      {user?.username?.[0]?.toUpperCase()}
+    </div>
+  </div>
+  <div>
+    <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-200">Welcome, {user?.username}</h1>
+    <p className="text-slate-300 text-sm mt-1">Administrator Dashboard</p>
+  </div>
+</div>
               <StatisticsCards />
               <ChartRow />
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">

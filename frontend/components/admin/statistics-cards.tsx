@@ -3,8 +3,8 @@ import { Users, BookOpen, Coins, Activity } from "lucide-react"
 
 export function StatisticsCards() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <Card className="bg-blue-900/20 backdrop-filter backdrop-blur-lg">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 transform transition-all hover:scale-[0.99]">
+      <Card className="bg-white/10 backdrop-filter backdrop-blur-md border border-white/10 shadow-xl">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Total Users</CardTitle>
           <Users className="h-4 w-4 text-gray-400" />
@@ -14,7 +14,7 @@ export function StatisticsCards() {
         </CardContent>
       </Card>
 
-      <Card className="bg-blue-900/20 backdrop-filter backdrop-blur-lg">
+      <Card className="bg-white/10 backdrop-filter backdrop-blur-md border border-white/10 shadow-xl">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Active Courses</CardTitle>
           <BookOpen className="h-4 w-4 text-gray-400" />
@@ -24,7 +24,7 @@ export function StatisticsCards() {
         </CardContent>
       </Card>
 
-      <Card className="bg-blue-900/20 backdrop-filter backdrop-blur-lg">
+      <Card className="bg-white/10 backdrop-filter backdrop-blur-md border border-white/10 shadow-xl">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Transactions</CardTitle>
           <Coins className="h-4 w-4 text-gray-400" />
@@ -34,7 +34,7 @@ export function StatisticsCards() {
         </CardContent>
       </Card>
 
-      <Card className="bg-blue-900/20 backdrop-filter backdrop-blur-lg">
+      <Card className="bg-white/10 backdrop-filter backdrop-blur-md border border-white/10 shadow-xl">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Active Now</CardTitle>
           <Activity className="h-4 w-4 text-gray-400" />

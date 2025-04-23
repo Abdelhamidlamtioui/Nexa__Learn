@@ -179,56 +179,56 @@ export function UserProfile() {
             </Card>
 
             <div className="grid gap-6 md:grid-cols-2">
-                <Card className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg">
-                    <CardHeader>
-                        <CardTitle className="text-white">Activity</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <dl className="grid grid-cols-2 gap-4 text-center">
-                            <div>
-                                <dt className="text-sm font-medium text-gray-300">Posts</dt>
-                                <dd className="text-2xl font-bold text-white">{userData.postsCount}</dd>
-                            </div>
-                            <div>
-                                <dt className="text-sm font-medium text-gray-300">Comments</dt>
-                                <dd className="text-2xl font-bold text-white">{userData.commentsCount}</dd>
-                            </div>
-                        </dl>
-                    </CardContent>
-                </Card>
+                {/*<Card className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg">*/}
+                {/*    <CardHeader>*/}
+                {/*        <CardTitle className="text-white">Activity</CardTitle>*/}
+                {/*    </CardHeader>*/}
+                {/*    <CardContent>*/}
+                {/*        <dl className="grid grid-cols-2 gap-4 text-center">*/}
+                {/*            <div>*/}
+                {/*                <dt className="text-sm font-medium text-gray-300">Posts</dt>*/}
+                {/*                <dd className="text-2xl font-bold text-white">{userData.postsCount}</dd>*/}
+                {/*            </div>*/}
+                {/*            <div>*/}
+                {/*                <dt className="text-sm font-medium text-gray-300">Comments</dt>*/}
+                {/*                <dd className="text-2xl font-bold text-white">{userData.commentsCount}</dd>*/}
+                {/*            </div>*/}
+                {/*        </dl>*/}
+                {/*    </CardContent>*/}
+                {/*</Card>*/}
 
-                <Card className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg">
-                    <CardHeader>
-                        <CardTitle className="text-white">Recent Activity</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-gray-300">Coming soon...</p>
-                    </CardContent>
-                </Card>
+                {/*<Card className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg">*/}
+                {/*    <CardHeader>*/}
+                {/*        <CardTitle className="text-white">Recent Activity</CardTitle>*/}
+                {/*    </CardHeader>*/}
+                {/*    <CardContent>*/}
+                {/*        <p className="text-gray-300">Coming soon...</p>*/}
+                {/*    </CardContent>*/}
+                {/*</Card>*/}
             </div>
 
-            <div className="mt-8">
-                <h2 className="text-2xl font-bold text-white mb-4">Wallet</h2>
-                <div className="space-y-6">
-                    <CurrencyOverview totalBalance={1512} />
-                    <CurrencyBreakdown
-                        currencies={[
-                            { name: "Tech Tokens", symbol: "TT", balance: 1512, icon: Coins, color: "from-[#4C9AFF] to-[#0052CC]" },
-                            { name: "Innovation Coins", symbol: "IC", balance: 250, icon: Zap, color: "from-[#FFB020] to-[#F08C00]" },
-                            {
-                                name: "Dev Credits",
-                                symbol: "DC",
-                                balance: 500,
-                                icon: CreditCard,
-                                color: "from-[#6B46C1] to-[#553C9A]",
-                            },
-                            { name: "Community Stars", symbol: "CS", balance: 100, icon: Star, color: "from-[#276749] to-[#1B4332]" },
-                        ]}
-                    />
-                    <QuickActions />
-                    <WalletStatistics />
-                </div>
-            </div>
+            {/*<div className="mt-8">*/}
+            {/*    <h2 className="text-2xl font-bold text-white mb-4">Wallet</h2>*/}
+            {/*    <div className="space-y-6">*/}
+            {/*        <CurrencyOverview totalBalance={1512} />*/}
+            {/*        <CurrencyBreakdown*/}
+            {/*            currencies={[*/}
+            {/*                { name: "Tech Tokens", symbol: "TT", balance: 1512, icon: Coins, color: "from-[#4C9AFF] to-[#0052CC]" },*/}
+            {/*                { name: "Innovation Coins", symbol: "IC", balance: 250, icon: Zap, color: "from-[#FFB020] to-[#F08C00]" },*/}
+            {/*                {*/}
+            {/*                    name: "Dev Credits",*/}
+            {/*                    symbol: "DC",*/}
+            {/*                    balance: 500,*/}
+            {/*                    icon: CreditCard,*/}
+            {/*                    color: "from-[#6B46C1] to-[#553C9A]",*/}
+            {/*                },*/}
+            {/*                { name: "Community Stars", symbol: "CS", balance: 100, icon: Star, color: "from-[#276749] to-[#1B4332]" },*/}
+            {/*            ]}*/}
+            {/*        />*/}
+            {/*        <QuickActions />*/}
+            {/*        <WalletStatistics />*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </div>
     );
 }

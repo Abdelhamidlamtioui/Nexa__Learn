@@ -75,36 +75,36 @@ export function TopContributors() {
 
   return (
     <section className="overflow-hidden">
-      <h2 className="text-3xl font-bold text-white mb-6">Top Contributors</h2>
-      <div ref={scrollRef} className="flex space-x-4 overflow-x-hidden">
-        {contributors.map((contributor, index) => (
-          <Card key={index} className="bg-white bg-opacity-10 text-white flex-shrink-0 w-64">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-4 mb-4">
-                <Avatar>
-                  <AvatarImage src={contributor.avatar} />
-                  <AvatarFallback>{contributor.username[0].toUpperCase()}</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="font-bold">{contributor.username}</p>
-                  <p className="text-sm">Level {contributor.level}</p>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="flex flex-wrap gap-2">
-                  {contributor.achievements.map((achievement, i) => (
-                    <Badge key={i} variant="secondary">
-                      {achievement}
-                    </Badge>
-                  ))}
-                </div>
-                <p>{contributor.techTokens.toLocaleString()} TT</p>
-                <p className="text-sm">{contributor.contribution}</p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {/*<h2 className="text-3xl font-bold text-white mb-6">Top Contributors</h2>*/}
+      {/*<div ref={scrollRef} className="flex space-x-4 overflow-x-hidden">*/}
+      {/*  {contributors.map((contributor, index) => (*/}
+      {/*    <Card key={index} className="bg-white bg-opacity-10 text-white flex-shrink-0 w-64">*/}
+      {/*      <CardContent className="p-4">*/}
+      {/*        <div className="flex items-center space-x-4 mb-4">*/}
+      {/*          <Avatar>*/}
+      {/*            <AvatarImage src={contributor.avatar} />*/}
+      {/*            <AvatarFallback>{contributor.username[0].toUpperCase()}</AvatarFallback>*/}
+      {/*          </Avatar>*/}
+      {/*          <div>*/}
+      {/*            <p className="font-bold">{contributor.username}</p>*/}
+      {/*            <p className="text-sm">Level {contributor.level}</p>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*        <div className="space-y-2">*/}
+      {/*          <div className="flex flex-wrap gap-2">*/}
+      {/*            {contributor.achievements.map((achievement, i) => (*/}
+      {/*              <Badge key={i} variant="secondary">*/}
+      {/*                {achievement}*/}
+      {/*              </Badge>*/}
+      {/*            ))}*/}
+      {/*          </div>*/}
+      {/*          <p>{contributor.techTokens.toLocaleString()} TT</p>*/}
+      {/*          <p className="text-sm">{contributor.contribution}</p>*/}
+      {/*        </div>*/}
+      {/*      </CardContent>*/}
+      {/*    </Card>*/}
+      {/*  ))}*/}
+      {/*</div>*/}
     </section>
   )
 }
