@@ -925,58 +925,6 @@ api.interceptors.request.use(
   }
 );
 
-const blogService = {
-  // Get all blogs with pagination
-  getAllBlogs: (page = 0, size = 10, sortBy = "createdAt", sortDir = "desc") =>
-      api.get(`/blogs?page=${page}&size=${size}&sort=${sortBy},${sortDir}`,
-          { headers: getAuthHeader() }),
-
-  // Get a specific blog by ID
-  getBlogById: (id) =>
-      api.get(`/blogs/${id}`, { headers: getAuthHeader() }),
-
-  // Create a new blog
-  createBlog: (blogData) =>
-      api.post('/blogs', blogData, { headers: getAuthHeader() }),
-
-  // Update an existing blog
-  updateBlog: (id, blogData) =>
-      api.put(`/blogs/${id}`, blogData, { headers: getAuthHeader() }),
-
-  // Delete a blog
-  deleteBlog: (id) =>
-      api.delete(`/blogs/${id}`, { headers: getAuthHeader() }),
-
-  // Publish a blog
-  publishBlog: (id) =>
-      api.post(`/blogs/${id}/publish`, {}, { headers: getAuthHeader() }),
-
-  // Toggle like on a blog
-  toggleLike: (blogId) =>
-      api.post(`/blogs/${blogId}/toggle-like`, {}, { headers: getAuthHeader() }),
-
-  // Get published blogs
-  getPublishedBlogs: (page = 0, size = 10) =>
-      api.get(`/blogs/published?page=${page}&size=${size}`, { headers: getAuthHeader() }),
-
-  // Get blogs by author
-  getBlogsByAuthor: (authorId, page = 0, size = 10) =>
-      api.get(`/blogs/author/${authorId}?page=${page}&size=${size}`, { headers: getAuthHeader() }),
-
-  // Get blogs by tag
-  getBlogsByTag: (tag, page = 0, size = 10) =>
-      api.get(`/blogs/tag/${tag}?page=${page}&size=${size}`, { headers: getAuthHeader() }),
-
-  // Search blogs
-  searchBlogs: (query, page = 0, size = 10) =>
-      api.get(`/blogs/search?query=${query}&page=${page}&size=${size}`, { headers: getAuthHeader() }),
-
-  // Get popular blogs
-  getPopularBlogs: (page = 0, size = 10) =>
-      api.get(`/blogs/popular?page=${page}&size=${size}`, { headers: getAuthHeader() })
-};
-
-
 // Add TypeScript declarations for window properties
 declare global {
   interface Window {
@@ -995,5 +943,5 @@ declare module 'axios' {
   }
 }
 
-export { authService, userService, blogService , documentationService, checkTokens }
+export { authService, userService , documentationService, checkTokens }
 export default api
