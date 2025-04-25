@@ -22,6 +22,9 @@ const NavLinks = () => (
     <Link href="/dev-forum/documentation" className="text-white hover:text-cyan-400 transition-colors">
       Documentation
     </Link>
+    <Link href="/dev-forum/blog" className="text-white hover:text-cyan-400 transition-colors">
+      Blog
+    </Link>
     <Link href="/dev-forum/pricing" className="text-white hover:text-cyan-400 transition-colors">
       Pricing
     </Link>
