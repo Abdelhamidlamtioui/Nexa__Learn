@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.doctech.blog.model.BlogCategory;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -33,6 +34,9 @@ public class BlogDTO {
     private Set<String> tags = new HashSet<>();
 
     private Integer likes;
+
+    @Builder.Default
+    private BlogCategory category = BlogCategory.GENERAL;
 
     @PositiveOrZero(message = "Points cost must be zero or positive")
     private Integer pointsCost;

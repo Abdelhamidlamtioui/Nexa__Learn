@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 020-add-category-column-to-blogs
+      author: doctech
+      changes:
+        - addColumn:
+            tableName: blogs
+            columns:
+              - column:
+                  name: category
+                  type: varchar(50)
+                  defaultValue: 'GENERAL'
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 020-update-existing-blogs-category
+      author: doctech
+      changes:
+        - update:
+            tableName: blogs
+            columns:
+              - column:
+                  name: category
+                  value: 'GENERAL'
+            where: category IS NULL
+
+  - changeSet:
+      id: 020-create-category-index
+      author: doctech
+      changes:
+        - createIndex:
+            tableName: blogs
+            indexName: idx_blog_category
+            columns:
+              - column:
+                  name: category

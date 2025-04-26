@@ -53,16 +53,16 @@ const initialBlogData = {
 
 // Category to color mapping
 const categoryColors = {
-    "Frontend": "bg-blue-500/20 text-blue-500",
-    "Backend": "bg-green-500/20 text-green-500",
-    "DevOps": "bg-orange-500/20 text-orange-500",
-    "Mobile": "bg-pink-500/20 text-pink-500",
-    "AI/ML": "bg-cyan-500/20 text-cyan-500",
-    "Database": "bg-yellow-500/20 text-yellow-500",
-    "Security": "bg-red-500/20 text-red-500",
-    "UI/UX": "bg-indigo-500/20 text-indigo-500",
-    "Career": "bg-purple-500/20 text-purple-500",
-    "Tools": "bg-gray-500/20 text-gray-500"
+    "GENERAL": "bg-gray-500/20 text-gray-500",
+    "TECHNOLOGY": "bg-blue-500/20 text-blue-500",
+    "PROGRAMMING": "bg-green-500/20 text-green-500",
+    "DESIGN": "bg-purple-500/20 text-purple-500",
+    "CAREER": "bg-orange-500/20 text-orange-500",
+    "TUTORIAL": "bg-pink-500/20 text-pink-500",
+    "REVIEW": "bg-cyan-500/20 text-cyan-500",
+    "NEWS": "bg-indigo-500/20 text-indigo-500",
+    "PROJECT_SHOWCASE": "bg-yellow-500/20 text-yellow-500",
+    "COMMUNITY": "bg-red-500/20 text-red-500"
 };
 
 export function BlogEditor({ blogId = null }) {
@@ -81,8 +81,8 @@ export function BlogEditor({ blogId = null }) {
 
     // Categories options
     const categories = [
-        "Frontend", "Backend", "DevOps", "Mobile", "AI/ML",
-        "Database", "Security", "UI/UX", "Career", "Tools"
+        "GENERAL", "TECHNOLOGY", "PROGRAMMING", "DESIGN", "CAREER",
+        "TUTORIAL", "REVIEW", "NEWS", "PROJECT_SHOWCASE", "COMMUNITY"
     ];
 
     // Fetch blog data if editing
@@ -251,7 +251,7 @@ export function BlogEditor({ blogId = null }) {
     };
 
     // Handle form submission
-    const handleSubmit = async (publishMode) => {
+    const handleSubmit = async (publishMode:any) => {
         if (!blogData.title || !blogData.content) {
             toast({
                 title: "Validation Error",

@@ -4,11 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
     Heart,
-    MessageCircle,
     Eye,
     Bookmark,
     Share2,
-    ThumbsUp,
     Calendar,
     Clock,
     Tag,
@@ -25,14 +23,16 @@ import { useAuthStore } from "@/stores/useAuthStore";
 
 // Category to color mapping
 const categoryColors = {
-    "Frontend": "bg-blue-500/20 text-blue-500",
-    "Backend": "bg-green-500/20 text-green-500",
-    "CSS": "bg-purple-500/20 text-purple-500",
-    "DevOps": "bg-orange-500/20 text-orange-500",
-    "Mobile": "bg-pink-500/20 text-pink-500",
-    "AI/ML": "bg-cyan-500/20 text-cyan-500",
-    "UI/UX": "bg-indigo-500/20 text-indigo-500",
-    "Database": "bg-yellow-500/20 text-yellow-500"
+    "GENERAL": "bg-gray-500/20 text-gray-500",
+    "TECHNOLOGY": "bg-blue-500/20 text-blue-500",
+    "PROGRAMMING": "bg-green-500/20 text-green-500",
+    "DESIGN": "bg-purple-500/20 text-purple-500",
+    "CAREER": "bg-orange-500/20 text-orange-500",
+    "TUTORIAL": "bg-pink-500/20 text-pink-500",
+    "REVIEW": "bg-cyan-500/20 text-cyan-500",
+    "NEWS": "bg-indigo-500/20 text-indigo-500",
+    "PROJECT_SHOWCASE": "bg-yellow-500/20 text-yellow-500",
+    "COMMUNITY": "bg-red-500/20 text-red-500"
 };
 
 // Status to color mapping
@@ -50,58 +50,7 @@ const formatDate = (dateString) => {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 };
 
-// Comment component
-const Comment = ({ comment }) => (
-    <div className="mb-6">
-        <div className="flex items-start gap-3">
-            <Avatar className="h-8 w-8">
-                <AvatarImage src={comment.author.avatar} />
-                <AvatarFallback className="bg-gradient-to-br from-blue-500 to-cyan-600 text-white">
-                    {comment.author.username[0].toUpperCase()}
-                </AvatarFallback>
-            </Avatar>
-            <div className="flex-1">
-                <div className="flex items-center gap-2">
-                    <span className="font-medium">{comment.author.username}</span>
-                    <span className="text-gray-400 text-xs">{formatDate(comment.date)}</span>
-                </div>
-                <p className="text-gray-300 mt-1">{comment.content}</p>
-                <div className="flex items-center gap-4 mt-2">
-                    <button className="text-gray-400 hover:text-cyan-400 text-xs flex items-center gap-1">
-                        <ThumbsUp className="h-3 w-3" /> {comment.likes} Likes
-                    </button>
-                    <button className="text-gray-400 hover:text-cyan-400 text-xs flex items-center gap-1">
-                        Reply
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-);
-
-// Sample comments - This would be replaced with API data in a production environment
-const sampleComments = [
-    {
-        id: "c1",
-        author: {
-            username: "jsdev123",
-            avatar: "/avatars/02.png"
-        },
-        content: "Great article! The explanation is particularly helpful. I've been struggling with that concept.",
-        date: "2023-12-16T10:30:00Z",
-        likes: 8
-    },
-    {
-        id: "c2",
-        author: {
-            username: "webcodeguru",
-            avatar: ""
-        },
-        content: "Have you considered adding more examples? Those are often misunderstood.",
-        date: "2023-12-16T14:45:00Z",
-        likes: 5
-    }
-];
+// No comment component needed
 
 // Sample related posts - Would be replaced with API data in production
 const sampleRelatedPosts = [
@@ -135,8 +84,7 @@ export function BlogPost({ blog }) {
     const [liked, setLiked] = useState(blog?.hasLiked || false);
     const [likesCount, setLikesCount] = useState(blog?.likes || 0);
     const [bookmarked, setBookmarked] = useState(false);
-    const [commentText, setCommentText] = useState("");
-    const [isSubmitting, setIsSubmitting] = useState(false);
+
 
     // Update liked state when blog changes
     useEffect(() => {
@@ -173,36 +121,7 @@ export function BlogPost({ blog }) {
         }
     };
 
-    const handleSubmitComment = () => {
-        if (!isAuthenticated) {
-            toast({
-                title: "Authentication Required",
-                description: "Please log in to comment",
-                variant: "destructive",
-            });
-            return;
-        }
 
-        if (!commentText.trim()) {
-            toast({
-                title: "Empty Comment",
-                description: "Please enter a comment",
-                variant: "destructive",
-            });
-            return;
-        }
-
-        setIsSubmitting(true);
-        // This would be replaced with an actual API call
-        setTimeout(() => {
-            toast({
-                title: "Comment Posted",
-                description: "Your comment has been posted successfully",
-            });
-            setCommentText("");
-            setIsSubmitting(false);
-        }, 1000);
-    };
 
     // Parse HTML content (in a real app, use a proper HTML parser or markdown)
     const createMarkup = (html) => {
@@ -315,14 +234,7 @@ export function BlogPost({ blog }) {
                                     <span>{likesCount} likes</span>
                                 </Button>
 
-                                <Button
-                                    variant="ghost"
-                                    className="flex items-center gap-2 text-white"
-                                    onClick={() => document.getElementById('comments-section').scrollIntoView({ behavior: 'smooth' })}
-                                >
-                                    <MessageCircle className="h-5 w-5" />
-                                    <span>Comments</span>
-                                </Button>
+
                             </div>
 
                             <div className="flex items-center gap-2">
@@ -359,39 +271,6 @@ export function BlogPost({ blog }) {
                         </div>
                     </CardContent>
                 </Card>
-
-                {/* Comments section */}
-                <div id="comments-section" className="mb-12">
-                    <h2 className="text-2xl font-bold mb-6">Comments</h2>
-
-                    {/* Comment form */}
-                    <div className="mb-8">
-                        <textarea
-                            className="w-full p-4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg border border-white/20 rounded-lg text-white resize-none focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                            placeholder="Add a comment..."
-                            rows={4}
-                            value={commentText}
-                            onChange={(e) => setCommentText(e.target.value)}
-                        ></textarea>
-                        <Button
-                            className="mt-2 bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white"
-                            onClick={handleSubmitComment}
-                            disabled={isSubmitting}
-                        >
-                            {isSubmitting ? "Posting..." : "Post Comment"}
-                        </Button>
-                    </div>
-
-                    {/* Comments list */}
-                    <div className="space-y-6">
-                        {sampleComments.map((comment) => (
-                            <Comment key={comment.id} comment={comment} />
-                        ))}
-                        {sampleComments.length === 0 && (
-                            <p className="text-gray-400">No comments yet. Be the first to comment!</p>
-                        )}
-                    </div>
-                </div>
 
                 {/* Related posts */}
                 <div className="mb-12">

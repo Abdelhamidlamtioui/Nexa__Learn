@@ -770,6 +770,80 @@ const documentationService = {
     api.get('/moderator/documentation/analytics', { headers: getAuthHeader() }),
 }
 
+
+export interface BlogDTO {
+  id?: string;
+  title: string;
+  content: string;
+  authorId?: string;
+  authorUsername?: string;
+  authorAvatarUrl?: string;
+  tags?: string[];
+  likes?: number;
+  category?: string; // Added category field to match backend
+  pointsCost?: number;
+  published?: boolean;
+  publishedAt?: string;
+  createdAt?: string;
+  lastUpdatedAt?: string;
+  hasLiked?: boolean;
+}
+
+const blogService = {
+  // Get all blogs with pagination
+  getAllBlogs: (page = 0, size = 10, sortBy = "createdAt", sortDir = "desc") =>
+      api.get(`/blogs?page=${page}&size=${size}&sort=${sortBy},${sortDir}`,
+          { headers: getAuthHeader() }),
+
+  // Get a specific blog by ID
+  getBlogById: (id:any) =>
+      api.get(`/blogs/${id}`, { headers: getAuthHeader() }),
+
+  // Create a new blog
+  createBlog: (blogData:any) =>
+      api.post('/blogs', blogData, { headers: getAuthHeader() }),
+
+  // Update an existing blog
+  updateBlog: (id:any, blogData:any) =>
+      api.put(`/blogs/${id}`, blogData, { headers: getAuthHeader() }),
+
+  // Delete a blog
+  deleteBlog: (id:any) =>
+      api.delete(`/blogs/${id}`, { headers: getAuthHeader() }),
+
+  // Publish a blog
+  publishBlog: (id:any) =>
+      api.post(`/blogs/${id}/publish`, {}, { headers: getAuthHeader() }),
+
+  // Toggle like on a blog
+  toggleLike: (blogId:any) =>
+      api.post(`/blogs/${blogId}/toggle-like`, {}, { headers: getAuthHeader() }),
+
+  // Get published blogs
+  getPublishedBlogs: (page = 0, size = 10) =>
+      api.get(`/blogs/published?page=${page}&size=${size}`, { headers: getAuthHeader() }),
+
+  // Get blogs by author
+  getBlogsByAuthor: (authorId:any, page = 0, size = 10) =>
+      api.get(`/blogs/author/${authorId}?page=${page}&size=${size}`, { headers: getAuthHeader() }),
+
+  // Get blogs by tag
+  getBlogsByTag: (tag:any, page = 0, size = 10) =>
+      api.get(`/blogs/tag/${tag}?page=${page}&size=${size}`, { headers: getAuthHeader() }),
+
+  // Search blogs
+  searchBlogs: (query:any, page = 0, size = 10) =>
+      api.get(`/blogs/search?query=${query}&page=${page}&size=${size}`, { headers: getAuthHeader() }),
+
+  // Get popular blogs
+  getPopularBlogs: (page = 0, size = 10) =>
+      api.get(`/blogs/popular?page=${page}&size=${size}`, { headers: getAuthHeader() }),
+      
+  // Get all blog categories
+  getCategories: () =>
+      api.get('/blog-categories', { headers: getAuthHeader() })
+};
+
 // Add JWT token interface
 interface JwtPayload {
   sub: string;
@@ -943,5 +1017,5 @@ declare module 'axios' {
   }
 }
 
-export { authService, userService , documentationService, checkTokens }
+export { authService, userService, blogService, documentationService, checkTokens }
 export default api

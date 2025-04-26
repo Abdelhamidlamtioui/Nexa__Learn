@@ -67,6 +67,11 @@ public class Blog extends Auditable {
     @Builder.Default
     private boolean published = false;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
+    private BlogCategory category = BlogCategory.GENERAL;
+
     @Column(name = "published_at")
     private LocalDateTime publishedAt;
 

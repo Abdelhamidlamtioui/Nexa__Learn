@@ -10,14 +10,16 @@ import { useToast } from "@/hooks/use-toast";
 
 // Category to color mapping
 const categoryColors = {
-    "Frontend": "bg-blue-500/20 text-blue-500",
-    "Backend": "bg-green-500/20 text-green-500",
-    "CSS": "bg-purple-500/20 text-purple-500",
-    "DevOps": "bg-orange-500/20 text-orange-500",
-    "Mobile": "bg-pink-500/20 text-pink-500",
-    "AI/ML": "bg-cyan-500/20 text-cyan-500",
-    "UI/UX": "bg-indigo-500/20 text-indigo-500",
-    "Database": "bg-yellow-500/20 text-yellow-500"
+    "GENERAL": "bg-gray-500/20 text-gray-500",
+    "TECHNOLOGY": "bg-blue-500/20 text-blue-500",
+    "PROGRAMMING": "bg-green-500/20 text-green-500",
+    "DESIGN": "bg-purple-500/20 text-purple-500",
+    "CAREER": "bg-orange-500/20 text-orange-500",
+    "TUTORIAL": "bg-pink-500/20 text-pink-500",
+    "REVIEW": "bg-cyan-500/20 text-cyan-500",
+    "NEWS": "bg-indigo-500/20 text-indigo-500",
+    "PROJECT_SHOWCASE": "bg-yellow-500/20 text-yellow-500",
+    "COMMUNITY": "bg-red-500/20 text-red-500"
 };
 
 // Status to color mapping
@@ -47,7 +49,7 @@ export function BlogList() {
     const [totalPages, setTotalPages] = useState(0);
 
     // Categories for filtering
-    const categories = ["All", "Frontend", "Backend", "DevOps", "CSS", "Mobile", "AI/ML", "UI/UX"];
+    const categories = ["All", "GENERAL", "TECHNOLOGY", "PROGRAMMING", "DESIGN", "CAREER", "TUTORIAL", "REVIEW", "NEWS", "PROJECT_SHOWCASE", "COMMUNITY"];
 
     // Fetch blogs from API
     useEffect(() => {
@@ -74,7 +76,18 @@ export function BlogList() {
                 if (filter === "All") {
                     response = await blogService.getPublishedBlogs(page, 6);
                 } else {
-                    response = await blogService.getBlogsByTag(filter, page, 6);
+                    // Filter published blogs by category on the client-side
+                    // First get all published blogs
+                    response = await blogService.getPublishedBlogs(page, 20);
+                    
+                    // Then filter by category if the response is successful
+                    if (response.data && response.data.success) {
+                        const allBlogs = response.data.data.content;
+                        const filteredBlogs = allBlogs.filter(blog => blog.category === filter);
+                        
+                        // Replace the content with filtered blogs
+                        response.data.data.content = filteredBlogs;
+                    }
                 }
 
                 if (response.data && response.data.success) {
