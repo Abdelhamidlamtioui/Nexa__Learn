@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 021
+      author: cascade
+      changes:
+        - addColumn:
+            tableName: blogs
+            columns:
+              - column:
+                  name: rejection_reason
+                  type: text
+                  constraints:
+                    nullable: true

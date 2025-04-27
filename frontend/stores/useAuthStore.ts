@@ -148,9 +148,11 @@ export const useAuthStore = create<AuthState>()(
           
           return user.roles.some((role: any) => {
             if (typeof role === 'string') {
-              return role === 'ADMIN' || role === 'ROLE_ADMIN'
+              return role === 'ADMIN' || role === 'ROLE_ADMIN' || 
+                     role === 'MODERATOR' || role === 'ROLE_MODERATOR'
             } else if (role && typeof role === 'object') {
-              return role.name === 'ADMIN' || role.name === 'ROLE_ADMIN'
+              return role.name === 'ADMIN' || role.name === 'ROLE_ADMIN' || 
+                     role.name === 'MODERATOR' || role.name === 'ROLE_MODERATOR'
             }
             return false
           })

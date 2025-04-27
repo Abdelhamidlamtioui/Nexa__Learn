@@ -2,6 +2,7 @@ package org.doctech.blog.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.doctech.blog.dto.BlogDTO;
+import org.doctech.blog.model.BlogStatus;
 import org.doctech.blog.service.BlogLikeService;
 import org.doctech.blog.service.BlogService;
 import org.doctech.common.dto.ApiResponse;
@@ -38,6 +39,9 @@ public class BlogController {
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
         blogDTO.setAuthorId(securityUser.getId());
 
+        // Set initial status as DRAFT
+        blogDTO.setStatus(BlogStatus.DRAFT);
+
         BlogDTO createdBlog = blogService.createBlog(blogDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ApiResponse(true, "Blog created successfully", createdBlog));
@@ -68,10 +72,18 @@ public class BlogController {
 
     // Blog Publishing
     @PostMapping("/{id}/publish")
-    @PreAuthorize("@blogService.isAuthorOrAdmin(#id, principal)")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     public ResponseEntity<ApiResponse> publishBlog(@PathVariable UUID id) {
         return ResponseEntity.ok(new ApiResponse(true, "Blog published successfully",
                 blogService.publishBlog(id)));
+    }
+
+    // New endpoint for submitting a blog for review
+    @PostMapping("/{id}/submit-for-review")
+    @PreAuthorize("@blogService.isAuthorOrAdmin(#id, principal)")
+    public ResponseEntity<ApiResponse> submitForReview(@PathVariable UUID id) {
+        return ResponseEntity.ok(new ApiResponse(true, "Blog submitted for review",
+                blogService.submitForReview(id)));
     }
 
     // Blog Retrieval
@@ -120,6 +132,18 @@ public class BlogController {
         PagedResponse<BlogDTO> response = PagedResponse.of(blogs.getContent(), blogs);
 
         return ResponseEntity.ok(new ApiResponse(true, "Author's blogs retrieved successfully", response));
+    }
+
+    @GetMapping("/my-blogs")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse> getMyBlogs(
+            Pageable pageable,
+            Authentication authentication) {
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        Page<BlogDTO> blogs = blogService.getBlogsByAuthor(securityUser.getId(), pageable);
+        PagedResponse<BlogDTO> response = PagedResponse.of(blogs.getContent(), blogs);
+
+        return ResponseEntity.ok(new ApiResponse(true, "Your blogs retrieved successfully", response));
     }
 
     // Blog Engagement

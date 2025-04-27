@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.doctech.blog.model.BlogCategory;
+import org.doctech.blog.model.BlogStatus;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -41,12 +42,23 @@ public class BlogDTO {
     @PositiveOrZero(message = "Points cost must be zero or positive")
     private Integer pointsCost;
 
-    private boolean published;
+    // Replace boolean published with status enum
+    @Builder.Default
+    private BlogStatus status = BlogStatus.DRAFT;
+
+    // Add a rejectionReason field
+    private String rejectionReason;
+
     private LocalDateTime publishedAt;
     private LocalDateTime createdAt;
     private LocalDateTime lastUpdatedAt;
 
     private boolean hasLiked;
+
+    // Helper method for backward compatibility
+    public boolean isPublished() {
+        return status == BlogStatus.PUBLISHED;
+    }
 
     public boolean isHasLiked() {
         return hasLiked;

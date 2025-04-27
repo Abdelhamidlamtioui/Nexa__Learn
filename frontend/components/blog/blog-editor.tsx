@@ -276,27 +276,38 @@ export function BlogEditor({ blogId = null }) {
                 // Update existing blog
                 response = await blogService.updateBlog(blogId, dataToSubmit);
 
-                // If publishing a draft
+                // With the approval workflow, submit for review instead of direct publishing
                 if (publishMode === "publish" && !originalBlog.published) {
-                    await blogService.publishBlog(blogId);
+                    await blogService.submitForReview(blogId);
                 }
             } else {
                 // Create new blog
                 response = await blogService.createBlog(dataToSubmit);
-
-                // If publishing right away
+                
+                // Submit for review if publishing a new blog
                 if (publishMode === "publish" && response.data && response.data.success) {
                     const newBlogId = response.data.data.id;
-                    await blogService.publishBlog(newBlogId);
+                    await blogService.submitForReview(newBlogId);
                 }
             }
 
             if (response.data && response.data.success) {
+                const blog = response.data.data;
+                setBlogData({
+                    title: blog.title || "",
+                    content: blog.content || "",
+                    category: blog.category || "",
+                    tags: blog.tags || [],
+                    published: blog.published || false,
+                    pointsCost: blog.pointsCost || 0
+                });
+                
                 toast({
                     title: "Success",
                     description: isEditing
-                        ? `Blog ${publishMode === "publish" ? "published" : "saved as draft"} successfully`
-                        : `Blog ${publishMode === "publish" ? "published" : "created as draft"} successfully`,
+                        ? (publishMode === "publish" ? "Blog submitted for review successfully" : "Blog saved as draft successfully")
+                        : (publishMode === "publish" ? "Blog submitted for review successfully" : "Blog created as draft successfully"),
+                    variant: "default",
                 });
 
                 // Navigate to the blog post or back to listing

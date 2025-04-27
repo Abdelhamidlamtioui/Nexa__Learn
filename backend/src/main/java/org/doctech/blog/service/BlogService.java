@@ -1,6 +1,7 @@
 package org.doctech.blog.service;
 
 import org.doctech.blog.dto.BlogDTO;
+import org.doctech.blog.model.BlogStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -36,6 +37,11 @@ public interface BlogService {
     Page<BlogDTO> getPublishedBlogs(Pageable pageable, UUID currentUserId);
 
     /**
+     * Retrieves blogs by status
+     */
+    Page<BlogDTO> getBlogsByStatus(BlogStatus status, Pageable pageable, UUID currentUserId);
+
+    /**
      * Retrieves blogs by a specific author
      */
     Page<BlogDTO> getBlogsByAuthor(UUID authorId, Pageable pageable);
@@ -51,9 +57,29 @@ public interface BlogService {
     BlogDTO publishBlog(UUID id);
 
     /**
+     * Submits a blog for review
+     */
+    BlogDTO submitForReview(UUID id);
+
+    /**
+     * Approves a blog that was pending review
+     */
+    BlogDTO approveBlog(UUID id);
+
+    /**
+     * Rejects a blog that was pending review
+     */
+    BlogDTO rejectBlog(UUID id, String reason);
+
+    /**
      * Retrieves the most popular blogs by likes
      */
     Page<BlogDTO> getMostPopularBlogs(Pageable pageable, UUID currentUserId);
+
+    /**
+     * Retrieves blogs pending review for admin approval
+     */
+    Page<BlogDTO> getPendingBlogs(Pageable pageable);
 
     /**
      * Deletes a blog

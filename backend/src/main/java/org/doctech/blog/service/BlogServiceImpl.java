@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.doctech.blog.dto.BlogDTO;
 import org.doctech.blog.mapper.BlogMapper;
 import org.doctech.blog.model.Blog;
+import org.doctech.blog.model.BlogStatus;
 import org.doctech.blog.repository.BlogRepository;
 import org.doctech.common.exception.BlogNotFoundException;
+import org.doctech.common.exception.IllegalOperationException;
 import org.doctech.common.exception.UserNotFoundException;
 import org.doctech.common.utils.ValidationUtils;
 import org.doctech.security.model.SecurityUser;
@@ -14,6 +16,7 @@ import org.doctech.user.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +45,9 @@ public class BlogServiceImpl implements BlogService {
         Blog blog = blogMapper.toEntity(blogDTO);
         blog.setAuthor(author);
 
+        // All new blogs start as drafts
+        blog.setStatus(BlogStatus.DRAFT);
+
         Blog savedBlog = blogRepository.save(blog);
         return blogMapper.toDTO(savedBlog);
     }
@@ -55,6 +61,12 @@ public class BlogServiceImpl implements BlogService {
         blog.setContent(blogDTO.getContent());
         blog.setTags(blogDTO.getTags());
         blog.setPointsCost(blogDTO.getPointsCost());
+        blog.setCategory(blogDTO.getCategory());
+
+        // If status was updated, update it
+        if (blogDTO.getStatus() != null) {
+            blog.setStatus(blogDTO.getStatus());
+        }
 
         Blog updatedBlog = blogRepository.save(blog);
         return blogMapper.toDTO(updatedBlog);
@@ -72,11 +84,57 @@ public class BlogServiceImpl implements BlogService {
     public BlogDTO publishBlog(UUID id) {
         Blog blog = findBlogById(id);
 
-        if (blog.isPublished()) {
+        if (blog.getStatus() == BlogStatus.PUBLISHED) {
             throw new IllegalStateException("Blog is already published");
         }
 
+        // Only approved blogs or admin-created blogs can be published directly
+        if (blog.getStatus() != BlogStatus.PENDING && blog.getStatus() != BlogStatus.DRAFT) {
+            throw new IllegalStateException("Only pending or draft blogs can be published");
+        }
+
         blog.publish();
+        Blog savedBlog = blogRepository.save(blog);
+        return blogMapper.toDTO(savedBlog);
+    }
+
+    @Override
+    public BlogDTO submitForReview(UUID id) {
+        Blog blog = findBlogById(id);
+
+        if (blog.getStatus() != BlogStatus.DRAFT) {
+            throw new IllegalStateException("Only draft blogs can be submitted for review");
+        }
+
+        blog.submitForReview();
+        Blog savedBlog = blogRepository.save(blog);
+        return blogMapper.toDTO(savedBlog);
+    }
+
+    @Override
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
+    public BlogDTO approveBlog(UUID id) {
+        Blog blog = findBlogById(id);
+
+        if (blog.getStatus() != BlogStatus.PENDING) {
+            throw new IllegalStateException("Only pending blogs can be approved");
+        }
+
+        blog.publish();
+        Blog savedBlog = blogRepository.save(blog);
+        return blogMapper.toDTO(savedBlog);
+    }
+
+    @Override
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
+    public BlogDTO rejectBlog(UUID id, String reason) {
+        Blog blog = findBlogById(id);
+
+        if (blog.getStatus() != BlogStatus.PENDING) {
+            throw new IllegalStateException("Only pending blogs can be rejected");
+        }
+
+        blog.reject(reason);
         Blog savedBlog = blogRepository.save(blog);
         return blogMapper.toDTO(savedBlog);
     }
@@ -120,7 +178,14 @@ public class BlogServiceImpl implements BlogService {
     @Override
     @Transactional(readOnly = true)
     public Page<BlogDTO> getPublishedBlogs(Pageable pageable, UUID currentUserId) {
-        return blogRepository.findByPublishedTrue(pageable)
+        return blogRepository.findByStatus(BlogStatus.PUBLISHED, pageable)
+                .map(blog -> enrichDTOWithLikeStatus(blog, currentUserId));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<BlogDTO> getBlogsByStatus(BlogStatus status, Pageable pageable, UUID currentUserId) {
+        return blogRepository.findByStatus(status, pageable)
                 .map(blog -> enrichDTOWithLikeStatus(blog, currentUserId));
     }
 
@@ -135,22 +200,30 @@ public class BlogServiceImpl implements BlogService {
     @Override
     @Transactional(readOnly = true)
     public Page<BlogDTO> getBlogsByTag(String tag, Pageable pageable, UUID currentUserId) {
-        return blogRepository.findByTag(tag, pageable)
+        return blogRepository.findByTagAndStatus(tag, BlogStatus.PUBLISHED, pageable)
                 .map(blog -> enrichDTOWithLikeStatus(blog, currentUserId));
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<BlogDTO> searchBlogs(String query, Pageable pageable, UUID currentUserId) {
-        return blogRepository.search(query, pageable)
+        return blogRepository.searchPublished(query, pageable)
                 .map(blog -> enrichDTOWithLikeStatus(blog, currentUserId));
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<BlogDTO> getMostPopularBlogs(Pageable pageable, UUID currentUserId) {
-        return blogRepository.findAllByOrderByLikesDesc(pageable)
+        return blogRepository.findByStatusOrderByLikesDesc(BlogStatus.PUBLISHED, pageable)
                 .map(blog -> enrichDTOWithLikeStatus(blog, currentUserId));
+    }
+
+    @Override
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
+    @Transactional(readOnly = true)
+    public Page<BlogDTO> getPendingBlogs(Pageable pageable) {
+        return blogRepository.findByStatus(BlogStatus.PENDING, pageable)
+                .map(blogMapper::toDTO);
     }
 
     @Override
@@ -160,14 +233,15 @@ public class BlogServiceImpl implements BlogService {
 
         return blog.getAuthor().getId().equals(securityUser.getId()) ||
                 securityUser.getAuthorities().stream()
-                        .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+                        .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN") ||
+                                auth.getAuthority().equals("ROLE_MODERATOR"));
     }
 
     @Override
     public void validateBlogUpdateEligibility(UUID blogId) {
         Blog blog = findBlogById(blogId);
-        if (blog.isPublished()) {
-            throw new IllegalStateException("Published blogs cannot be updated");
+        if (blog.getStatus() == BlogStatus.PUBLISHED) {
+            throw new IllegalOperationException("Published blogs cannot be updated");
         }
     }
 

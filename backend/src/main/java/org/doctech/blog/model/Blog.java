@@ -63,9 +63,11 @@ public class Blog extends Auditable {
     @Column(name = "points_cost")
     private Integer pointsCost;
 
+    // Replace boolean published field with status enum
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
-    private boolean published = false;
+    private BlogStatus status = BlogStatus.DRAFT;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -74,6 +76,10 @@ public class Blog extends Auditable {
 
     @Column(name = "published_at")
     private LocalDateTime publishedAt;
+
+    // Adding rejectionReason field for rejected blogs
+    @Column(columnDefinition = "TEXT")
+    private String rejectionReason;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -97,16 +103,36 @@ public class Blog extends Auditable {
         this.lastUpdatedAt = LocalDateTime.now();
     }
 
+    // Updated publish method to use status enum
     public void publish() {
-        if (!this.published) {
-            this.published = true;
+        if (this.status != BlogStatus.PUBLISHED) {
+            this.status = BlogStatus.PUBLISHED;
             this.publishedAt = LocalDateTime.now();
         }
     }
 
+    // New method for submitting a blog for review
+    public void submitForReview() {
+        if (this.status == BlogStatus.DRAFT) {
+            this.status = BlogStatus.PENDING;
+        }
+    }
+
+    // New method for rejecting a blog
+    public void reject(String reason) {
+        this.status = BlogStatus.REJECTED;
+        this.rejectionReason = reason;
+    }
+
+    // Updated unpublish method
     public void unpublish() {
-        this.published = false;
+        this.status = BlogStatus.DRAFT;
         this.publishedAt = null;
+    }
+
+    // Method to archive a blog
+    public void archive() {
+        this.status = BlogStatus.ARCHIVED;
     }
 
     public boolean toggleLike(User user) {
@@ -140,5 +166,10 @@ public class Blog extends Auditable {
         if (tags != null) {
             tags.remove(tag);
         }
+    }
+
+    // Helper method to check if the blog is published
+    public boolean isPublished() {
+        return this.status == BlogStatus.PUBLISHED;
     }
 }

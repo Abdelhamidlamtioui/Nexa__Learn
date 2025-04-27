@@ -783,6 +783,8 @@ export interface BlogDTO {
   category?: string; // Added category field to match backend
   pointsCost?: number;
   published?: boolean;
+  status?: string; // Add status field to match the enum in backend
+  rejectionReason?: string; // Add rejection reason field
   publishedAt?: string;
   createdAt?: string;
   lastUpdatedAt?: string;
@@ -814,6 +816,40 @@ const blogService = {
   // Publish a blog
   publishBlog: (id:any) =>
       api.post(`/blogs/${id}/publish`, {}, { headers: getAuthHeader() }),
+
+  // Submit a blog for review
+  submitForReview: (id:any) =>
+      api.post(`/blogs/${id}/submit-for-review`, {}, { headers: getAuthHeader() }),
+
+  // For admin: approve a blog
+  approveBlog: (id:any) =>
+      api.post(`/admin/blogs/${id}/approve`, {}, { headers: getAuthHeader() }),
+
+  // For admin: reject a blog
+  rejectBlog: (id:any, reason:string) =>
+      api.post(`/admin/blogs/${id}/reject`, { reason }, { headers: getAuthHeader() }),
+
+  // For admin: get pending blogs
+  getPendingBlogs: (page = 0, size = 10) =>
+      api.get(`/admin/blogs/pending?page=${page}&size=${size}`, { headers: getAuthHeader() }),
+
+  // For admin: get blogs by status
+  getBlogsByStatus: (status:string, page = 0, size = 10) =>
+      api.get(`/admin/blogs/status/${status}?page=${page}&size=${size}`, { headers: getAuthHeader() }),
+      
+  // For admin: get blog statistics
+  getBlogStats: (): Promise<AxiosResponse> => {
+    return axiosInstance.get('/admin/blogs/stats');
+  },
+  
+  // Category management methods
+  createCategory: (categoryName: string): Promise<AxiosResponse> => {
+    return axiosInstance.post('/admin/blog-categories', { name: categoryName });
+  },
+  
+  deleteCategory: (categoryName: string): Promise<AxiosResponse> => {
+    return axiosInstance.delete(`/admin/blog-categories/${categoryName}`);
+  },
 
   // Toggle like on a blog
   toggleLike: (blogId:any) =>

@@ -24,10 +24,11 @@ const categoryColors = {
 
 // Status to color mapping
 const statusColors = {
-    "Published": "bg-green-500/20 text-green-500",
-    "Draft": "bg-yellow-500/20 text-yellow-500",
-    "Archived": "bg-gray-500/20 text-gray-500",
-    "Under Review": "bg-orange-500/20 text-orange-500"
+    "PUBLISHED": "bg-green-500/20 text-green-500",
+    "DRAFT": "bg-yellow-500/20 text-yellow-500",
+    "ARCHIVED": "bg-gray-500/20 text-gray-500",
+    "PENDING": "bg-orange-500/20 text-orange-500",
+    "REJECTED": "bg-red-500/20 text-red-500"
 };
 
 // Format the date
@@ -175,8 +176,8 @@ export function BlogList() {
                                     <Badge className={`${featuredBlog.category ? categoryColors[featuredBlog.category] : 'bg-gray-500/20 text-gray-500'} px-2 py-0.5`}>
                                         {featuredBlog.category || "General"}
                                     </Badge>
-                                    <Badge className={`${featuredBlog.published ? statusColors.Published : statusColors.Draft} px-2 py-0.5`}>
-                                        {featuredBlog.published ? "Published" : "Draft"}
+                                    <Badge className={`${featuredBlog.status ? statusColors[featuredBlog.status] : (featuredBlog.published ? statusColors.PUBLISHED : statusColors.DRAFT)} px-2 py-0.5`}>
+                                        {featuredBlog.status || (featuredBlog.published ? "PUBLISHED" : "DRAFT")}
                                     </Badge>
                                     <Badge className="bg-cyan-500/20 text-cyan-500 px-2 py-0.5">
                                         Featured
@@ -274,14 +275,14 @@ export function BlogList() {
                                     <Badge className={`${blog.category ? categoryColors[blog.category] : 'bg-gray-500/20 text-gray-500'} px-2 py-0.5`}>
                                         {blog.category || "General"}
                                     </Badge>
-                                    <Badge className={`${blog.published ? statusColors.Published : statusColors.Draft} px-2 py-0.5`}>
-                                        {blog.published ? "Published" : "Draft"}
+                                    <Badge className={`${blog.status ? statusColors[blog.status] : (blog.published ? statusColors.PUBLISHED : statusColors.DRAFT)} px-2 py-0.5`}>
+                                        {blog.status || (blog.published ? "Published" : "Draft")}
                                     </Badge>
                                 </div>
                                 <h3 className="text-xl font-bold mb-2">{blog.title}</h3>
                                 <div className="flex items-center gap-2">
                                     <Avatar className="h-6 w-6">
-                                        <AvatarImage src={blog.authorAvatarUrl} />
+// ...
                                         <AvatarFallback className="bg-gradient-to-br from-blue-500 to-cyan-600 text-white text-xs">
                                             {blog.authorUsername?.[0]?.toUpperCase() || 'U'}
                                         </AvatarFallback>
