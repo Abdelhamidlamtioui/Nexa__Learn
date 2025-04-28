@@ -41,18 +41,29 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuthStore } from "@/stores/useAuthStore";
 
+// Type definition for Blog Data
+interface BlogData {
+    id?: string; 
+    title: string;
+    content: string;
+    categoryName: string;
+    tags: string[];
+    published: boolean;
+    pointsCost: number;
+}
+
 // Initial blog data template
-const initialBlogData = {
+const initialBlogData: BlogData = {
     title: "",
     content: "",
-    category: "",
+    categoryName: "",
     tags: [],
     published: false,
     pointsCost: 0
 };
 
 // Category to color mapping
-const categoryColors = {
+const categoryColors: Record<string, string> = {
     "GENERAL": "bg-gray-500/20 text-gray-500",
     "TECHNOLOGY": "bg-blue-500/20 text-blue-500",
     "PROGRAMMING": "bg-green-500/20 text-green-500",
@@ -71,19 +82,36 @@ export function BlogEditor({ blogId = null }) {
     const { isAuthenticated, user } = useAuthStore();
     const [isEditing, setIsEditing] = useState(!!blogId);
     const [activeTab, setActiveTab] = useState("write");
-    const [blogData, setBlogData] = useState(initialBlogData);
-    const [originalBlog, setOriginalBlog] = useState(null);
+    const [blogData, setBlogData] = useState<BlogData>(initialBlogData);
+    const [originalBlog, setOriginalBlog] = useState<BlogData | null>(null);
     const [newTag, setNewTag] = useState("");
     const [previewHTML, setPreviewHTML] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isFetching, setIsFetching] = useState(!!blogId);
     const [isDirty, setIsDirty] = useState(false);
 
-    // Categories options
-    const categories = [
-        "GENERAL", "TECHNOLOGY", "PROGRAMMING", "DESIGN", "CAREER",
-        "TUTORIAL", "REVIEW", "NEWS", "PROJECT_SHOWCASE", "COMMUNITY"
-    ];
+    // Categories state
+    const [categories, setCategories] = useState<string[]>([]);
+    
+    // Fetch categories from API
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await blogService.getCategories();
+                if (response.data && response.data.success) {
+                    const fetched = response.data.data;
+                    const names = fetched.map((c: any) => (typeof c === "string" ? c : c.name));
+                    setCategories(names);
+                } else {
+                    console.error('Failed to fetch categories:', response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+        
+        fetchCategories();
+    }, []);
 
     // Fetch blog data if editing
     useEffect(() => {
@@ -111,7 +139,7 @@ export function BlogEditor({ blogId = null }) {
                     setBlogData({
                         title: blog.title || "",
                         content: blog.content || "",
-                        category: blog.category || "",
+                        categoryName: blog.categoryName || "",
                         tags: blog.tags || [],
                         published: blog.published || false,
                         pointsCost: blog.pointsCost || 0
@@ -129,7 +157,7 @@ export function BlogEditor({ blogId = null }) {
                 console.error("Error fetching blog:", error);
                 toast({
                     title: "Error",
-                    description: error.response?.data?.message || "Failed to load blog post",
+                    description: (error as any).response?.data?.message || "Failed to load blog post",
                     variant: "destructive",
                 });
                 router.push("/dev-forum/blog");
@@ -264,10 +292,11 @@ export function BlogEditor({ blogId = null }) {
         setIsLoading(true);
 
         try {
-            // Set publish status based on button clicked
+            const isPublish = publishMode === "publish";
             const dataToSubmit = {
                 ...blogData,
-                published: publishMode === "publish"
+                categoryName: blogData.categoryName,
+                published: isPublish // true only when explicitly publishing (admin flow)
             };
 
             let response;
@@ -277,7 +306,7 @@ export function BlogEditor({ blogId = null }) {
                 response = await blogService.updateBlog(blogId, dataToSubmit);
 
                 // With the approval workflow, submit for review instead of direct publishing
-                if (publishMode === "publish" && !originalBlog.published) {
+                if (isPublish && !originalBlog.published) {
                     await blogService.submitForReview(blogId);
                 }
             } else {
@@ -285,7 +314,7 @@ export function BlogEditor({ blogId = null }) {
                 response = await blogService.createBlog(dataToSubmit);
                 
                 // Submit for review if publishing a new blog
-                if (publishMode === "publish" && response.data && response.data.success) {
+                if (isPublish && response.data && response.data.success) {
                     const newBlogId = response.data.data.id;
                     await blogService.submitForReview(newBlogId);
                 }
@@ -296,7 +325,7 @@ export function BlogEditor({ blogId = null }) {
                 setBlogData({
                     title: blog.title || "",
                     content: blog.content || "",
-                    category: blog.category || "",
+                    categoryName: blog.categoryName || "",
                     tags: blog.tags || [],
                     published: blog.published || false,
                     pointsCost: blog.pointsCost || 0
@@ -305,18 +334,14 @@ export function BlogEditor({ blogId = null }) {
                 toast({
                     title: "Success",
                     description: isEditing
-                        ? (publishMode === "publish" ? "Blog submitted for review successfully" : "Blog saved as draft successfully")
-                        : (publishMode === "publish" ? "Blog submitted for review successfully" : "Blog created as draft successfully"),
+                        ? (isPublish ? "Blog submitted for review successfully" : "Blog saved as draft successfully")
+                        : (isPublish ? "Blog submitted for review successfully" : "Blog created as draft successfully"),
                     variant: "default",
                 });
 
-                // Navigate to the blog post or back to listing
-                if (publishMode === "publish") {
-                    const blogId = isEditing ? originalBlog.id : response.data.data.id;
-                    router.push(`/dev-forum/blog/${blogId}`);
-                } else {
-                    router.push("/dev-forum/blog");
-                }
+                // Navigate to the blog post
+                const blogIdToView = isEditing ? (originalBlog?.id || response.data.data.id) : response.data.data.id;
+                router.push(`/dev-forum/blog/${blogIdToView}`);
             } else {
                 throw new Error("Failed to save blog");
             }
@@ -324,7 +349,7 @@ export function BlogEditor({ blogId = null }) {
             console.error("Error saving blog:", error);
             toast({
                 title: "Error",
-                description: error.response?.data?.message || "Failed to save blog",
+                description: (error as any).response?.data?.message || "Failed to save blog",
                 variant: "destructive",
             });
         } finally {
@@ -398,21 +423,8 @@ export function BlogEditor({ blogId = null }) {
                                     Cancel
                                 </Button>
                                 <Button
-                                    variant="default"
-                                    className="bg-green-600 hover:bg-green-700 text-white"
-                                    onClick={() => handleSubmit("draft")}
-                                    disabled={isLoading}
-                                >
-                                    {isLoading ? (
-                                        <Loader className="mr-2 h-4 w-4 animate-spin" />
-                                    ) : (
-                                        <Save className="mr-2 h-4 w-4" />
-                                    )}
-                                    Save Draft
-                                </Button>
-                                <Button
                                     className="bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white"
-                                    onClick={() => handleSubmit("publish")}
+                                    onClick={() => handleSubmit("next")}
                                     disabled={isLoading}
                                 >
                                     {isLoading ? (
@@ -420,7 +432,7 @@ export function BlogEditor({ blogId = null }) {
                                     ) : (
                                         <Eye className="mr-2 h-4 w-4" />
                                     )}
-                                    Publish
+                                    Next
                                 </Button>
                             </div>
                         </CardTitle>
@@ -452,7 +464,7 @@ export function BlogEditor({ blogId = null }) {
                                             className="w-full justify-between mt-1 border-white/20 text-white"
                                             disabled={isLoading}
                                         >
-                                            {blogData.category || "Select a category"}
+                                            {blogData.categoryName || "Select a category"}
                                             <ChevronDown className="h-4 w-4 ml-2 opacity-50" />
                                         </Button>
                                     </DropdownMenuTrigger>
@@ -462,11 +474,11 @@ export function BlogEditor({ blogId = null }) {
                                                 key={category}
                                                 className="hover:bg-gray-700 cursor-pointer"
                                                 onClick={() => {
-                                                    setBlogData(prev => ({ ...prev, category }));
+                                                    setBlogData(prev => ({ ...prev, categoryName: category }));
                                                     setIsDirty(true);
                                                 }}
                                             >
-                                                <span className={`w-2 h-2 rounded-full mr-2 ${categoryColors[category]?.split(' ')[0] || 'bg-gray-500'}`}></span>
+                                                <span className={`w-2 h-2 rounded-full mr-2 ${(categoryColors as Record<string, string>)[category]?.split(' ')[0] || 'bg-gray-500'}`}></span>
                                                 {category}
                                             </DropdownMenuItem>
                                         ))}
@@ -664,13 +676,13 @@ export function BlogEditor({ blogId = null }) {
 
                     <CardFooter className="flex justify-between">
                         <div className="flex items-center">
-                            {blogData.category && (
-                                <Badge className={categoryColors[blogData.category]}>
-                                    {blogData.category}
+                            {blogData.categoryName && (
+                                <Badge className={categoryColors[blogData.categoryName]}>
+                                    {blogData.categoryName}
                                 </Badge>
                             )}
                             <p className="ml-2 text-gray-300">
-                                {isEditing && originalBlog?.published ? "Published" : "Draft"}
+                                {isEditing && originalBlog && originalBlog.published ? "Published" : "Draft"}
                             </p>
                         </div>
 
@@ -684,21 +696,8 @@ export function BlogEditor({ blogId = null }) {
                                 Cancel
                             </Button>
                             <Button
-                                variant="default"
-                                className="bg-green-600 hover:bg-green-700 text-white"
-                                onClick={() => handleSubmit("draft")}
-                                disabled={isLoading}
-                            >
-                                {isLoading ? (
-                                    <Loader className="mr-2 h-4 w-4 animate-spin" />
-                                ) : (
-                                    <Save className="mr-2 h-4 w-4" />
-                                )}
-                                Save Draft
-                            </Button>
-                            <Button
                                 className="bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white"
-                                onClick={() => handleSubmit("publish")}
+                                onClick={() => handleSubmit("next")}
                                 disabled={isLoading}
                             >
                                 {isLoading ? (
@@ -706,7 +705,7 @@ export function BlogEditor({ blogId = null }) {
                                 ) : (
                                     <Eye className="mr-2 h-4 w-4" />
                                 )}
-                                Publish
+                                Next
                             </Button>
                         </div>
                     </CardFooter>

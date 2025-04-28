@@ -162,6 +162,20 @@
             </plugin>
 
             <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>4.24.0</version>
+                <configuration>
+                    <changeLogFile>src/main/resources/db/changelog/db.changelog-master.yaml</changeLogFile>
+                    <url>jdbc:postgresql://localhost:5432/doctech</url>
+                    <username>postgres</username>
+                    <password>toor</password>
+                    <driver>org.postgresql.Driver</driver>
+                    <defaultSchemaName>public</defaultSchemaName>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>

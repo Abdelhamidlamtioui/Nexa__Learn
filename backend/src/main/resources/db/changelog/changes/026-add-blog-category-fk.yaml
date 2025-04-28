@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 026-add-blog-category-fk
+      author: anas
+      changes:
+        - addColumn:
+            tableName: blogs
+            columns:
+              - column:
+                  name: category_id
+                  type: bigint
+                  constraints:
+                    nullable: true
+                    foreignKeyName: fk_blogs_category
+                    references: custom_blog_categories(id)

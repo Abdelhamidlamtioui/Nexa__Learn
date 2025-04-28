@@ -36,8 +36,7 @@ public class BlogDTO {
 
     private Integer likes;
 
-    @Builder.Default
-    private String categoryName = "GENERAL";
+    private String categoryName;
 
     @PositiveOrZero(message = "Points cost must be zero or positive")
     private Integer pointsCost;

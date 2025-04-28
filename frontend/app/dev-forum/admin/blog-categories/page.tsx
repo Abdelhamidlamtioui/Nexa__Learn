@@ -8,21 +8,18 @@ import { CategoryManager } from "@/components/blog/category-manager";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { ForumHeader } from "@/components/forum-header";
 
 export default function BlogCategoriesPage() {
   const router = useRouter();
   
   return (
     <AdminGuard>
+      <ForumHeader />
       <div className="min-h-screen bg-gradient-to-br from-blue-900 to-blue-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <div className="container max-w-6xl mx-auto py-8 px-4">
           <div className="flex items-center mb-8">
-            <Link 
-              href="/dev-forum"
-              className="mr-4 p-2 hover:bg-white/10 rounded-full transition-colors"
-            >
-              <ArrowLeft className="h-5 w-5 text-white" />
-            </Link>
+            
             <div>
               <h1 className="text-3xl font-bold mb-1 text-white">Blog Categories</h1>
               <p className="text-gray-300">

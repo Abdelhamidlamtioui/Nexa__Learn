@@ -45,3 +45,5 @@ databaseChangeLog:
       file: db/changelog/changes/022-add-status-to-blogs.yaml
   - include:
       file: db/changelog/changes/023-create-custom-blog-categories-table.yaml
+  - include:
+      file: db/changelog/changes/026-add-blog-category-fk.yaml

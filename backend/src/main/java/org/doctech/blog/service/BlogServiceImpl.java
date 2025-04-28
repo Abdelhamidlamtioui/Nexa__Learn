@@ -26,7 +26,7 @@ import java.util.UUID;
 /**
  * Implementation of BlogService for blog operations
  */
-@Service
+@Service("blogService")
 @RequiredArgsConstructor
 @Transactional
 public class BlogServiceImpl implements BlogService {

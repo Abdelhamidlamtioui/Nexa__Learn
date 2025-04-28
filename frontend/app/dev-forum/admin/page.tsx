@@ -9,6 +9,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { ForumHeader } from "@/components/forum-header"
 
+import { AdminSidebar } from "@/components/admin/AdminSidebar";
+
 export default function AdminDashboardPage() {
   const { user, checkIsAdmin } = useAuthStore()
   const { toast } = useToast()
@@ -28,13 +30,15 @@ export default function AdminDashboardPage() {
 
   return (
     <AdminGuard>
-      <div className="min-h-screen flex flex-col bg-gradient-to-br from-deep-navy to-rich-purple text-white">
-        <ForumHeader />
-        
-        <main className="flex-grow container mx-auto py-8 px-4 sm:px-6 lg:px-8">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-            <p className="text-gray-300">Manage your platform settings and users</p>
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 to-blue-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <div className="container max-w-6xl mx-auto py-8 px-4">
+          <ForumHeader />
+
+          {/* Admin blog navigation bar */}
+          <nav className="my-6 flex gap-4">
+            <a href="/dev-forum/admin/blog-management" className="px-4 py-2 rounded bg-blue-800 text-white hover:bg-blue-700 transition">Blog Management</a>
+            <a href="/dev-forum/admin/blog-categories" className="px-4 py-2 rounded bg-blue-800 text-white hover:bg-blue-700 transition">Blog Categories</a>
+          </nav>
             
             {/* Debug section */}
             <Card className="mt-4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg border-none">

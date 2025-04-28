@@ -11,9 +11,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Entity representing custom blog categories
- */
 @Entity
 @Table(name = "custom_blog_categories")
 @Data
@@ -21,11 +18,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomBlogCategory {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(unique = true, nullable = false)
     private String name;
 }

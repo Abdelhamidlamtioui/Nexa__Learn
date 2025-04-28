@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { blogService } from "@/services/api";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import Link from "next/link";
+import { ForumHeader } from "@/components/forum-header";
 
 // Status to color mapping
 const statusColors = {
@@ -190,15 +191,11 @@ export default function BlogManagement() {
 
   return (
     <AdminGuard>
+      <ForumHeader />
       <div className="min-h-screen bg-gradient-to-br from-blue-900 to-blue-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <div className="container max-w-6xl mx-auto py-8 px-4">
-          <div className="flex items-center mb-8">
-            <Link 
-              href="/dev-forum"
-              className="mr-4 p-2 hover:bg-white/10 rounded-full transition-colors"
-            >
-              <ArrowLeft className="h-5 w-5 text-white" />
-            </Link>
+          <div className="container max-w-6xl mx-auto py-8 px-4">
+            <div className="flex items-center mb-8">
             <div>
               <h1 className="text-3xl font-bold mb-1 text-white">Blog Management</h1>
               <p className="text-gray-300">
@@ -387,6 +384,7 @@ export default function BlogManagement() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
     </AdminGuard>
   );

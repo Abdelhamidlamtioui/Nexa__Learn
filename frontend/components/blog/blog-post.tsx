@@ -21,19 +21,19 @@ import { blogService } from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
 import { useAuthStore } from "@/stores/useAuthStore";
 
-// Category to color mapping
-const categoryColors = {
-    "GENERAL": "bg-gray-500/20 text-gray-500",
-    "TECHNOLOGY": "bg-blue-500/20 text-blue-500",
-    "PROGRAMMING": "bg-green-500/20 text-green-500",
-    "DESIGN": "bg-purple-500/20 text-purple-500",
-    "CAREER": "bg-orange-500/20 text-orange-500",
-    "TUTORIAL": "bg-pink-500/20 text-pink-500",
-    "REVIEW": "bg-cyan-500/20 text-cyan-500",
-    "NEWS": "bg-indigo-500/20 text-indigo-500",
-    "PROJECT_SHOWCASE": "bg-yellow-500/20 text-yellow-500",
-    "COMMUNITY": "bg-red-500/20 text-red-500"
-};
+// Default color values that will be used as fallbacks
+const defaultColorClasses = [
+    "bg-gray-500/20 text-gray-500",
+    "bg-blue-500/20 text-blue-500",
+    "bg-green-500/20 text-green-500",
+    "bg-purple-500/20 text-purple-500",
+    "bg-orange-500/20 text-orange-500",
+    "bg-pink-500/20 text-pink-500",
+    "bg-cyan-500/20 text-cyan-500",
+    "bg-indigo-500/20 text-indigo-500", 
+    "bg-yellow-500/20 text-yellow-500",
+    "bg-red-500/20 text-red-500"
+];
 
 // Status to color mapping
 const statusColors = {
@@ -88,13 +88,43 @@ export function BlogPost(props: { blog: any }) {
     const [bookmarked, setBookmarked] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
+    const [categories, setCategories] = useState<string[]>([]);
+    const [categoryColors, setCategoryColors] = useState<Record<string, string>>({});
     
-    // Check if current user is the author of the blog
-    const isAuthor = user && blog?.authorId === user.id;
+    // Fetch categories from API
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await blogService.getCategories();
+                if (response.data && response.data.success) {
+                    const categoryNames = response.data.data.map((category: { name: string }) => category.name);
+                    setCategories(categoryNames);
+                    
+                    // Create a mapping of category names to color classes
+                    const colorMap: Record<string, string> = {};
+                    categoryNames.forEach((name: string, index: number) => {
+                        colorMap[name] = defaultColorClasses[index % defaultColorClasses.length];
+                    });
+                    setCategoryColors(colorMap);
+                } else {
+                    console.error('Failed to fetch categories:', response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+        
+        fetchCategories();
+    }, []);
     
-    // Check if user is admin or moderator
-    const isAdmin = user && (user.roles?.includes('ROLE_ADMIN') || user.roles?.includes('ROLE_MODERATOR'));
-
+    // Helper function to get color for a category
+    const getCategoryColor = (category: string): string => {
+        return categoryColors[category] || 'bg-gray-500/20 text-gray-500'; // Fallback color
+    };
+    
+    // Determine author/admin privileges
+    const isAuthor = user?.id === blog.authorId;
+    const isAdmin = Array.isArray(user?.roles) ? user!.roles.includes('ADMIN') : false;
 
     // Update liked state when blog changes
     useEffect(() => {
@@ -153,12 +183,15 @@ export function BlogPost(props: { blog: any }) {
                 });
                 // Update blog status in UI
                 blog.status = "PENDING";
+                
+                // Redirect back to list / management
+                router.push("/dev-forum/blog");
             }
         } catch (error) {
             console.error("Error submitting blog for review:", error);
             toast({
                 title: "Error",
-                description: error.response?.data?.message || "Failed to submit blog for review",
+                description: (error as any).response?.data?.message || "Failed to submit blog for review",
                 variant: "destructive",
             });
         } finally {
@@ -197,7 +230,7 @@ export function BlogPost(props: { blog: any }) {
             console.error("Error approving blog:", error);
             toast({
                 title: "Error",
-                description: error.response?.data?.message || "Failed to approve blog",
+                description: (error as any).response?.data?.message || "Failed to approve blog",
                 variant: "destructive",
             });
         } finally {
@@ -237,7 +270,7 @@ export function BlogPost(props: { blog: any }) {
             console.error("Error rejecting blog:", error);
             toast({
                 title: "Error",
-                description: error.response?.data?.message || "Failed to reject blog",
+                description: (error as any).response?.data?.message || "Failed to reject blog",
                 variant: "destructive",
             });
         } finally {
@@ -271,8 +304,8 @@ export function BlogPost(props: { blog: any }) {
                 <div className="mb-8">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
                         <div>
-                            <Badge className={`${categoryColors[blog.category] || 'bg-gray-500/20 text-gray-500'} px-2 py-1`}>
-                                {blog.category}
+                            <Badge className={`${categoryColors[blog.categoryName] || 'bg-gray-500/20 text-gray-500'} px-2 py-1`}>
+                                {blog.categoryName}
                             </Badge>
                             <Badge className={`${statusColors[blog.status || (blog.published ? 'PUBLISHED' : 'DRAFT')] || 'bg-gray-500/20 text-gray-500'} ml-2 px-2 py-1`}>
                                 {blog.status || (blog.published ? 'PUBLISHED' : 'DRAFT')}
@@ -330,7 +363,7 @@ export function BlogPost(props: { blog: any }) {
                             {blog.tags && blog.tags.length > 0 && (
                                 <div className="mt-8 flex flex-wrap gap-2">
                                     <Tag className="h-5 w-5 text-gray-400" />
-                                    {blog.tags.map(tag => (
+                                    {blog.tags.map((tag: string) => (
                                         <span key={tag} className="bg-white/10 text-gray-300 px-3 py-1 rounded-full text-sm">
                                             {tag}
                                         </span>
@@ -421,7 +454,7 @@ export function BlogPost(props: { blog: any }) {
                         {sampleRelatedPosts.map((post) => (
                             <Card key={post.id} className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg border-none hover:shadow-lg transition-all duration-300">
                                 <CardContent className="p-4">
-                                    <Badge className={`${categoryColors[post.category]} px-2 py-0.5 mb-2`}>
+                                    <Badge className={`${getCategoryColor(post.category)} px-2 py-0.5 mb-2`}>
                                         {post.category}
                                     </Badge>
                                     <h3 className="text-lg font-bold mb-2">{post.title}</h3>
