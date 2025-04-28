@@ -100,4 +100,9 @@ public interface BlogService {
      * Validates if a blog can be updated
      */
     void validateBlogUpdateEligibility(UUID blogId);
+    
+    /**
+     * Counts blogs by status
+     */
+    long countBlogsByStatus(BlogStatus status);
 }

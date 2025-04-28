@@ -58,6 +58,7 @@ public class Blog extends Auditable {
     private Set<User> likedBy = new HashSet<>();
 
     @Column(name = "likes_count", nullable = false)
+    @Builder.Default
     private Integer likes = 0;
 
     @Column(name = "points_cost")
@@ -69,10 +70,9 @@ public class Blog extends Auditable {
     @Builder.Default
     private BlogStatus status = BlogStatus.DRAFT;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    @Builder.Default
-    private BlogCategory category = BlogCategory.GENERAL;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
+    private CustomBlogCategory category;
 
     @Column(name = "published_at")
     private LocalDateTime publishedAt;

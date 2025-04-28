@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.doctech.blog.model.BlogCategory;
+// import org.doctech.blog.model.BlogCategory; - not using enum anymore
 import org.doctech.blog.model.BlogStatus;
 
 import java.time.LocalDateTime;
@@ -37,7 +37,7 @@ public class BlogDTO {
     private Integer likes;
 
     @Builder.Default
-    private BlogCategory category = BlogCategory.GENERAL;
+    private String categoryName = "GENERAL";
 
     @PositiveOrZero(message = "Points cost must be zero or positive")
     private Integer pointsCost;

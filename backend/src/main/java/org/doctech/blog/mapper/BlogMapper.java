@@ -13,6 +13,7 @@ public interface BlogMapper {
     @Mapping(source = "author.username", target = "authorUsername")
     @Mapping(source = "author.avatar", target = "authorAvatarUrl")
     @Mapping(target = "likes", expression = "java(blog.getLikes())")
+    @Mapping(source = "category.name", target = "categoryName")
     @Mapping(target = "hasLiked", ignore = true)
     BlogDTO toDTO(Blog blog);
 

@@ -823,33 +823,32 @@ const blogService = {
 
   // For admin: approve a blog
   approveBlog: (id:any) =>
-      api.post(`/admin/blogs/${id}/approve`, {}, { headers: getAuthHeader() }),
+      api.post(`/blogs/admin/blogs/${id}/approve`, {}, { headers: getAuthHeader() }),
 
   // For admin: reject a blog
   rejectBlog: (id:any, reason:string) =>
-      api.post(`/admin/blogs/${id}/reject`, { reason }, { headers: getAuthHeader() }),
+      api.post(`/blogs/admin/blogs/${id}/reject`, { reason }, { headers: getAuthHeader() }),
 
   // For admin: get pending blogs
   getPendingBlogs: (page = 0, size = 10) =>
-      api.get(`/admin/blogs/pending?page=${page}&size=${size}`, { headers: getAuthHeader() }),
+      api.get(`/blogs/admin/blogs/pending?page=${page}&size=${size}`, { headers: getAuthHeader() }),
 
   // For admin: get blogs by status
   getBlogsByStatus: (status:string, page = 0, size = 10) =>
-      api.get(`/admin/blogs/status/${status}?page=${page}&size=${size}`, { headers: getAuthHeader() }),
+      api.get(`/blogs/admin/blogs/status/${status}?page=${page}&size=${size}`, { headers: getAuthHeader() }),
       
   // For admin: get blog statistics
-  getBlogStats: (): Promise<AxiosResponse> => {
-    return axiosInstance.get('/admin/blogs/stats');
-  },
+  getBlogStats: (page = 0, size = 10) => 
+    api.get('/blogs/admin/blogs/stats', { headers: getAuthHeader() }),
   
   // Category management methods
-  createCategory: (categoryName: string): Promise<AxiosResponse> => {
-    return axiosInstance.post('/admin/blog-categories', { name: categoryName });
-  },
+  createCategory: (categoryName: string) => 
+    api.post('/blogs/admin/blog-categories', { name: categoryName }, { headers: getAuthHeader() }),
   
-  deleteCategory: (categoryName: string): Promise<AxiosResponse> => {
-    return axiosInstance.delete(`/admin/blog-categories/${categoryName}`);
-  },
+  deleteCategory: (categoryName: string) => 
+    api.delete(`/blogs/admin/blog-categories/${categoryName}`, { headers: getAuthHeader() }),
+  
+  // Get all blog categories (kept this one, removed the duplicate below)
 
   // Toggle like on a blog
   toggleLike: (blogId:any) =>

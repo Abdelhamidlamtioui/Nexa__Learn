@@ -44,11 +44,24 @@ export default function BlogManagement() {
     const fetchBlogs = async () => {
       try {
         setIsLoading(true);
-        const response = await blogService.getAllBlogs();
+        console.log('Fetching pending blogs with URL:', '/admin/blogs/pending');
+        
+        // Debugging - log the original service function
+        console.log('getPendingBlogs method:', blogService.getPendingBlogs);
+        
+        const response = await blogService.getPendingBlogs();
+        console.log('API Response:', response);
 
         if (response.data && response.data.success) {
-          setBlogs(response.data.data);
+          // Support both paged and non-paged responses
+          const data = response.data.data;
+          const blogsArray = (data && Array.isArray(data.content)) ? data.content : data;
+
+          console.log('Blog data received:', blogsArray);
+          // Ensure we always store an array to avoid runtime errors
+          setBlogs(Array.isArray(blogsArray) ? blogsArray : []);
         } else {
+          console.error('API returned success=false:', response.data);
           toast({
             title: "Error",
             description: "Failed to load blogs",
@@ -57,6 +70,18 @@ export default function BlogManagement() {
         }
       } catch (error: any) {
         console.error("Error fetching blogs:", error);
+        // Debug the error details
+        console.error('Error details:', {
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          data: error.response?.data,
+          config: {
+            url: error.config?.url,
+            method: error.config?.method,
+            headers: error.config?.headers,
+          }
+        });
+        
         toast({
           title: "Error",
           description: error.response?.data?.message || "Failed to load blogs",
@@ -71,7 +96,7 @@ export default function BlogManagement() {
   }, [toast]);
 
   // Filter blogs based on search term
-  const filteredBlogs = blogs.filter(blog => {
+  const filteredBlogs = Array.isArray(blogs) ? blogs.filter(blog => {
     if (!searchTerm.trim()) return true;
     const term = searchTerm.toLowerCase();
     return (
@@ -80,7 +105,7 @@ export default function BlogManagement() {
       blog.category?.toLowerCase().includes(term) ||
       blog.status?.toLowerCase().includes(term)
     );
-  });
+  }) : []; // Default to empty array if blogs is not an array
 
   // Handle blog approval
   const handleApproveBlog = async (blogId: string) => {
@@ -267,8 +292,11 @@ export default function BlogManagement() {
                             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-400">
                               <span>By: {blog.authorUsername}</span>
                               <span>Created: {formatDate(blog.createdAt)}</span>
-                              <span>Updated: {formatDate(blog.updatedAt)}</span>
-                              <span>Views: {blog.views || 0}</span>
+                              <span>Updated: {formatDate(blog.lastUpdatedAt || blog.createdAt)}</span>
+                              {/* Only show view count if supported by backend */}
+                              {blog.views !== undefined && (
+                                <span>Views: {blog.views}</span>
+                              )}
                             </div>
                             {blog.status === "REJECTED" && blog.rejectionReason && (
                               <div className="mt-3 bg-red-500/10 border border-red-500/20 text-red-400 p-2 rounded-md text-sm">

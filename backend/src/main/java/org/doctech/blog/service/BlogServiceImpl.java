@@ -5,6 +5,7 @@ import org.doctech.blog.dto.BlogDTO;
 import org.doctech.blog.mapper.BlogMapper;
 import org.doctech.blog.model.Blog;
 import org.doctech.blog.model.BlogStatus;
+import org.doctech.blog.model.CustomBlogCategory;
 import org.doctech.blog.repository.BlogRepository;
 import org.doctech.common.exception.BlogNotFoundException;
 import org.doctech.common.exception.IllegalOperationException;
@@ -34,6 +35,7 @@ public class BlogServiceImpl implements BlogService {
     private final UserRepository userRepository;
     private final BlogMapper blogMapper;
     private final BlogLikeService blogLikeService;
+    private final BlogCategoryService blogCategoryService;
 
     @Override
     public BlogDTO createBlog(BlogDTO blogDTO) {
@@ -48,6 +50,13 @@ public class BlogServiceImpl implements BlogService {
         // All new blogs start as drafts
         blog.setStatus(BlogStatus.DRAFT);
 
+        // Set category using the categoryName from DTO
+        if (blogDTO.getCategoryName() != null) {
+            CustomBlogCategory category = blogCategoryService.getCategoryByName(blogDTO.getCategoryName())
+                    .orElseThrow(() -> new IllegalOperationException("Category not found: " + blogDTO.getCategoryName()));
+            blog.setCategory(category);
+        }
+
         Blog savedBlog = blogRepository.save(blog);
         return blogMapper.toDTO(savedBlog);
     }
@@ -61,7 +70,13 @@ public class BlogServiceImpl implements BlogService {
         blog.setContent(blogDTO.getContent());
         blog.setTags(blogDTO.getTags());
         blog.setPointsCost(blogDTO.getPointsCost());
-        blog.setCategory(blogDTO.getCategory());
+
+        // Set category using the categoryName from DTO
+        if (blogDTO.getCategoryName() != null) {
+            CustomBlogCategory category = blogCategoryService.getCategoryByName(blogDTO.getCategoryName())
+                    .orElseThrow(() -> new IllegalOperationException("Category not found: " + blogDTO.getCategoryName()));
+            blog.setCategory(category);
+        }
 
         // If status was updated, update it
         if (blogDTO.getStatus() != null) {
@@ -268,5 +283,11 @@ public class BlogServiceImpl implements BlogService {
         }
 
         return dto;
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public long countBlogsByStatus(BlogStatus status) {
+        return blogRepository.countByStatus(status);
     }
 }

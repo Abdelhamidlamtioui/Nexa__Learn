@@ -54,8 +54,8 @@ export default function BlogDashboard() {
           
           // Get the 5 most recent blogs
           const sortedBlogs = [...blogs].sort((a, b) => 
-            new Date(b.updatedAt || b.createdAt).getTime() - 
-            new Date(a.updatedAt || a.createdAt).getTime()
+            new Date(b.lastUpdatedAt || b.createdAt).getTime() - 
+            new Date(a.lastUpdatedAt || a.createdAt).getTime()
           ).slice(0, 5);
           
           setRecentBlogs(sortedBlogs);
@@ -259,14 +259,16 @@ export default function BlogDashboard() {
                         <div className="flex-1">
                           <div className="font-medium">{blog.title}</div>
                           <div className="flex items-center mt-1 text-sm text-gray-400 space-x-4">
-                            <div>By {blog.author?.username || "Unknown"}</div>
-                            <div>Updated {formatDate(blog.updatedAt || blog.createdAt)}</div>
+                            <div>By {blog.authorUsername || blog.author?.username || "Unknown"}</div>
+                            <div>Updated {formatDate(blog.lastUpdatedAt || blog.createdAt)}</div>
                             <div className="flex items-center">
                               <ThumbsUp className="h-3.5 w-3.5 mr-1" /> {blog.likes || 0}
                             </div>
-                            <div className="flex items-center">
-                              <Eye className="h-3.5 w-3.5 mr-1" /> {blog.views || 0}
-                            </div>
+                            {blog.views !== undefined && (
+                              <div className="flex items-center">
+                                <Eye className="h-3.5 w-3.5 mr-1" /> {blog.views}
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className="ml-4 flex items-center">

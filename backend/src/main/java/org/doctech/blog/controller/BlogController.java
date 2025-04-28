@@ -17,6 +17,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -109,6 +111,15 @@ public class BlogController {
         PagedResponse<BlogDTO> response = PagedResponse.of(blogs.getContent(), blogs);
 
         return ResponseEntity.ok(new ApiResponse(true, "Blogs retrieved successfully", response));
+    }
+
+    // Legacy endpoint - keeping for backward compatibility
+    @GetMapping("/admin/pending")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
+    public ResponseEntity<ApiResponse> getAdminPendingBlogs(Pageable pageable) { 
+        Page<BlogDTO> blogs = blogService.getPendingBlogs(pageable);
+        PagedResponse<BlogDTO> response = PagedResponse.of(blogs.getContent(), blogs);
+        return ResponseEntity.ok(new ApiResponse(true, "Pending blogs retrieved successfully", response));
     }
 
     @GetMapping("/published")
@@ -206,5 +217,91 @@ public class BlogController {
         PagedResponse<BlogDTO> response = PagedResponse.of(blogs.getContent(), blogs);
 
         return ResponseEntity.ok(new ApiResponse(true, "Popular blogs retrieved successfully", response));
+    }
+
+    // Admin endpoints for blog management
+
+    /**
+     * Admin endpoint for approving a blog
+     */
+    @PostMapping("/admin/blogs/{id}/approve")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse> approveBlog(@PathVariable UUID id) {
+        return ResponseEntity.ok(new ApiResponse(true, "Blog approved and published",
+                blogService.publishBlog(id)));
+    }
+
+    /**
+     * Admin endpoint for rejecting a blog
+     */
+    @PostMapping("/admin/blogs/{id}/reject")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse> rejectBlog(
+            @PathVariable UUID id,
+            @RequestBody Map<String, String> requestBody) {
+        String reason = requestBody.get("reason");
+        return ResponseEntity.ok(new ApiResponse(true, "Blog rejected",
+                blogService.rejectBlog(id, reason)));
+    }
+
+    /**
+     * Admin endpoint to get blogs with pending status
+     */
+    @GetMapping("/admin/blogs/pending")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse> getPendingBlogs(Pageable pageable, Authentication authentication) {
+        UUID currentUserId = null;
+        if (authentication != null && authentication.getPrincipal() instanceof SecurityUser) {
+            currentUserId = ((SecurityUser) authentication.getPrincipal()).getId();
+        }
+        
+        Page<BlogDTO> blogs = blogService.getBlogsByStatus(BlogStatus.PENDING, pageable, currentUserId);
+        PagedResponse<BlogDTO> response = PagedResponse.of(blogs.getContent(), blogs);
+        
+        return ResponseEntity.ok(new ApiResponse(true, "Pending blogs retrieved successfully", response));
+    }
+
+    /**
+     * Admin endpoint to get blogs by status
+     */
+    @GetMapping("/admin/blogs/status/{status}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse> getBlogsByStatus(
+            @PathVariable String status,
+            Pageable pageable,
+            Authentication authentication) {
+        UUID currentUserId = null;
+        if (authentication != null && authentication.getPrincipal() instanceof SecurityUser) {
+            currentUserId = ((SecurityUser) authentication.getPrincipal()).getId();
+        }
+        
+        BlogStatus blogStatus = BlogStatus.valueOf(status.toUpperCase());
+        Page<BlogDTO> blogs = blogService.getBlogsByStatus(blogStatus, pageable, currentUserId);
+        PagedResponse<BlogDTO> response = PagedResponse.of(blogs.getContent(), blogs);
+        
+        return ResponseEntity.ok(new ApiResponse(true, status + " blogs retrieved successfully", response));
+    }
+    
+    /**
+     * Admin endpoint to get blog statistics
+     */
+    @GetMapping("/admin/blogs/stats")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse> getBlogStats() {
+        // Get counts for each status
+        Map<BlogStatus, Long> statusCounts = new HashMap<>();
+        for (BlogStatus status : BlogStatus.values()) {
+            long count = blogService.countBlogsByStatus(status);
+            statusCounts.put(status, count);
+        }
+        
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("total", statusCounts.values().stream().mapToLong(Long::longValue).sum());
+        stats.put("published", statusCounts.getOrDefault(BlogStatus.PUBLISHED, 0L));
+        stats.put("pending", statusCounts.getOrDefault(BlogStatus.PENDING, 0L));
+        stats.put("draft", statusCounts.getOrDefault(BlogStatus.DRAFT, 0L));
+        stats.put("rejected", statusCounts.getOrDefault(BlogStatus.REJECTED, 0L));
+        
+        return ResponseEntity.ok(new ApiResponse(true, "Blog statistics retrieved successfully", stats));
     }
 }

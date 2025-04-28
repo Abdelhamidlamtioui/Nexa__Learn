@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: 022-add-status-column-to-blogs
+      author: your-name
+      changes:
+        # Add the status column to blogs table
+        - addColumn:
+            tableName: blogs
+            columns:
+              - column:
+                  name: status
+                  type: varchar(20)
+                  defaultValue: 'DRAFT'
+                  constraints:
+                    nullable: false
+        
+        # Set proper status values for existing records
+        - update:
+            tableName: blogs
+            columns:
+              - column:
+                  name: status
+                  value: 'PUBLISHED'
+            where: published_at IS NOT NULL
+        
+        - update:
+            tableName: blogs
+            columns:
+              - column:
+                  name: status
+                  value: 'REJECTED'
+            where: rejection_reason IS NOT NULL
+        
+        - update:
+            tableName: blogs
+            columns:
+              - column:
+                  name: status
+                  value: 'PENDING'
+            where: published_at IS NULL AND rejection_reason IS NULL
+        
+        # Create a check constraint to ensure only valid enum values are used
+        - sql:
+            sql: ALTER TABLE blogs ADD CONSTRAINT ck_blog_status_enum CHECK (status IN ('DRAFT', 'PENDING', 'PUBLISHED', 'REJECTED', 'ARCHIVED'))
+        
+        # Create an index to improve query performance on status
+        - createIndex:
+            tableName: blogs
+            indexName: idx_blog_status
+            columns:
+              - column:
+                  name: status

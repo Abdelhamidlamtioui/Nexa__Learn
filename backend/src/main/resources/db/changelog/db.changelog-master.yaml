@@ -41,3 +41,7 @@ databaseChangeLog:
       file: db/changelog/changes/020-add-category-to-blogs.yaml
   - include:
       file: db/changelog/changes/021-add-rejection-reason-to-blogs.yaml
+  - include:
+      file: db/changelog/changes/022-add-status-to-blogs.yaml
+  - include:
+      file: db/changelog/changes/023-create-custom-blog-categories-table.yaml

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -45,7 +45,7 @@ const statusColors = {
 };
 
 // Format the date
-const formatDate = (dateString) => {
+const formatDate = (dateString: string | null) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -78,7 +78,8 @@ const sampleRelatedPosts = [
     }
 ];
 
-export function BlogPost({ blog }) {
+export function BlogPost(props: { blog: any }) {
+    const { blog } = props;
     const router = useRouter();
     const { toast } = useToast();
     const { isAuthenticated, user } = useAuthStore();
@@ -242,21 +243,21 @@ export function BlogPost({ blog }) {
         } finally {
             setIsProcessing(false);
         }
-    };
-
-
+    }
 
     // Parse HTML content (in a real app, use a proper HTML parser or markdown)
-    const createMarkup = (html) => {
-        return { __html: html };
-    };
+    const createMarkup = (html: string) => {
+        return { __html: html }
+    }
 
     if (!blog) {
         return <div className="text-white">Loading blog post...</div>;
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-900 to-blue-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-white py-12 px-4">
+        <div 
+            className="min-h-screen bg-gradient-to-br from-blue-900 to-blue-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-white py-12 px-4"
+        >
             <div className="container mx-auto max-w-4xl">
                 {/* Back button */}
                 <button
@@ -451,5 +452,6 @@ export function BlogPost({ blog }) {
                 </div>
             </div>
         </div>
-    );
+    </div>
+    )
 }

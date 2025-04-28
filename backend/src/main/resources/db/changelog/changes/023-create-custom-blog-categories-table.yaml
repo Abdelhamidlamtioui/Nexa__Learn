@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 023-create-custom-blog-categories-table
+      author: anas
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: custom_blog_categories
+      changes:
+        - createTable:
+            tableName: custom_blog_categories
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+        - createIndex:
+            indexName: idx_custom_blog_category_name
+            tableName: custom_blog_categories
+            columns:
+              - column:
+                  name: name
