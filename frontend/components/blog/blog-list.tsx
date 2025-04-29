@@ -49,8 +49,31 @@ export function BlogList() {
     const [hasMore, setHasMore] = useState(true);
     const [totalPages, setTotalPages] = useState(0);
 
-    // Categories for filtering
-    const categories = ["All", "GENERAL", "TECHNOLOGY", "PROGRAMMING", "DESIGN", "CAREER", "TUTORIAL", "REVIEW", "NEWS", "PROJECT_SHOWCASE", "COMMUNITY"];
+    // Categories for filtering (dynamic)
+    const [categories, setCategories] = useState<string[]>([]);
+    const [loadingCategories, setLoadingCategories] = useState(true);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await blogService.getCategories();
+                let names: string[] = [];
+                if (response.data && response.data.success) {
+                    const data = response.data.data;
+                    names = Array.isArray(data) ? data.filter(Boolean) : [];
+                }
+                setCategories(names);
+            } catch (error) {
+                setCategories([]);
+            } finally {
+                setLoadingCategories(false);
+            }
+        };
+        fetchCategories();
+    }, []);
+
+    // Always show 'All' as the first filter
+    const allCategories = ['All', ...categories.filter(c => c && c.toUpperCase() !== 'ALL')];
 
     // Fetch blogs from API
     useEffect(() => {
@@ -148,14 +171,21 @@ export function BlogList() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-900 to-blue-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-white py-12 px-4">
             <div className="container mx-auto max-w-6xl">
-                <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-yellow-500 mb-2">
-                    Developer Blog
-                </h1>
                 <p className="text-xl text-gray-300 mb-8">Insights, tutorials, and community highlights</p>
 
                 {/* Category filter */}
                 <div className="flex flex-wrap gap-2 mb-8">
-                    {categories.map(category => (
+                    {/* Always-visible 'All' button */}
+                    <Button
+                        key="All"
+                        variant={filter === "All" ? "default" : "outline"}
+                        onClick={() => handleFilterChange("All")}
+                        className={`rounded-full ${filter === "All" ? 'bg-gradient-to-r from-cyan-500 to-cyan-600 text-white border-none' : 'text-white border-white/20 hover:bg-white/10'}`}
+                    >
+                        All
+                    </Button>
+                    {/* Dynamic category buttons */}
+                    {categories.filter((category) => category && category.toUpperCase() !== "ALL").map((category) => (
                         <Button
                             key={category}
                             variant={filter === category ? "default" : "outline"}
@@ -173,9 +203,6 @@ export function BlogList() {
                         <div className="md:flex">
                             <div className="flex-1 p-6">
                                 <div className="flex items-center gap-2 mb-3">
-                                    <Badge className={`${featuredBlog.category ? categoryColors[featuredBlog.category] : 'bg-gray-500/20 text-gray-500'} px-2 py-0.5`}>
-                                        {featuredBlog.category || "General"}
-                                    </Badge>
                                     <Badge className={`${featuredBlog.status ? statusColors[featuredBlog.status] : (featuredBlog.published ? statusColors.PUBLISHED : statusColors.DRAFT)} px-2 py-0.5`}>
                                         {featuredBlog.status || (featuredBlog.published ? "PUBLISHED" : "DRAFT")}
                                     </Badge>
@@ -234,13 +261,6 @@ export function BlogList() {
                                         <span>Views coming soon</span>
                                     </div>
                                     <div className="pt-4">
-                                        <Button
-                                            variant="outline"
-                                            className="w-full border-white/20 hover:bg-white/10"
-                                            onClick={() => navigateToBlog(featuredBlog.id)}
-                                        >
-                                            <Bookmark className="mr-2 h-4 w-4" /> Save for later
-                                        </Button>
                                     </div>
                                 </div>
                             </div>
@@ -272,8 +292,8 @@ export function BlogList() {
                         >
                             <CardHeader className="pb-2">
                                 <div className="flex justify-between items-center mb-2">
-                                    <Badge className={`${blog.category ? categoryColors[blog.category] : 'bg-gray-500/20 text-gray-500'} px-2 py-0.5`}>
-                                        {blog.category || "General"}
+                                    <Badge className={`${blog.category?.name ? categoryColors[blog.category?.name] : 'bg-gray-500/20 text-gray-500'} px-2 py-0.5`}>
+                                        {blog.category?.name || "General"}
                                     </Badge>
                                     <Badge className={`${blog.status ? statusColors[blog.status] : (blog.published ? statusColors.PUBLISHED : statusColors.DRAFT)} px-2 py-0.5`}>
                                         {blog.status || (blog.published ? "Published" : "Draft")}
@@ -282,7 +302,6 @@ export function BlogList() {
                                 <h3 className="text-xl font-bold mb-2">{blog.title}</h3>
                                 <div className="flex items-center gap-2">
                                     <Avatar className="h-6 w-6">
-// ...
                                         <AvatarFallback className="bg-gradient-to-br from-blue-500 to-cyan-600 text-white text-xs">
                                             {blog.authorUsername?.[0]?.toUpperCase() || 'U'}
                                         </AvatarFallback>

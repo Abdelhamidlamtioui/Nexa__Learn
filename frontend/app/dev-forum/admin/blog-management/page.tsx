@@ -45,12 +45,12 @@ export default function BlogManagement() {
     const fetchBlogs = async () => {
       try {
         setIsLoading(true);
-        console.log('Fetching pending blogs with URL:', '/admin/blogs/pending');
+        console.log('Fetching all blogs for management');
         
         // Debugging - log the original service function
-        console.log('getPendingBlogs method:', blogService.getPendingBlogs);
+        console.log('getAllBlogs method:', blogService.getAllBlogs);
         
-        const response = await blogService.getPendingBlogs();
+        const response = await blogService.getAllBlogs(0, 100); // Fetch all (or increase page size as needed)
         console.log('API Response:', response);
 
         if (response.data && response.data.success) {
@@ -247,14 +247,13 @@ export default function BlogManagement() {
                 />
               </div>
               <Button
-                onClick={() => router.push("/dev-forum/create-blog")}
+                onClick={() => router.push("/dev-forum/blog/new")}
                 className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white"
               >
                 Create New Blog
               </Button>
             </div>
           </div>
-
           {isLoading ? (
             <div className="min-h-[400px] flex flex-col items-center justify-center">
               <Loader className="animate-spin h-8 w-8 mb-4" />
@@ -311,23 +310,45 @@ export default function BlogManagement() {
                             </Button>
                             
                             {blog.status === "PENDING" && (
-                              <div className="flex gap-2">
-                                <Button
-                                  onClick={() => handleApproveBlog(blog.id)}
-                                  disabled={isProcessing}
-                                  className="bg-green-600 hover:bg-green-700 text-white"
-                                >
-                                  <Check className="h-4 w-4 mr-2" /> Approve
-                                </Button>
-                                <Button
-                                  onClick={() => openRejectionDialog(blog.id)}
-                                  disabled={isProcessing}
-                                  className="bg-red-600 hover:bg-red-700 text-white"
-                                >
-                                  <X className="h-4 w-4 mr-2" /> Reject
-                                </Button>
-                              </div>
-                            )}
+  <div className="flex gap-2">
+    <Button
+      onClick={() => handleApproveBlog(blog.id)}
+      disabled={isProcessing}
+      className="bg-green-600 hover:bg-green-700 text-white"
+    >
+      <Check className="h-4 w-4 mr-2" /> Approve
+    </Button>
+    <Button
+      onClick={() => openRejectionDialog(blog.id)}
+      disabled={isProcessing}
+      className="bg-red-600 hover:bg-red-700 text-white"
+    >
+      <X className="h-4 w-4 mr-2" /> Reject
+    </Button>
+  </div>
+)}
+{blog.status === "PUBLISHED" && (
+  <div className="flex gap-2">
+    <Button
+      onClick={() => openRejectionDialog(blog.id)}
+      disabled={isProcessing}
+      className="bg-red-600 hover:bg-red-700 text-white"
+    >
+      <X className="h-4 w-4 mr-2" /> Reject
+    </Button>
+  </div>
+)}
+{blog.status === "REJECTED" && (
+  <div className="flex gap-2">
+    <Button
+      onClick={() => handleApproveBlog(blog.id)}
+      disabled={isProcessing}
+      className="bg-green-600 hover:bg-green-700 text-white"
+    >
+      <Check className="h-4 w-4 mr-2" /> Approve
+    </Button>
+  </div>
+)}
                           </div>
                         </div>
                       </CardContent>

@@ -22,6 +22,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Transactional
 public class BlogLikeServiceImpl implements BlogLikeService {
+    @Override
+    @Transactional(readOnly = true)
+    public java.util.List<UUID> getLikedBlogIdsByUserId(UUID userId) {
+        return blogLikesRepository.findLikedBlogIdsByUserId(userId);
+    }
 
     private final BlogRepository blogRepository;
     private final UserRepository userRepository;

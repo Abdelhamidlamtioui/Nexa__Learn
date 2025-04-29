@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface BlogLikesRepository extends JpaRepository<BlogLike, BlogLikeId> {
+    @Query("SELECT bl.blog.id FROM BlogLike bl WHERE bl.user.id = :userId")
+    java.util.List<UUID> findLikedBlogIdsByUserId(@Param("userId") UUID userId);
     boolean existsByBlogIdAndUserId(UUID blogId, UUID userId);
     Optional<BlogLike> findByBlogIdAndUserId(UUID blogId, UUID userId);
 

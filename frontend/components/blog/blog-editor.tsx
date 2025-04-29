@@ -712,7 +712,7 @@ export function BlogEditor({ blogId = null }) {
                 </Card>
 
                 {/* Markdown Cheatsheet Card */}
-                <Card className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg border-none">
+                {/* <Card className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg border-none">
                     <CardHeader>
                         <CardTitle>Markdown Cheatsheet</CardTitle>
                     </CardHeader>
@@ -754,7 +754,7 @@ export function BlogEditor({ blogId = null }) {
                             </div>
                         </div>
                     </CardContent>
-                </Card>
+                </Card> */}
             </div>
         </div>
     );

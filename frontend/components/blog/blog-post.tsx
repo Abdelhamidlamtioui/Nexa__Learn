@@ -23,16 +23,16 @@ import { useAuthStore } from "@/stores/useAuthStore";
 
 // Default color values that will be used as fallbacks
 const defaultColorClasses = [
-    "bg-gray-500/20 text-gray-500",
-    "bg-blue-500/20 text-blue-500",
-    "bg-green-500/20 text-green-500",
-    "bg-purple-500/20 text-purple-500",
-    "bg-orange-500/20 text-orange-500",
-    "bg-pink-500/20 text-pink-500",
     "bg-cyan-500/20 text-cyan-500",
-    "bg-indigo-500/20 text-indigo-500", 
-    "bg-yellow-500/20 text-yellow-500",
-    "bg-red-500/20 text-red-500"
+    "bg-cyan-500/20 text-cyan-500",
+    "bg-cyan-500/20 text-cyan-500",
+    "bg-cyan-500/20 text-cyan-500",
+    "bg-cyan-500/20 text-cyan-500",
+    "bg-cyan-500/20 text-cyan-500",
+    "bg-cyan-500/20 text-cyan-500",
+    "bg-cyan-500/20 text-cyan-500", 
+    "bg-cyan-500/20 text-cyan-500",
+    "bg-cyan-500/20 text-cyan-500"
 ];
 
 // Status to color mapping
@@ -90,7 +90,11 @@ export function BlogPost(props: { blog: any }) {
     const [isProcessing, setIsProcessing] = useState(false);
     const [categories, setCategories] = useState<string[]>([]);
     const [categoryColors, setCategoryColors] = useState<Record<string, string>>({});
-    
+
+
+    const isAdmin = Array.isArray(user?.roles) ? user!.roles.includes('ADMIN') : false;
+
+
     // Fetch categories from API
     useEffect(() => {
         const fetchCategories = async () => {
@@ -124,7 +128,6 @@ export function BlogPost(props: { blog: any }) {
     
     // Determine author/admin privileges
     const isAuthor = user?.id === blog.authorId;
-    const isAdmin = Array.isArray(user?.roles) ? user!.roles.includes('ADMIN') : false;
 
     // Update liked state when blog changes
     useEffect(() => {
@@ -199,6 +202,45 @@ export function BlogPost(props: { blog: any }) {
         }
     };
     
+    // Direct publish by admin/author
+    const handleDirectPublish = async () => {
+        if (!isAdmin && !isAuthor) {
+            toast({
+                title: "Permission Denied",
+                description: "Only the author or an admin can publish this blog",
+                variant: "destructive",
+            });
+            return;
+        }
+        try {
+            setIsProcessing(true);
+            const response = await blogService.approveBlog(blog.id);
+            if (response.data && response.data.success) {
+                toast({
+                    title: "Success",
+                    description: "Blog published successfully.",
+                    variant: "default",
+                });
+                router.push('/dev-forum/admin/dashboard');
+            } else {
+                toast({
+                    title: "Error",
+                    description: "Failed to publish blog.",
+                    variant: "destructive",
+                });
+            }
+        } catch (error) {
+            console.error("Error publishing blog:", error);
+            toast({
+                title: "Error",
+                description: (error as any).response?.data?.message || "Failed to publish blog.",
+                variant: "destructive",
+            });
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
     // Handle blog approval
     const handleApproveBlog = async () => {
         if (!isAdmin) {
@@ -385,7 +427,7 @@ export function BlogPost(props: { blog: any }) {
                                 </div>
 
                                 <div className="flex items-center gap-2">
-                                    <Button
+                                    {/* <Button
                                         variant="ghost"
                                         className={`${bookmarked ? 'text-cyan-500' : 'text-white'}`}
                                         onClick={() => setBookmarked(!bookmarked)}
@@ -397,19 +439,29 @@ export function BlogPost(props: { blog: any }) {
                                     <Button variant="ghost" className="text-white">    
                                         <Share2 className="h-5 w-5" />
                                         <span className="sr-only">Share</span>
-                                    </Button>
+                                    </Button> */}
                                 </div>
                             </div>
-                            
-                            {/* Blog action buttons based on status and user role */}
-                            {isAuthor && blog.status === 'DRAFT' && (
-                                <Button 
-                                    onClick={handleSubmitForReview}
-                                    disabled={isSubmitting}
-                                    className="mt-4 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white">
-                                    {isSubmitting ? "Submitting..." : "Submit for Review"}
-                                </Button>
-                            )}
+
+                            <div className="flex flex-row gap-3 mt-4 mb-4">
+                                {isAdmin && blog.status !== 'PUBLISHED' && (
+                                    <Button
+                                        onClick={handleDirectPublish}
+                                        disabled={isProcessing}
+                                        className="bg-green-600 hover:bg-green-700 text-white font-semibold"
+                                    >
+                                        {isProcessing ? 'Publishing...' : 'Publish'}
+                                    </Button>
+                                )}
+                                {isAuthor && blog.status === 'DRAFT' && (
+                                    <Button 
+                                        onClick={handleSubmitForReview}
+                                        disabled={isSubmitting}
+                                        className="bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white">
+                                        {isSubmitting ? "Submitting..." : "Submit for Review"}
+                                    </Button>
+                                )}
+                            </div>
                             
                             {isAdmin && blog.status === 'PENDING' && (
                                 <div className="mt-4 flex gap-2">

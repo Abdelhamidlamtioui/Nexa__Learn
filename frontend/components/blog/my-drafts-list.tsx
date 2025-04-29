@@ -58,9 +58,22 @@ export function MyDraftsList() {
                   <span className="ml-3 text-xs text-yellow-400 bg-yellow-900 rounded px-2 py-0.5">Draft</span>
                   <div className="text-xs text-gray-400 mt-1">Last updated: {new Date(draft.lastUpdatedAt || draft.createdAt).toLocaleString()}</div>
                 </div>
-                <Button size="sm" variant="secondary" onClick={() => router.push(`/dev-forum/blog/edit/${draft.id}`)}>
-                  Edit
-                </Button>
+                <div className="flex gap-2">
+                  <Button size="sm" variant="secondary" onClick={() => router.push(`/dev-forum/blog/edit/${draft.id}`)}>
+                    Edit
+                  </Button>
+                  <Button size="sm" variant="destructive" onClick={async () => {
+                    if (!window.confirm('Are you sure you want to delete this draft?')) return;
+                    try {
+                      await blogService.deleteBlog(draft.id);
+                      setDrafts(prev => prev.filter(d => d.id !== draft.id));
+                    } catch (e) {
+                      alert('Failed to delete draft.');
+                    }
+                  }}>
+                    Delete
+                  </Button>
+                </div>
               </li>
             ))}
           </ul>

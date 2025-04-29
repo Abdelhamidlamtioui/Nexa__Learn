@@ -9,17 +9,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface BlogRepository extends JpaRepository<Blog, UUID> {
+    @Query("SELECT b FROM Blog b WHERE b.id IN :blogIds")
+    Page<Blog> findByIdIn(@Param("blogIds") List<UUID> blogIds, Pageable pageable);
+
     Page<Blog> findByAuthorId(UUID authorId, Pageable pageable);
 
     // Replace findByPublishedTrue with findByStatus
     Page<Blog> findByStatus(BlogStatus status, Pageable pageable);
-
-    // Update tag query to include status
     @Query("SELECT b FROM Blog b WHERE :tag MEMBER OF b.tags AND b.status = :status")
     Page<Blog> findByTagAndStatus(String tag, BlogStatus status, Pageable pageable);
 

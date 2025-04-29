@@ -31,6 +31,7 @@ interface UserData {
 
 import { MyDraftsList } from "@/components/blog/my-drafts-list";
 import { MyPublishedList } from "@/components/blog/my-published-list";
+import { LikedBlogsList } from "@/components/blog/liked-blogs-list";
 
 export function UserProfile() {
     const [userData, setUserData] = useState<UserData | null>(null);
@@ -183,6 +184,7 @@ export function UserProfile() {
 
             <MyDraftsList />
             <MyPublishedList />
+            <LikedBlogsList />
 
             <div className="grid gap-6 md:grid-cols-2">
                 {/*<Card className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg">*/}

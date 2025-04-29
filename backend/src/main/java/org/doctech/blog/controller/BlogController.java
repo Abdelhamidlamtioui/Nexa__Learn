@@ -29,6 +29,16 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class BlogController {
 
+    @GetMapping("/liked")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse> getLikedBlogs(Pageable pageable, Authentication authentication) {
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        java.util.List<UUID> likedBlogIds = blogLikeService.getLikedBlogIdsByUserId(securityUser.getId());
+        Page<BlogDTO> blogs = blogService.getBlogsByIds(likedBlogIds, pageable, securityUser.getId());
+        org.doctech.common.dto.PagedResponse<BlogDTO> response = org.doctech.common.dto.PagedResponse.of(blogs.getContent(), blogs);
+        return ResponseEntity.ok(new ApiResponse(true, "Liked blogs retrieved successfully", response));
+    }
+
     private final BlogService blogService;
     private final BlogLikeService blogLikeService;
 

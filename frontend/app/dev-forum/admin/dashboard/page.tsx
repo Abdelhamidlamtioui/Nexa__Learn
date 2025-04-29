@@ -35,49 +35,56 @@ export default function BlogDashboard() {
   // Fetch blog stats and recent blogs
   useEffect(() => {
     const fetchBlogData = async () => {
-      try {
-        setIsLoading(true);
-        const response = await blogService.getAllBlogs();
+  try {
+    setIsLoading(true);
 
-        if (response.data && response.data.success) {
-          const blogs = response.data.data;
-          
-          // Calculate stats
-          const stats = {
-            total: blogs.length,
-            published: blogs.filter(blog => blog.status === "PUBLISHED").length,
-            rejected: blogs.filter(blog => blog.status === "REJECTED").length,
-            pending: blogs.filter(blog => blog.status === "PENDING").length,
-            draft: blogs.filter(blog => blog.status === "DRAFT").length
-          };
-          
-          setBlogStats(stats);
-          
-          // Get the 5 most recent blogs
-          const sortedBlogs = [...blogs].sort((a, b) => 
-            new Date(b.lastUpdatedAt || b.createdAt).getTime() - 
-            new Date(a.lastUpdatedAt || a.createdAt).getTime()
-          ).slice(0, 5);
-          
-          setRecentBlogs(sortedBlogs);
-        } else {
-          toast({
-            title: "Error",
-            description: "Failed to load blog data",
-            variant: "destructive",
-          });
-        }
-      } catch (error: any) {
-        console.error("Error fetching blog data:", error);
-        toast({
-          title: "Error",
-          description: error.response?.data?.message || "Failed to load blog data",
-          variant: "destructive",
-        });
-      } finally {
-        setIsLoading(false);
+    // Fetch blog statistics
+    const statsResponse = await blogService.getBlogStats();
+    if (statsResponse.data && statsResponse.data.success) {
+      setBlogStats(statsResponse.data.data);
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to load blog statistics",
+        variant: "destructive",
+      });
+    }
+
+    // Fetch recent blogs (for recent activity section)
+    const blogsResponse = await blogService.getAllBlogs();
+    if (blogsResponse.data && blogsResponse.data.success) {
+      // Support both paginated and non-paginated API responses
+      let blogs = [];
+      if (Array.isArray(blogsResponse.data.data)) {
+        blogs = blogsResponse.data.data;
+      } else if (blogsResponse.data.data && Array.isArray(blogsResponse.data.data.content)) {
+        blogs = blogsResponse.data.data.content;
       }
-    };
+
+      // Get the 3 most recent blogs
+      const sortedBlogs = [...blogs].sort((a, b) =>
+        new Date(b.lastUpdatedAt || b.createdAt).getTime() -
+        new Date(a.lastUpdatedAt || a.createdAt).getTime()
+      ).slice(0, 3);
+      setRecentBlogs(sortedBlogs);
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to load recent blogs",
+        variant: "destructive",
+      });
+    }
+  } catch (error: any) {
+    console.error("Error fetching blog data:", error);
+    toast({
+      title: "Error",
+      description: error.response?.data?.message || "Failed to load blog data",
+      variant: "destructive",
+    });
+  } finally {
+    setIsLoading(false);
+  }
+};
 
     fetchBlogData();
   }, [toast]);
@@ -239,25 +246,27 @@ export default function BlogDashboard() {
             <CardContent>
               {isLoading ? (
                 <div className="space-y-4">
-                  {Array(5).fill(0).map((_, i) => (
+                  {Array(3).fill(0).map((_, i) => (
                     <div key={i} className="flex items-center justify-between">
                       <Skeleton className="h-16 w-full bg-white/20" />
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {recentBlogs.length > 0 ? (
                     recentBlogs.map(blog => (
                       <div 
                         key={blog.id} 
-                        className="flex items-center justify-between p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+                        className="flex flex-col justify-between h-full p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
                       >
                         <div className="flex-1">
-                          <div className="font-medium">{blog.title}</div>
-                          <div className="flex items-center mt-1 text-sm text-gray-400 space-x-4">
+                          <div className="font-medium mb-2">{blog.title}</div>
+                          <div className="flex flex-wrap items-center mt-1 text-sm text-gray-400 space-x-4 mb-2">
                             <div>By {blog.authorUsername || blog.author?.username || "Unknown"}</div>
                             <div>Updated {formatDate(blog.lastUpdatedAt || blog.createdAt)}</div>
+                          </div>
+                          <div className="flex items-center space-x-4 mb-2">
                             <div className="flex items-center">
                               <ThumbsUp className="h-3.5 w-3.5 mr-1" /> {blog.likes || 0}
                             </div>
@@ -268,7 +277,7 @@ export default function BlogDashboard() {
                             )}
                           </div>
                         </div>
-                        <div className="ml-4 flex items-center">
+                        <div className="flex items-center mt-auto">
                           <Badge className={statusColors[blog.status]}>
                             {blog.status}
                           </Badge>
@@ -281,7 +290,7 @@ export default function BlogDashboard() {
                       </div>
                     ))
                   ) : (
-                    <div className="text-center py-8 text-gray-400">
+                    <div className="text-center py-8 text-gray-400 col-span-3">
                       No recent blog activity found
                     </div>
                   )}
@@ -311,7 +320,7 @@ export default function BlogDashboard() {
                     Manage Categories
                   </Button>
                 </Link>
-                <Link href="/dev-forum/blog/create" className="block">
+                <Link href="/dev-forum/blog/new" className="block">
                   <Button 
                     className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
                   >

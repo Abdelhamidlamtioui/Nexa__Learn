@@ -2,7 +2,7 @@
 
 import {useEffect, useState} from "react"
 import Link from "next/link"
-import { Bell, User, Sun, Moon, Settings, DollarSign, Menu, X, Shield, BookOpen } from "lucide-react"
+import { Bell, User, Sun, Moon, Settings, DollarSign, Menu, X, Shield, BookOpen, FileText } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -150,13 +150,21 @@ export function ForumHeader() {
                   </Link>
                 </DropdownMenuItem>
                 {isAdmin && (
-                  <DropdownMenuItem asChild>
-                    <Link href="/dev-forum/admin/users" className="flex items-center hover:bg-[#2a3754] focus:bg-[#2a3754] cursor-pointer">
-                      <Shield className="mr-2 h-4 w-4" />
-                      <span>Admin Dashboard</span>
-                    </Link>
-                  </DropdownMenuItem>
-                )}
+  <>
+    <DropdownMenuItem asChild>
+      <Link href="/dev-forum/admin/users" className="flex items-center hover:bg-[#2a3754] focus:bg-[#2a3754] cursor-pointer">
+        <Shield className="mr-2 h-4 w-4" />
+        <span>Users Dashboard</span>
+      </Link>
+    </DropdownMenuItem>
+    <DropdownMenuItem asChild>
+      <Link href="/dev-forum/admin/dashboard" className="flex items-center hover:bg-[#2a3754] focus:bg-[#2a3754] cursor-pointer">
+        <FileText className="mr-2 h-4 w-4" />
+        <span>Blog Dashboard</span>
+      </Link>
+    </DropdownMenuItem>
+  </>
+)}
                 {(isAdmin || isModerator) && (
                   <DropdownMenuItem asChild>
                     <Link href="/moderator/documentation" className="flex items-center hover:bg-[#2a3754] focus:bg-[#2a3754] cursor-pointer">

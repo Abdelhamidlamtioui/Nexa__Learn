@@ -30,6 +30,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Transactional
 public class BlogServiceImpl implements BlogService {
+    @Override
+    @Transactional(readOnly = true)
+    public Page<BlogDTO> getBlogsByIds(java.util.List<UUID> blogIds, Pageable pageable, UUID currentUserId) {
+        if (blogIds == null || blogIds.isEmpty()) {
+            return Page.empty(pageable);
+        }
+        return blogRepository.findByIdIn(blogIds, pageable)
+                .map(blog -> enrichDTOWithLikeStatus(blog, currentUserId));
+    }
 
     private final BlogRepository blogRepository;
     private final UserRepository userRepository;
@@ -103,9 +112,8 @@ public class BlogServiceImpl implements BlogService {
             throw new IllegalStateException("Blog is already published");
         }
 
-        // Only approved blogs or admin-created blogs can be published directly
-        if (blog.getStatus() != BlogStatus.PENDING && blog.getStatus() != BlogStatus.DRAFT) {
-            throw new IllegalStateException("Only pending or draft blogs can be published");
+        if (blog.getStatus() != BlogStatus.PENDING && blog.getStatus() != BlogStatus.DRAFT && blog.getStatus() != BlogStatus.REJECTED) {
+            throw new IllegalStateException("Only pending, draft, or rejected blogs can be published");
         }
 
         blog.publish();
@@ -131,7 +139,7 @@ public class BlogServiceImpl implements BlogService {
     public BlogDTO approveBlog(UUID id) {
         Blog blog = findBlogById(id);
 
-        if (blog.getStatus() != BlogStatus.PENDING) {
+        if (blog.getStatus() != BlogStatus.PENDING && blog.getStatus() != BlogStatus.REJECTED) {
             throw new IllegalStateException("Only pending blogs can be approved");
         }
 
@@ -145,8 +153,8 @@ public class BlogServiceImpl implements BlogService {
     public BlogDTO rejectBlog(UUID id, String reason) {
         Blog blog = findBlogById(id);
 
-        if (blog.getStatus() != BlogStatus.PENDING) {
-            throw new IllegalStateException("Only pending blogs can be rejected");
+        if (blog.getStatus() != BlogStatus.PENDING && blog.getStatus() != BlogStatus.PUBLISHED) {
+            throw new IllegalStateException("Only pending or published blogs can be rejected");
         }
 
         blog.reject(reason);

@@ -792,6 +792,9 @@ export interface BlogDTO {
 }
 
 const blogService = {
+    // Get liked blogs for current user
+    getLikedBlogs: (page = 0, size = 6) =>
+        api.get(`/blogs/liked?page=${page}&size=${size}`, { headers: getAuthHeader() }),
   // Get all blogs with pagination
   getAllBlogs: (page = 0, size = 10, sortBy = "createdAt", sortDir = "desc") =>
       api.get(`/blogs?page=${page}&size=${size}&sort=${sortBy},${sortDir}`,

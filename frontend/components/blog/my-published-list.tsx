@@ -58,9 +58,22 @@ export function MyPublishedList() {
                   <span className="ml-3 text-xs text-green-400 bg-green-900 rounded px-2 py-0.5">Published</span>
                   <div className="text-xs text-gray-400 mt-1">Published: {new Date(post.publishedAt || post.createdAt).toLocaleString()}</div>
                 </div>
-                <Button size="sm" variant="secondary" onClick={() => router.push(`/dev-forum/blog/${post.id}`)}>
-                  View
-                </Button>
+                <div className="flex gap-2">
+                  <Button size="sm" variant="secondary" onClick={() => router.push(`/dev-forum/blog/${post.id}`)}>
+                    View
+                  </Button>
+                  <Button size="sm" variant="destructive" onClick={async () => {
+                    if (!window.confirm('Are you sure you want to delete this published post?')) return;
+                    try {
+                      await blogService.deleteBlog(post.id);
+                      setPublished(prev => prev.filter(p => p.id !== post.id));
+                    } catch (e) {
+                      alert('Failed to delete published post.');
+                    }
+                  }}>
+                    Delete
+                  </Button>
+                </div>
               </li>
             ))}
           </ul>

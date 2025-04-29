@@ -11,6 +11,7 @@ import java.util.UUID;
  * Service interface for blog operations
  */
 public interface BlogService {
+    org.springframework.data.domain.Page<BlogDTO> getBlogsByIds(java.util.List<UUID> blogIds, org.springframework.data.domain.Pageable pageable, UUID currentUserId);
     /**
      * Creates a new blog
      */

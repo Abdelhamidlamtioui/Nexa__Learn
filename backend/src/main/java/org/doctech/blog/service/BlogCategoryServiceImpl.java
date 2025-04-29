@@ -3,6 +3,7 @@ package org.doctech.blog.service;
 import lombok.RequiredArgsConstructor;
 import org.doctech.blog.model.CustomBlogCategory;
 import org.doctech.blog.repository.CustomBlogCategoryRepository;
+import org.doctech.blog.repository.BlogRepository;
 import org.doctech.common.exception.IllegalOperationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class BlogCategoryServiceImpl implements BlogCategoryService {
 
     private final CustomBlogCategoryRepository customRepo;
+    private final BlogRepository blogRepository; // Inject BlogRepository
 
     @Override
     public String createCategory(String categoryName) {
@@ -35,6 +37,7 @@ public class BlogCategoryServiceImpl implements BlogCategoryService {
     }
 
     @Override
+    @Transactional
     public void deleteCategory(String categoryName) {
         if (categoryName == null || categoryName.trim().isEmpty()) {
             throw new IllegalArgumentException("Category name cannot be empty");
@@ -44,6 +47,12 @@ public class BlogCategoryServiceImpl implements BlogCategoryService {
 
         CustomBlogCategory category = customRepo.findByName(normalizedName)
                 .orElseThrow(() -> new IllegalOperationException("Category not found: " + normalizedName));
+
+        // Delete all blogs with this category
+        List<org.doctech.blog.model.Blog> blogsToDelete = blogRepository.findAll().stream()
+            .filter(blog -> blog.getCategory() != null && blog.getCategory().getName().equals(normalizedName))
+            .toList();
+        blogRepository.deleteAll(blogsToDelete);
 
         customRepo.delete(category);
     }

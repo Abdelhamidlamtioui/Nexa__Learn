@@ -8,6 +8,7 @@ import java.util.UUID;
  * Service interface for blog like operations
  */
 public interface BlogLikeService {
+    java.util.List<UUID> getLikedBlogIdsByUserId(UUID userId);
     /**
      * Toggles a like on a blog for a specific user
      * @param blogId The ID of the blog to toggle like on
